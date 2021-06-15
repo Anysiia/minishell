@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 12:05:07 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/15 11:27:51 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/15 13:25:38 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	handle_metacharacter(t_lexer *lexer)
 	if (lexer->line[lexer->index] == '<')
 	{
 		if (lexer->line[lexer->index + 1]
-			&& lexer->line[lexer->index + 1] == '>')
+			&& lexer->line[lexer->index + 1] == '<')
 		{
 			add_token(lexer, "<<", TOKEN_DOUBLE_LESS);
 			lexer->index++;
