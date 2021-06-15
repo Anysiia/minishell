@@ -1,0 +1,86 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/10 17:51:57 by cmorel-a          #+#    #+#             */
+/*   Updated: 2021/06/15 10:12:19 by cmorel-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/minishell.h"
+
+/*
+Recode builtin Cd.
+
+cd [DIR]
+
+Change the shell working directory.
+Change the current directory to DIR. The default DIR is the value of the
+HOME shell variable.
+cd - will go back to the last folder you looked at, and the pwd is printed.
+Returns 0 if the directory is changed.
+*/
+
+static int	change_directory(t_minishell *minishell, const char *path)
+{
+	int		ret;
+
+	ret = set_pwd(minishell, "OLDPWD");
+	if (ret == RET_ERROR)
+		return (builtin_error("cd", path, strerror(errno), 1));
+	ret = chdir(path);
+	if (ret == RET_ERROR)
+		return (builtin_error("cd", path, strerror(errno), 1));
+	ret = set_pwd(minishell, "PWD");
+	if (ret == RET_ERROR)
+		return (builtin_error("cd", path, strerror(errno), 1));
+	return (EXIT_SUCCESS);
+}
+
+static int	go_directory(t_minishell *minishell, const char *var_name)
+{
+	char	*path;
+	int		ret;
+
+	path = ft_getenv(minishell->env, var_name);
+	if (!path)
+	{
+		builtin_error("cd", var_name, NOT_SET, 1);
+		return (EXIT_FAILURE);
+	}
+	ret = change_directory(minishell, path);
+	ft_freestr(&path);
+	return (ret);
+}
+
+int	cd_builtin(int ac, char **av, t_minishell *minishell)
+{
+	int		ret;
+	char	*path;
+
+	set_state(EXIT_SUCCESS);
+	if (ac > 2)
+		return (argument_error(av[CMD]));
+	else if (ac == NO_ARGS || !ft_strcmp(av[FIRST_ARG], "~"))
+		ret = go_directory(minishell, "HOME");
+	else if (av[FIRST_ARG][0] == OPT_INDICATOR && ft_strlen(av[FIRST_ARG]) > 1)
+	{
+		invalid_option(av[CMD], av[FIRST_ARG]);
+		builtin_usage(av[CMD], "cd [path]");
+		return (get_state());
+	}
+	else if (!ft_strcmp(av[FIRST_ARG], "-"))
+	{
+		ret = go_directory(minishell, "OLDPWD");
+		path = ft_getenv(minishell->env, "PWD");
+		if (ret == EXIT_SUCCESS)
+			printf("%s\n", path);
+		ft_freestr(&path);
+	}
+	else
+		ret = change_directory(minishell, av[FIRST_ARG]);
+	return (get_state());
+}
