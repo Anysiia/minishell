@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 11:33:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/05/11 15:43:24 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/15 13:38:48 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,6 @@ static void	handle_fatal_error(int signal)
 		ft_putchar_fd('\n', STDOUT);
 	}
 }
-/*
-static void	handle_sigquit(int signal)
-{
-	set_state(FATAL_SIGN + signal);
-	printf("sigquit");
-}*/
 
 static void	handle_signal_error(t_minishell *minishell)
 {
