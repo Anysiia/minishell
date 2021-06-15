@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:35:58 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/04/20 16:34:44 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/15 11:30:49 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	get_arg_count(t_token *list, t_cmd *cmd)
 
 	arg = 0;
 	tmp = list;
-	while (tmp && tmp->type != TOKEN_SEMI && tmp->type != TOKEN_PIPE)
+	while (tmp && tmp->type != TOKEN_PIPE)
 	{
 		if (tmp->type == TOKEN_WORD)
 			arg++;
@@ -75,7 +75,7 @@ static int	get_arg(t_token *token, t_cmd *cmd, int ac)
 	if (!cmd->av)
 		return (RET_ERROR);
 	i = 0;
-	while (list && list->type != TOKEN_SEMI && list->type != TOKEN_PIPE)
+	while (list && list->type != TOKEN_PIPE)
 	{
 		if ((list)->type == TOKEN_WORD)
 		{

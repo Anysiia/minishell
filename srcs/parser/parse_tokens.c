@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:35:58 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/04/14 11:20:37 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/15 11:40:11 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,14 @@ static int	parse_command(t_minishell *minishell, t_token *tmp)
 {
 	int	ret;
 
-	while (!get_lexer() && tmp && tmp->type != TOKEN_SEMI)
+	while (!get_lexer() && tmp)
 	{
 		create_new_command(minishell, tmp);
-		while (tmp && tmp->type != TOKEN_SEMI && tmp->type != TOKEN_PIPE)
+		while (tmp && tmp->type != TOKEN_PIPE)
 			tmp = tmp->next;
 		if (tmp && tmp->type == TOKEN_PIPE)
 		{
-			if (!tmp->next || tmp->next->type == TOKEN_PIPE
-				|| tmp->next->type == TOKEN_SEMI)
+			if (!tmp->next || tmp->next->type == TOKEN_PIPE)
 				print_error(ERR_TOKEN_PIPE, false);
 			tmp = tmp->next;
 		}
@@ -65,7 +64,7 @@ static int	parse_command(t_minishell *minishell, t_token *tmp)
 bool	is_redir(t_token *token)
 {
 	if (token->type == TOKEN_DOUBLE_GREAT || token->type == TOKEN_GREAT
-		|| token->type == TOKEN_LESS)
+		|| token->type == TOKEN_LESS || token->type == TOKEN_DOUBLE_LESS)
 		return (true);
 	return (false);
 }
@@ -76,23 +75,10 @@ int	parse_tokens(t_minishell *minishell)
 	int		ret;
 
 	tmp = minishell->lexer->tokens;
-	if (!tmp || (tmp->type != TOKEN_WORD && !is_redir(tmp)))
+	if (tmp && tmp->type != TOKEN_WORD && !is_redir(tmp))
 		error_lexer(INVALID_TOKEN, false);
-	while (!get_lexer() && tmp && tmp->type != TOKEN_SEMI)
-	{
-		ret = parse_command(minishell, tmp);
-		while (tmp && tmp->type != TOKEN_SEMI)
-			tmp = tmp->next;
-		if (ret)
-			return (EXIT_FAILURE);
-		if (tmp && tmp->type == TOKEN_SEMI)
-		{
-			if (!tmp->next || tmp->next->type == TOKEN_SEMI
-				|| tmp->next->type == TOKEN_PIPE)
-				error_lexer(ERR_TOKEN_SEMI, false);
-			else
-				tmp = tmp->next;
-		}
-	}
+	ret = parse_command(minishell, tmp);
+	if (ret)
+		return (EXIT_FAILURE);
 	return (get_lexer());
 }

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 12:05:07 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/04/14 11:13:59 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/15 11:27:51 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,18 @@ void	handle_metacharacter(t_lexer *lexer)
 			add_token(lexer, ">", TOKEN_GREAT);
 	}
 	if (lexer->line[lexer->index] == '<')
-		add_token(lexer, "<", TOKEN_LESS);
+	{
+		if (lexer->line[lexer->index + 1]
+			&& lexer->line[lexer->index + 1] == '>')
+		{
+			add_token(lexer, "<<", TOKEN_DOUBLE_LESS);
+			lexer->index++;
+		}
+		else
+			add_token(lexer, "<", TOKEN_LESS);
+	}
 	if (lexer->line[lexer->index] == '|')
 		add_token(lexer, "|", TOKEN_PIPE);
-	if (lexer->line[lexer->index] == ';')
-		add_token(lexer, ";", TOKEN_SEMI);
 }
 
 char	*append_char_to_str(char *str, char c)
@@ -63,23 +70,6 @@ char	*append_char_to_str(char *str, char c)
 	new_str[len] = c;
 	ft_freestr(&str);
 	return (new_str);
-}
-
-char	*handle_backslash(char	*word, t_lexer *lexer)
-{
-	if (lexer->line[lexer->index + 1])
-	{
-		word = append_char_to_str(word, lexer->line[lexer->index]);
-		if (!word)
-			error_lexer(MALLOC_TOKEN_DATA, 1);
-		word = append_char_to_str(word, lexer->line[lexer->index + 1]);
-		if (!word)
-			error_lexer(MALLOC_TOKEN_DATA, 1);
-		lexer->index++;
-		return (word);
-	}
-	error_lexer(MULTILINES, 0);
-	return (word);
 }
 
 char	*handle_quote(char *word, t_lexer *lexer)

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:51:54 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/05/25 12:02:02 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/15 11:28:03 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ typedef enum e_token_type
 	NOT_A_TOKEN = 0,
 	TOKEN_DOUBLE_GREAT,
 	TOKEN_GREAT,
+	TOKEN_DOUBLE_LESS,
 	TOKEN_LESS,
 	TOKEN_PIPE,
-	TOKEN_SEMI,
 	TOKEN_WORD
 }	t_token_type;
 

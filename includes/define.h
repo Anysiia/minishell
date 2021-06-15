@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:50:01 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/15 10:31:34 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/15 11:26:34 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@
 # define DFT_PATH1 "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:"
 # define DFT_PATH2 "/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 
-# define METACHARACTER " \t\n><|;"
+# define METACHARACTER " \t\n><|"
 # define BACKSLASH '\\'
+# define SEMI ';'
 # define STRONG_QUOTE '\''
 # define WEAK_QUOTE '\"'
 # define COMMENT '#'
@@ -61,12 +62,11 @@ Len max of a path (1024 on mac, 4096 on linux VM)
 Errors
 */
 
-# define TERM_VAR "fatal error: TERM variable is not set"
-# define TERM_ERROR "fatal error: cannot access to the terminal"
 # define MALLOC_TOKEN "fatal error: malloc new token"
 # define MALLOC_TOKEN_DATA "fatal error: malloc token data"
 # define MALLOC_COMMAND "fatal error: malloc new command"
 # define MALLOC_ARG_LIST "fatal error: malloc arg list of a command"
+# define MULTIPLE_CMD "usage: minishell doesn't support multiple commands"
 # define MULTILINES "usage: minishell doesn't support multilines"
 # define MALLOC_CREATE_ENV "fatal error: malloc environnement"
 # define MALLOC_DUP_ENV "malloc sorted environnement"

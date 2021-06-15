@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:04:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/15 10:09:37 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/15 11:27:22 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,6 @@ void	free_lexer(t_lexer	*lexer);
 int		split_into_tokens(t_lexer *lexer);
 void	print_lexer(t_lexer *lexer);
 char	*handle_quote(char *word, t_lexer *lexer);
-char	*handle_backslash(char *word, t_lexer *lexer);
 void	handle_metacharacter(t_lexer *lexer);
 char	*append_char_to_str(char *str, char c);
 void	add_token(t_lexer *lexer, char *s, int type);

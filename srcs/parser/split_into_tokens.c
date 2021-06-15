@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 12:05:07 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/04/14 11:14:41 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/15 11:25:57 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int	split_into_tokens(t_lexer *lexer)
 				word = add_token_word(lexer, word);
 			handle_metacharacter(lexer);
 		}
-		else if (lexer->line[lexer->index] == BACKSLASH)
-			word = handle_backslash(word, lexer);
+		else if (lexer->line[lexer->index] == SEMI)
+			error_lexer(MULTIPLE_CMD, 0);
 		else
 			word = append_char_to_str(word, lexer->line[lexer->index]);
 		lexer->index++;
