@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 16:19:29 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/05/11 15:41:01 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/15 16:01:52 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,12 @@ static char	*handle_weak_quote(char **env, const char *word, int *i)
 {
 	char	*in_quote;
 
+	(void)env;
 	(*i)++;
 	in_quote = NULL;
 	while (word[*i] && word[*i] != WEAK_QUOTE)
 	{
-		if (word[*i] == BACKSLASH)
-			remove_backslash(&in_quote, word, i);
-		else if (word[*i] == BACKSLASH)
-			get_var_value(env, &in_quote, word, i);
-		else
-			in_quote = append_char_to_str(in_quote, word[*i]);
+		in_quote = append_char_to_str(in_quote, word[*i]);
 		(*i)++;
 	}
 	if (in_quote == NULL)

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 10:25:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/15 10:33:00 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/15 16:00:02 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static int	increase_shell_level(t_minishell *minishell)
 	return (EXIT_SUCCESS);
 }
 
+/*
 static void	set_default_path(t_minishell *minishell)
 {
 	char	*default_path;
@@ -52,7 +53,7 @@ static void	set_default_path(t_minishell *minishell)
 		exit_error(minishell, MALLOC_CREATE_ENV);
 	if (default_path)
 		ft_freestr(&default_path);
-}
+}*/
 
 static void	copy_environnement(t_minishell *minishell, char **envp)
 {
@@ -94,12 +95,14 @@ void	create_env(t_minishell *minishell, char **envp)
 			exit_error(minishell, MALLOC_CREATE_ENV);
 		if (ft_putenv(minishell, DFT_SHLVL) == RET_ERROR)
 			exit_error(minishell, MALLOC_CREATE_ENV);
-		set_default_path(minishell);
+		if (ft_putenv(minishell, DFT_PATH) == RET_ERROR)
+			exit_error(minishell, MALLOC_CREATE_ENV);
 	}
 	else
 	{
 		copy_environnement(minishell, envp);
 		if (find_variable_index(minishell->env, "PATH") < 0)
-			set_default_path(minishell);
+			if (ft_putenv(minishell, DFT_PATH) == RET_ERROR)
+				exit_error(minishell, MALLOC_CREATE_ENV);
 	}
 }

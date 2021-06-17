@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:35:58 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/15 11:40:11 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/17 11:46:17 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,15 @@ static int	parse_command(t_minishell *minishell, t_token *tmp)
 		if (tmp && tmp->type == TOKEN_PIPE)
 		{
 			if (!tmp->next || tmp->next->type == TOKEN_PIPE)
-				print_error(ERR_TOKEN_PIPE, false);
+				error_lexer(ERR_TOKEN_PIPE, false);
 			tmp = tmp->next;
 		}
 	}
 	if (get_lexer())
+	{
+		free_command(&minishell->cmd);
 		return (EXIT_FAILURE);
+	}
 	print_command_list(minishell->cmd);
 	ret = execute_command(minishell, minishell->cmd);
 	free_command(&minishell->cmd);
@@ -63,10 +66,8 @@ static int	parse_command(t_minishell *minishell, t_token *tmp)
 
 bool	is_redir(t_token *token)
 {
-	if (token->type == TOKEN_DOUBLE_GREAT || token->type == TOKEN_GREAT
-		|| token->type == TOKEN_LESS || token->type == TOKEN_DOUBLE_LESS)
-		return (true);
-	return (false);
+	return (token->type == TOKEN_DOUBLE_GREAT || token->type == TOKEN_GREAT
+		|| token->type == TOKEN_LESS || token->type == TOKEN_DOUBLE_LESS);
 }
 
 int	parse_tokens(t_minishell *minishell)

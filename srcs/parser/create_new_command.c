@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:35:58 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/15 11:30:49 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/17 11:49:53 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	get_arg_count(t_token *list, t_cmd *cmd)
 		{
 			if (!tmp->next || tmp->next->type != TOKEN_WORD)
 			{
-				error_lexer(ERR_TOKEN_REDIR, 0);
+				error_lexer(ERR_TOKEN_REDIR, false);
 				return (RET_ERROR);
 			}
 			else
@@ -102,13 +102,14 @@ void	create_new_command(t_minishell *minishell, t_token *list)
 
 	new = malloc_command();
 	if (!new)
-		error_lexer(MALLOC_COMMAND, 1);
+		error_lexer(MALLOC_COMMAND, true);
 	ret = get_arg_count(list, new);
-	if (ret == RET_ERROR)
-		return ;
-	ret = get_arg(list, new, new->ac);
-	if (ret == RET_ERROR)
-		error_lexer(MALLOC_ARG_LIST, 1);
+	if (ret != RET_ERROR)
+	{
+		ret = get_arg(list, new, new->ac);
+		if (ret == RET_ERROR)
+			error_lexer(MALLOC_ARG_LIST, true);
+	}
 	if (!minishell->cmd)
 		minishell->cmd = new;
 	else

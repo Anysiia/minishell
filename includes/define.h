@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:50:01 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/15 11:26:34 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/15 16:02:37 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 
 # define SHELL_NAME "minishell"
 # define DFT_SHLVL "SHLVL=1"
-# define DFT_PATH1 "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:"
-# define DFT_PATH2 "/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
+# define DFT_PATH "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:\
+/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 
 # define METACHARACTER " \t\n><|"
 # define BACKSLASH '\\'
