@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:35:58 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/17 11:46:17 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/17 15:29:03 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,23 @@ static void	print_command_list(t_cmd *list)
 	}
 }
 
-static int	parse_command(t_minishell *minishell, t_token *tmp)
+static int	parse_command(t_minishell *minishell, t_token *tmp, int *lexer)
 {
 	int	ret;
 
-	while (!get_lexer() && tmp)
+	while (*lexer == EXIT_SUCCESS && tmp)
 	{
-		create_new_command(minishell, tmp);
+		create_new_command(minishell, tmp, lexer);
 		while (tmp && tmp->type != TOKEN_PIPE)
 			tmp = tmp->next;
 		if (tmp && tmp->type == TOKEN_PIPE)
 		{
 			if (!tmp->next || tmp->next->type == TOKEN_PIPE)
-				error_lexer(ERR_TOKEN_PIPE, false);
+				error_lexer(ERR_TOKEN_PIPE, false, lexer);
 			tmp = tmp->next;
 		}
 	}
-	if (get_lexer())
+	if (*lexer == EXIT_FAILURE)
 	{
 		free_command(&minishell->cmd);
 		return (EXIT_FAILURE);
@@ -70,16 +70,16 @@ bool	is_redir(t_token *token)
 		|| token->type == TOKEN_LESS || token->type == TOKEN_DOUBLE_LESS);
 }
 
-int	parse_tokens(t_minishell *minishell)
+int	parse_tokens(t_minishell *minishell, int *lexer_state)
 {
 	t_token	*tmp;
 	int		ret;
 
 	tmp = minishell->lexer->tokens;
 	if (tmp && tmp->type != TOKEN_WORD && !is_redir(tmp))
-		error_lexer(INVALID_TOKEN, false);
-	ret = parse_command(minishell, tmp);
+		error_lexer(INVALID_TOKEN, false, lexer_state);
+	ret = parse_command(minishell, tmp, lexer_state);
 	if (ret)
 		return (EXIT_FAILURE);
-	return (get_lexer());
+	return (*lexer_state);
 }

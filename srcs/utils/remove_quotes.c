@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 16:19:29 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/15 16:01:52 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/17 15:46:28 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*handle_weak_quote(char **env, const char *word, int *i)
 	in_quote = NULL;
 	while (word[*i] && word[*i] != WEAK_QUOTE)
 	{
-		in_quote = append_char_to_str(in_quote, word[*i]);
+		in_quote = append_c_to_str(in_quote, word[*i]);
 		(*i)++;
 	}
 	if (in_quote == NULL)

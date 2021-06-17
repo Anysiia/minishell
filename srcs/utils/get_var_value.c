@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 15:27:46 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/05/11 15:35:15 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/17 15:41:08 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	get_var_value(char **env, char **new_word, const char *word, int *i)
 
 	if (!word[*i + 1] || word[*i + 1] == BACKSLASH)
 	{
-		*new_word = append_char_to_str(*new_word, word[*i]);
+		*new_word = append_c_to_str(*new_word, word[*i]);
 		return ;
 	}
 	if (is_quote(word[*i + 1]))

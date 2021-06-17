@@ -41,7 +41,6 @@ SRCS =	srcs/minishell.c \
 		srcs/parser/create_new_command.c \
 		srcs/utils/error.c \
 		srcs/utils/create_prompt.c \
-		srcs/utils/lexer.c \
 		srcs/utils/state.c \
 		srcs/utils/exit.c \
 		srcs/utils/utils_parser.c \

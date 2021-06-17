@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:04:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/15 11:27:22 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/17 15:46:05 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,12 @@ int		get_state(void);
 int		save_exit(bool action, int exit);
 void	set_exit(int exit);
 int		get_exit(void);
-int		save_lexer(bool action, int lexer);
+/*int		save_lexer(bool action, int lexer);
 void	set_lexer(int lexer);
-int		get_lexer(void);
+int		get_lexer(void);*/
 void	exit_shell(t_minishell *minishell);
 int		is_quote(const char c);
+char	*append_c_to_str(char *new_word, char c);
 char	*expand_token_word(char **env, char *word);
 void	remove_backslash(char **new_word, const char *word, int *i);
 void	remove_quote(char **env, char **new_word, const char *word, int *i);
@@ -102,7 +103,7 @@ ERRORS
 */
 
 void	exit_error(t_minishell *minishell, const char *msg);
-void	error_lexer(const char *error, bool quit);
+void	error_lexer(const char *error, bool quit, int *lexer_state);
 void	print_error(const char *msg, bool quit);
 void	print_errno(const char *error_command);
 void	print_exec_error(const char *error_command, const char *msg);
@@ -124,20 +125,20 @@ void	create_lexer(t_lexer *lexer);
 t_lexer	*malloc_lexer(void);
 void	reset_lexer(t_lexer *lexer);
 void	free_lexer(t_lexer	*lexer);
-int		split_into_tokens(t_lexer *lexer);
+int		split_into_tokens(t_lexer *lexer, int *lexer_state);
 void	print_lexer(t_lexer *lexer);
-char	*handle_quote(char *word, t_lexer *lexer);
-void	handle_metacharacter(t_lexer *lexer);
-char	*append_char_to_str(char *str, char c);
-void	add_token(t_lexer *lexer, char *s, int type);
+char	*handle_quote(char *word, t_lexer *lexer, int *lexer_state);
+void	handle_metacharacter(t_lexer *lexer, int *lexer_state);
+char	*append_char_to_str(char *str, char c, int *lexer_state);
+void	add_token(t_lexer *lexer, char *s, int type, int *lexer_state);
 t_cmd	*malloc_command(void);
 void	free_command(t_cmd **cmd);
 void	find_command(char **env, t_cmd *cmd);
 int		is_builtin(t_cmd *cmd);
 char	*expand_relative_path(char **env, t_cmd *cmd);
 int		is_file(const char *name);
-int		parse_tokens(t_minishell *minishell);
-void	create_new_command(t_minishell *minishell, t_token *list);
+int		parse_tokens(t_minishell *minishell, int *lexer_state);
+void	create_new_command(t_minishell *minishell, t_token *list, int *lexer);
 bool	is_redir(t_token *token);
 
 #endif

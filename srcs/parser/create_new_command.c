@@ -6,13 +6,13 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:35:58 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/17 11:49:53 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/17 15:27:58 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	get_arg_count(t_token *list, t_cmd *cmd)
+static int	get_arg_count(t_token *list, t_cmd *cmd, int *lexer_state)
 {
 	t_token	*tmp;
 	int		arg;
@@ -27,7 +27,7 @@ static int	get_arg_count(t_token *list, t_cmd *cmd)
 		{
 			if (!tmp->next || tmp->next->type != TOKEN_WORD)
 			{
-				error_lexer(ERR_TOKEN_REDIR, false);
+				error_lexer(ERR_TOKEN_REDIR, false, lexer_state);
 				return (RET_ERROR);
 			}
 			else
@@ -41,7 +41,7 @@ static int	get_arg_count(t_token *list, t_cmd *cmd)
 	return (EXIT_SUCCESS);
 }
 
-static void	handle_redir(t_cmd *cmd, t_token *list)
+static void	handle_redir(t_cmd *cmd, t_token *list, int *lexer_state)
 {
 	char	*filename;
 	int		fd;
@@ -58,14 +58,14 @@ static void	handle_redir(t_cmd *cmd, t_token *list)
 	else
 		fd = open(filename, O_RDONLY | O_CREAT, 0644);
 	if (fd == RET_ERROR)
-		error_lexer(CREATE_FILE, false);
+		error_lexer(CREATE_FILE, false, lexer_state);
 	if (list->type == TOKEN_GREAT || list->type == TOKEN_DOUBLE_GREAT)
 		cmd->fd[STDOUT] = fd;
 	if (list->type == TOKEN_LESS)
 		cmd->fd[STDIN] = fd;
 }
 
-static int	get_arg(t_token *token, t_cmd *cmd, int ac)
+static int	get_arg(t_token *token, t_cmd *cmd, int ac, int *lexer_state)
 {
 	t_token	*list;
 	int		i;
@@ -87,14 +87,15 @@ static int	get_arg(t_token *token, t_cmd *cmd, int ac)
 		}
 		else if (is_redir(list) && list->next && list->next->type == TOKEN_WORD)
 		{
-			handle_redir(cmd, list);
+			handle_redir(cmd, list, lexer_state);
 			list = list->next->next;
 		}
 	}
 	return (EXIT_SUCCESS);
 }
 
-void	create_new_command(t_minishell *minishell, t_token *list)
+void	create_new_command(t_minishell *minishell, t_token *list,
+	int *lexer_state)
 {
 	t_cmd	*new;
 	t_cmd	*tmp;
@@ -102,13 +103,13 @@ void	create_new_command(t_minishell *minishell, t_token *list)
 
 	new = malloc_command();
 	if (!new)
-		error_lexer(MALLOC_COMMAND, true);
-	ret = get_arg_count(list, new);
+		error_lexer(MALLOC_COMMAND, true, lexer_state);
+	ret = get_arg_count(list, new, lexer_state);
 	if (ret != RET_ERROR)
 	{
-		ret = get_arg(list, new, new->ac);
+		ret = get_arg(list, new, new->ac, lexer_state);
 		if (ret == RET_ERROR)
-			error_lexer(MALLOC_ARG_LIST, true);
+			error_lexer(MALLOC_ARG_LIST, true, lexer_state);
 	}
 	if (!minishell->cmd)
 		minishell->cmd = new;
