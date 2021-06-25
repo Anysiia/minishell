@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 12:05:07 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/17 15:54:22 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/25 15:19:23 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ int	split_into_tokens(t_lexer *lexer, int *state)
 				word = add_token_word(lexer, word, state);
 			handle_metacharacter(lexer, state);
 		}
-		else if (lexer->line[lexer->index] == SEMI)
-			error_lexer(MULTIPLE_CMD, 0, state);
 		else
 			word = append_char_to_str(word, lexer->line[lexer->index], state);
 		lexer->index++;

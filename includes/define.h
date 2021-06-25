@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:50:01 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/15 16:02:37 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/25 15:20:27 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 
 # define METACHARACTER " \t\n><|"
 # define BACKSLASH '\\'
-# define SEMI ';'
 # define STRONG_QUOTE '\''
 # define WEAK_QUOTE '\"'
 # define COMMENT '#'
@@ -66,14 +65,12 @@ Errors
 # define MALLOC_TOKEN_DATA "fatal error: malloc token data"
 # define MALLOC_COMMAND "fatal error: malloc new command"
 # define MALLOC_ARG_LIST "fatal error: malloc arg list of a command"
-# define MULTIPLE_CMD "usage: minishell doesn't support multiple commands"
 # define MULTILINES "usage: minishell doesn't support multilines"
 # define MALLOC_CREATE_ENV "fatal error: malloc environnement"
 # define MALLOC_DUP_ENV "malloc sorted environnement"
 # define MALLOC_BUILTIN_LIST "fatal error: malloc builtin list"
 # define ERR_TOKEN_REDIR "unexpected token near redirection"
 # define ERR_TOKEN_PIPE "unexpected token near pipe"
-# define ERR_TOKEN_SEMI "unexpected token near semi"
 # define INVALID_TOKEN "first token is invalid"
 # define CREATE_FILE "an error occur on opening redirection files"
 # define ARG_EXPANSION "an error occur on expansion of arguments"
