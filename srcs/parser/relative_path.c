@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 11:36:24 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/05/11 15:30:42 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/25 15:55:14 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static char	*remove_last_folder(char *cmd_name)
 	len = ft_strlen(cmd_name);
 	while (len > 0 && cmd_name[len] != '/')
 		cmd_name[len--] = '\0';
-	cmd_name[len] = '\0';
 	return (cmd_name);
 }
 
@@ -67,6 +66,8 @@ char	*expand_relative_path(char **env, t_cmd *cmd)
 			cmd_name = add_last_folder(cmd_name, split_path[i]);
 		if (!cmd_name)
 			return (NULL);
+		ft_putendl(split_path[i]);
+		ft_putendl(cmd_name);
 		i++;
 	}
 	split_path = ft_free_tab(split_path);

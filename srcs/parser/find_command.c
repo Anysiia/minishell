@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 15:57:38 by user42            #+#    #+#             */
-/*   Updated: 2021/05/11 15:29:34 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/25 15:46:15 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	find_command(char **env, t_cmd *cmd)
 			ft_freestr(&cmd->av[CMD]);
 			cmd->av[CMD] = new;
 		}
-		return ;
 	}
-	search_binary(env, cmd);
+	if (!is_file(cmd->av[CMD]))
+		search_binary(env, cmd);
 }
