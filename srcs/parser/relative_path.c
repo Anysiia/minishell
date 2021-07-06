@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 11:36:24 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/25 18:00:39 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/07/06 12:01:33 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,57 +26,46 @@ static char	*remove_last_folder(char *cmd_name)
 
 static char	*add_last_folder(char *cmd_name, char *new_folder)
 {
-	char	*new;
-	char	len;
+	int	len;
 
 	if (!cmd_name || !new_folder)
 		return (cmd_name);
-	len = ft_strlen(cmd_name) + ft_strlen(new_folder);
-	new = ft_strnew(len + 2);
-	if (!new)
-		return (NULL);
-	ft_strlcpy(new, cmd_name, ft_strlen(cmd_name));
-	new[ft_strlen(cmd_name) + 2] = '/';
-	ft_strlcat(new, new_folder, len + 2);
-	ft_freestr(&cmd_name);
-	return (new);
+	len = ft_strlen(cmd_name);
+	if (len != 0 && cmd_name[len - 1] != '/')
+		cmd_name[len] = '/';
+	ft_strlcat(cmd_name, new_folder, PATH_MAX);
+	return (cmd_name);
 }
 
 char	*expand_relative_path(char **env, t_cmd *cmd)
 {
 	char	*cmd_name;
+	char	*home;
 	char	**split_path;
 	int		i;
 
 	i = 0;
+	cmd_name = ft_strnew(PATH_MAX);
 	split_path = ft_split(cmd->av[CMD], '/');
-	if (!split_path)
+	if (!split_path || !cmd_name || ((split_path[i]
+		&& (!ft_strcmp("..", split_path[i]) || !ft_strcmp(".", split_path[i])))
+		&& !getcwd(cmd_name, PATH_MAX)))
 		return (NULL);
-	if (split_path[i] && !ft_strcmp("..", split_path[i]))
-	{
-		cmd_name = ft_strnew(PATH_MAX);
-		if (!cmd_name || !getcwd(cmd_name, PATH_MAX))
-			return (NULL);
-	}
-	else
-		cmd_name = ft_strnew(1);
-	if (!cmd_name)
-		return (NULL);
+	if (!ft_strcmp(".", split_path[i]))
+		i++;
 	while (split_path[i])
 	{
 		if (!ft_strcmp(split_path[i], ".."))
 			cmd_name = remove_last_folder(cmd_name);
 		else if (!ft_strcmp(split_path[i], "~"))
 		{
-			ft_freestr(&cmd_name);
-			cmd_name = ft_getenv(env, "HOME");
+			ft_bzero(cmd_name, PATH_MAX);
+			home = ft_getenv(env, "HOME");
+			ft_strlcpy(cmd_name, home, ft_strlen(home));
+			ft_freestr(&home);
 		}
 		else if (ft_strcmp(split_path[i], "."))
 			cmd_name = add_last_folder(cmd_name, split_path[i]);
-		if (!cmd_name)
-			return (NULL);
-		ft_putendl(split_path[i]);
-		ft_putendl(cmd_name);
 		i++;
 	}
 	split_path = ft_free_tab(split_path);
