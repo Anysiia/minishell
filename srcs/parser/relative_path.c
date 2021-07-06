@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 11:36:24 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/07/06 16:38:31 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/07/06 16:43:09 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ static char	*remove_last_folder(char *cmd_name)
 	len = ft_strlen(cmd_name);
 	while (len > 0 && cmd_name[len] != '/')
 		cmd_name[len--] = '\0';
+	len = ft_strlen(cmd_name);
+	if (len != 0 && cmd_name[len - 1] == '/')
+		cmd_name[len - 1] = '\0';
 	return (cmd_name);
 }
 
