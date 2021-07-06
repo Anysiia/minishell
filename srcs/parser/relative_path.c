@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 11:36:24 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/25 15:55:14 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/06/25 18:00:39 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,20 @@ char	*expand_relative_path(char **env, t_cmd *cmd)
 	char	**split_path;
 	int		i;
 
-	split_path = ft_split(cmd->av[CMD], '/');
-	cmd_name = ft_strnew(PATH_MAX);
-	if (!split_path || !cmd_name || !getcwd(cmd_name, PATH_MAX))
-		return (NULL);
 	i = 0;
+	split_path = ft_split(cmd->av[CMD], '/');
+	if (!split_path)
+		return (NULL);
+	if (split_path[i] && !ft_strcmp("..", split_path[i]))
+	{
+		cmd_name = ft_strnew(PATH_MAX);
+		if (!cmd_name || !getcwd(cmd_name, PATH_MAX))
+			return (NULL);
+	}
+	else
+		cmd_name = ft_strnew(1);
+	if (!cmd_name)
+		return (NULL);
 	while (split_path[i])
 	{
 		if (!ft_strcmp(split_path[i], ".."))
