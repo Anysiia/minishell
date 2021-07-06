@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 12:57:44 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/05/11 15:09:59 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/07/06 16:57:47 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_getenv(char **env, const char *name)
 	int		index;
 	int		ret;
 
-	if (!name)
+	if (!name || !env)
 		return (NULL);
 	len = len_name_env(name);
 	if (len == RET_ERROR || name[len] == VAR_ENV_SEP)
