@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 11:36:24 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/07/06 16:43:09 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/07/07 10:07:06 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,18 @@ static char	*get_path(char **env, char *cmd_name, char **split_path)
 char	*expand_relative_path(char **env, t_cmd *cmd)
 {
 	char	*cmd_name;
-	char	**split_path;
+	char	**split;
 	int		i;
 
 	i = 0;
 	cmd_name = ft_strnew(PATH_MAX);
-	split_path = ft_split(cmd->av[CMD], '/');
-	if (!split_path || !cmd_name || ((split_path[i]
-		&& (!ft_strcmp("..", split_path[i]) || !ft_strcmp(".", split_path[i])))
-		&& !getcwd(cmd_name, PATH_MAX)))
-		return (NULL);
-	cmd_name = get_path(env, cmd_name, split_path);
-	split_path = ft_free_tab(split_path);
+	split = ft_split(cmd->av[CMD], '/');
+	if (!split || !cmd_name)
+		return (cmd->av[CMD]);
+	if ((split[i] && (!ft_strcmp("..", split[i]) || !ft_strcmp(".", split[i])))
+		&& !getcwd(cmd_name, PATH_MAX))
+		return (cmd->av[CMD]);
+	cmd_name = get_path(env, cmd_name, split);
+	split = ft_free_tab(split);
 	return (cmd_name);
 }

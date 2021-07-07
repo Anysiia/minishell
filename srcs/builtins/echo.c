@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 17:51:57 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/05/25 11:25:14 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/07/07 09:59:05 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,33 @@ Echo the string(s) to standard output.
 -n : do not output the trailing newline
 */
 
+static void	check_newline(char **av, int *i, int *nl)
+{
+	int		j;
+
+	while (av[*i] && av[*i][0] == '-')
+	{
+		j = 1;
+		while (av[*i][j] && av[*i][j] == 'n')
+			j++;
+		if (!av[*i][j])
+			*nl = 1;
+		else
+			break ;
+		*i += 1;
+	}
+}
+
 int	echo_builtin(int ac, char **av, t_minishell *minishell)
 {
 	int		i;
+	int		nl;
 
 	(void)minishell;
+	nl = 0;
 	set_state(EXIT_SUCCESS);
 	i = FIRST_ARG;
-	while (av[i] && !ft_strcmp(av[i], "-n"))
-		i++;
+	check_newline(av, &i, &nl);
 	while (i < ac)
 	{
 		ft_putstr(av[i]);
@@ -35,7 +53,7 @@ int	echo_builtin(int ac, char **av, t_minishell *minishell)
 			ft_putstr(" ");
 		i++;
 	}
-	if (av[FIRST_ARG] && ft_strcmp(av[FIRST_ARG], "-n"))
+	if (nl == 0)
 		ft_putstr("\n");
 	return (get_state());
 }
