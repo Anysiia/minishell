@@ -6,31 +6,35 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 14:21:52 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/07/08 11:09:05 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/07/08 12:50:58 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	expand_all_args(char **env, t_cmd *command)
+int	expand_all_args(char **env, t_cmd *command)
 {
 	int		i;
-	char	*expand;
+	int		ret;
 
 	i = 1;
 	while (i < command->ac)
 	{
-		expand = expand_token_word(env, command->av[i]);
-		if (!expand)
+		if (ft_test_set(WEAK_QUOTE, command->av[i])
+				|| ft_test_set(STRONG_QUOTE, command->av[i])
+				|| ft_test_set(ENV_VAR_SIGN, command->av[i]))
 		{
-			print_error(ARG_EXPANSION, 0);
-			return ;
+			ret = expand_token_word(env, command, i);
+			if (!ret)
+			{
+				print_error(ARG_EXPANSION, 0);
+				return (EXIT_FAILURE);
+			}
 		}
-		ft_freestr(&command->av[i]);
-		command->av[i] = expand;
 		i++;
 	}
 	find_command(env, command);
+	return (EXIT_SUCCESS);
 }
 
 int	execute_pipe(t_minishell *minishell, t_cmd *command)
@@ -66,10 +70,13 @@ void	fork_process(t_minishell *minishell, t_cmd *command)
 
 int	execute_simple_command(t_minishell *minishell, t_cmd *command)
 {
+	int		ret;
 	int		fd[2];
 
 	manage_redir(command, fd);
-	expand_all_args(minishell->env, command);
+	ret = expand_all_args(minishell->env, command);
+	if (ret == EXIT_FAILURE)
+		return (save_state(true, EXIT_FAILURE));
 	if (command->is_builtin == true)
 		command->command(command->ac, command->av, minishell);
 	else if (is_file(command->av[CMD]))

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:50:01 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/25 15:20:27 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/07/08 12:20:11 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define EMPTY_STRING ""
 # define VAR_ENV_SEP '='
 # define OPT_INDICATOR '-'
+# define QUOTE_VAR '\"\'$'
 
 # define NB_BUILTINS 7
 # define RET_ERROR -1

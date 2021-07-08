@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 12:01:03 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/03/30 14:33:17 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/07/08 12:11:51 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int				ft_isspace(int c);
 int				ft_toupper(int c);
 int				ft_tolower(int c);
 int				ft_test_set(const char c, const char *charset);
+int				ft_charset_in_str(const char *charset, const char *str);
 char			*ft_strchr(const char *s, int c);
 char			*ft_strrchr(const char *s, int c);
 int				ft_strcmp(const char *s1, const char *s2);

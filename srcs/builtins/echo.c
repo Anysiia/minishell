@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 17:51:57 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/07/07 09:59:05 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/07/08 12:18:04 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	check_newline(char **av, int *i, int *nl)
 {
 	int		j;
 
-	while (av[*i] && av[*i][0] == '-')
+	while (av[*i] && av[*i][0] == OPT_INDICATOR)
 	{
 		j = 1;
 		while (av[*i][j] && av[*i][j] == 'n')
