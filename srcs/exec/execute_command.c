@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 14:21:52 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/05/25 12:30:08 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/07/08 11:09:05 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	expand_all_args(char **env, t_cmd *command)
 	int		i;
 	char	*expand;
 
-	find_command(env, command);
 	i = 1;
 	while (i < command->ac)
 	{
@@ -31,6 +30,7 @@ void	expand_all_args(char **env, t_cmd *command)
 		command->av[i] = expand;
 		i++;
 	}
+	find_command(env, command);
 }
 
 int	execute_pipe(t_minishell *minishell, t_cmd *command)
