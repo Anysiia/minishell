@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:02:13 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/05/11 15:32:26 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/07/08 11:22:03 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,23 @@ void	print_prompt(char **env)
 {
 	char	*path;
 
-	path = prompt_path(env);
-	if (path)
+	if (isatty(STDERR))
 	{
-		ft_putstr_fd(MAG BLD "[", STDERR);
-		ft_putstr_fd(SHELL_NAME, STDERR);
-		ft_putstr_fd("] "CYN, STDERR);
-		ft_putstr_fd(path, STDERR);
-		ft_putstr_fd(NRM " > ", STDERR);
+		path = prompt_path(env);
+		if (path)
+		{
+			ft_putstr_fd(MAG BLD "[", STDERR);
+			ft_putstr_fd(SHELL_NAME, STDERR);
+			ft_putstr_fd("] "CYN, STDERR);
+			ft_putstr_fd(path, STDERR);
+			ft_putstr_fd(NRM " > ", STDERR);
+		}
+		else
+		{
+			ft_putstr_fd(MAG BLD "[", STDERR);
+			ft_putstr_fd(SHELL_NAME, STDERR);
+			ft_putstr_fd("]"NRM " > ", STDERR);
+		}
+		ft_freestr(&path);
 	}
-	else
-	{
-		ft_putstr_fd(MAG BLD "[", STDERR);
-		ft_putstr_fd(SHELL_NAME, STDERR);
-		ft_putstr_fd("]"NRM " > ", STDERR);
-	}
-	ft_freestr(&path);
 }

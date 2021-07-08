@@ -6,7 +6,6 @@
 int main()
 {
     // Configure readline to auto-complete paths when the tab key is hit.
-    rl_bind_key('\t', rl_complete);
 
     while (1) {
         // Display prompt and read input
