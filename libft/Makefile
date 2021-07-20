@@ -6,7 +6,7 @@
 #    By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 14:38:15 by cmorel-a          #+#    #+#              #
-#    Updated: 2021/02/19 10:05:22 by cmorel-a         ###   ########.fr        #
+#    Updated: 2021/07/20 15:11:20 by cmorel-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,8 @@ SRCS =	./ft_atoi.c \
 		./ft_strcdup.c \
 		./ft_freetab.c \
 		./ft_len_tab.c \
+		./ft_insert_tab_in_tab.c \
+		./ft_remove_line_in_tab.c \
 		./ft_strswap.c \
 		./gnl.c
 

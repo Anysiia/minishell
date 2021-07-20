@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 12:01:03 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/07/08 12:11:51 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/07/20 15:06:02 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ char			**ft_split(char const *s, char c);
 char			**ft_split_charset(const char *s, const char *charset);
 void			ft_freestr(char **string);
 void			ft_strswap(char **s1, char **s2);
+char			**ft_insert_tab_in_tab(char **dest, char **src, int pos);
+char			**ft_remove_line_on_tab(char **tabl, int index);
 char			**ft_free_tab(char **tabl);
 size_t			ft_len_tab(char **tabl);
 char			*ft_itoa(int n);
