@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 17:05:35 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/07/08 14:53:58 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/07/20 15:54:59 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	expand_token_word(char **env, t_cmd *cmd, int i)
 			get_var_value(env, &new_word, cmd->av[i], &j);
 		else
 			new_word = append_c_to_str(new_word, cmd->av[i][j]);
-		i++;
+		j++;
 	}
 	return (EXIT_SUCCESS);
 }
