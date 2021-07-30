@@ -6,16 +6,11 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 12:05:53 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/01/04 17:27:09 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/07/30 11:50:51 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-void	numb(char c, int fd)
-{
-	write(fd, &c, 1);
-}
 
 void	ft_putnbr_fd(int n, int fd)
 {

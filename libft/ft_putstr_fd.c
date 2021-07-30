@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 14:53:17 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/03/09 11:59:33 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/07/30 11:51:30 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,5 @@
 
 void	ft_putstr_fd(const char *s, int fd)
 {
-	size_t	i;
-
-	i = 0;
-	if (!s)
-		return ;
-	while (s[i])
-		i++;
-	write(fd, s, i);
+	write(fd, s, ft_strlen(s));
 }

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 10:15:42 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/05/11 16:10:20 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/07/29 14:38:47 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ void	print_errno(const char *error_command)
 	ft_putstr_fd(": ", STDERR);
 	ft_putstr_fd(error_command, STDERR);
 	ft_putstr_fd(": ", STDERR);
-	ft_putstr_fd(strerror(errno), STDERR);
-	ft_putstr_fd("\n", STDERR);
+	ft_putendl_fd(strerror(errno), STDERR);
 }
 
 void	print_error(const char *msg, bool quit)
@@ -35,8 +34,7 @@ void	print_error(const char *msg, bool quit)
 	{
 		ft_putstr_fd(SHELL_NAME, STDERR);
 		ft_putstr_fd(": ", STDERR);
-		ft_putstr_fd(msg, STDERR);
-		ft_putstr_fd("\n", STDERR);
+		ft_putendl_fd(msg, STDERR);
 	}
 	if (quit)
 		set_exit(1);
@@ -54,8 +52,7 @@ void	print_exec_error(const char *error_command, const char *msg)
 	ft_putstr_fd(": ", STDERR);
 	ft_putstr_fd(error_command, STDERR);
 	ft_putstr_fd(": ", STDERR);
-	ft_putstr_fd(msg, STDERR);
-	ft_putstr_fd("\n", STDERR);
+	ft_putendl_fd(msg, STDERR);
 }
 
 void	exit_error(t_minishell *minishell, const char *msg)

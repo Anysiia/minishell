@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 11:36:29 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/01/18 15:22:29 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/07/30 11:52:24 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,6 @@ static char	*fill_lines(const char *s, char c)
 	return (word);
 }
 
-static char	**free_tab(int i, char **tab)
-{
-	while (i-- >= 0)
-		free(tab[i]);
-	free(tab);
-	return (NULL);
-}
-
 char	**ft_split(char const *s, char c)
 {
 	char	**tab;
@@ -81,7 +73,7 @@ char	**ft_split(char const *s, char c)
 			s++;
 		tab[i] = fill_lines(s, c);
 		if (!tab[i])
-			return (free_tab(i, tab));
+			return (ft_free_tab(tab));
 		while (*s && *s != c)
 			s++;
 		i++;

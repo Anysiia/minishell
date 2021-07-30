@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 14:51:36 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/03/09 11:58:41 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/07/30 11:49:04 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,6 @@
 
 void	ft_putendl(const char *s)
 {
-	size_t	i;
-
-	i = 0;
-	if (!s)
-		return ;
-	while (s[i])
-	{
-		write(1, &s[i], 1);
-		i++;
-	}
+	write(1, s, ft_strlen(s));
 	write(1, "\n", 1);
 }
