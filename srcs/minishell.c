@@ -6,11 +6,17 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:03:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/09 11:51:21 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/09 12:02:33 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static void	exit_ctrld(t_minishell *minishell)
+{
+	ft_putendl_fd("exit", STDERR);
+	exit_shell(minishell);
+}
 
 void	wait_command(t_minishell *minishell)
 {
@@ -24,7 +30,7 @@ void	wait_command(t_minishell *minishell)
 	{
 		minishell->lexer->line = readline(create_prompt(str, minishell->env));
 		if (!minishell->lexer->line)
-			exit_shell(minishell);
+			exit_ctrld(minishell);
 		add_history(minishell->lexer->line);
 		if (ft_strcmp(minishell->lexer->line, EMPTY_STRING))
 		{
@@ -32,11 +38,10 @@ void	wait_command(t_minishell *minishell)
 			if (!get_exit())
 				parse_tokens(minishell, &lexer_state);
 		}
-		reset_lexer(minishell->lexer);
 		if (get_exit())
 			exit_shell(minishell);
+		reset_lexer(minishell->lexer);
 	}
-	exit_shell(minishell);
 }
 
 int	main(int argc, char **argv, char **envp)
