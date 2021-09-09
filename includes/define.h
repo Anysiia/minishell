@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:50:01 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/07/08 12:20:11 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/09 11:26:25 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define STDERR 2
 
 # define SHELL_NAME "minishell"
+# define SHELL_PROMPT "[minishell] "
 # define DFT_SHLVL "SHLVL=1"
 # define DFT_PATH "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:\
 /sbin:/bin:/usr/games:/usr/local/games:/snap/bin"

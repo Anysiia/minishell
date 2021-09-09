@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:02:13 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/07/08 11:22:03 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/09 11:39:22 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,27 +55,29 @@ static char	*prompt_path(char **env)
 	return (ft_strdup(pwd));
 }
 
-void	print_prompt(char **env)
+char	*readline_prompt(char *prompt, char **env)
 {
 	char	*path;
 
-	if (isatty(STDERR))
+	if (!isatty(STDERR))
+		return (NULL);
+	ft_bzero(prompt, PATH_MAX);
+	path = prompt_path(env);
+	ft_strlcpy(prompt, MAG, PATH_MAX);
+	ft_strlcat(prompt, BLD, PATH_MAX);
+	ft_strlcat(prompt, SHELL_PROMPT, PATH_MAX);
+	if (path)
 	{
-		path = prompt_path(env);
-		if (path)
-		{
-			ft_putstr_fd(MAG BLD "[", STDERR);
-			ft_putstr_fd(SHELL_NAME, STDERR);
-			ft_putstr_fd("] "CYN, STDERR);
-			ft_putstr_fd(path, STDERR);
-			ft_putstr_fd(NRM " > ", STDERR);
-		}
-		else
-		{
-			ft_putstr_fd(MAG BLD "[", STDERR);
-			ft_putstr_fd(SHELL_NAME, STDERR);
-			ft_putstr_fd("]"NRM " > ", STDERR);
-		}
-		ft_freestr(&path);
+		ft_strlcat(prompt, CYN, PATH_MAX);
+		ft_strlcat(prompt, path, PATH_MAX);
+		ft_strlcat(prompt, NRM, PATH_MAX);
+		ft_strlcat(prompt, " > ", PATH_MAX);
 	}
+	else
+	{
+		ft_strlcat(prompt, NRM, PATH_MAX);
+		ft_strlcat(prompt, "> ", PATH_MAX);
+	}
+	ft_freestr(&path);
+	return (prompt);
 }
