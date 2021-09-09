@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:04:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/09 11:36:24 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/09 11:51:34 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@
 # include <stdarg.h>
 # include <errno.h>
 # include <limits.h>
-# include <term.h>
-# include <curses.h>
-# include <termios.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "../libft/libft.h"
 # include "define.h"
 # include "struct.h"
@@ -80,7 +79,7 @@ UTILS
 */
 
 void	register_signal(t_minishell *minishell);
-char	*readline_prompt(char *prompt, char **env);
+char	*create_prompt(char *prompt, char **env);
 int		save_state(bool action, int state);
 void	set_state(int state);
 int		get_state(void);

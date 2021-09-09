@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:02:13 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/09 11:39:22 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/09 11:51:49 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	*prompt_path(char **env)
 	return (ft_strdup(pwd));
 }
 
-char	*readline_prompt(char *prompt, char **env)
+char	*create_prompt(char *prompt, char **env)
 {
 	char	*path;
 

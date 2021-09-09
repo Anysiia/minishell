@@ -61,7 +61,7 @@ all:	$(NAME)
 
 $(NAME):$(OBJS)
 		@$(MAKE) -C ./libft/ >/dev/null
-		@$(CC) $(OBJS) $(INCLUDE) $(CFLAGS) ./libft/libft.a -lncurses -o $(NAME)
+		@$(CC) $(OBJS) $(INCLUDE) $(CFLAGS) ./libft/libft.a -lreadline -o $(NAME)
 
 clean:
 		@rm -rf $(OBJS)
