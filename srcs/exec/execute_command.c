@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 14:21:52 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/07/20 15:31:23 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/13 15:38:29 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ int	expand_all_args(char **env, t_cmd *command)
 			|| ft_test_set(ENV_VAR_SIGN, command->av[i]))
 		{
 			ret = expand_token_word(env, command, i);
-			if (!ret)
+			if (ret)
 			{
 				print_error(ARG_EXPANSION, 0);
 				return (EXIT_FAILURE);
 			}
-			i = 0;
+			//i = 0;
 		}
 		i++;
 	}

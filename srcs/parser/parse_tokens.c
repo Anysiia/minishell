@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:35:58 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/17 15:29:03 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/13 15:43:03 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,9 @@ int	parse_tokens(t_minishell *minishell, int *lexer_state)
 	if (tmp && tmp->type != TOKEN_WORD && !is_redir(tmp))
 		error_lexer(INVALID_TOKEN, false, lexer_state);
 	ret = parse_command(minishell, tmp, lexer_state);
+	if (minishell->heredoc == 1)
+		unlink(MINISHELL_HDOC);
+	minishell->heredoc = 0;
 	if (ret)
 		return (EXIT_FAILURE);
 	return (*lexer_state);

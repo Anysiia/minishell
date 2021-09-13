@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:50:01 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/09 11:26:25 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/13 15:57:43 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define OPT_INDICATOR '-'
 # define QUOTE_VAR '\"\'$'
 
+# define MINISHELL_HDOC "minishell_heredoc"
 # define NB_BUILTINS 7
 # define RET_ERROR -1
 # define NOT_FOUND -2
@@ -48,6 +49,7 @@ Len max of a path (1024 on mac, 4096 on linux VM)
 
 # define NO_ARGS 1
 # define CMD 0
+# define NO_CMD -2
 # define FIRST_ARG 1
 # define INC_USAGE 2
 # define EXIT_STATUS_MAX 255

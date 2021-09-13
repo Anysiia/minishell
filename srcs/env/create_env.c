@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 10:25:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/15 16:00:02 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/13 15:45:01 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,6 @@ static int	increase_shell_level(t_minishell *minishell)
 	return (EXIT_SUCCESS);
 }
 
-/*
-static void	set_default_path(t_minishell *minishell)
-{
-	char	*default_path;
-
-	default_path = ft_strjoin(DFT_PATH1, DFT_PATH2);
-	if (!default_path)
-		if (ft_putenv(minishell, "PATH=/bin") == RET_ERROR)
-			exit_error(minishell, MALLOC_CREATE_ENV);
-	if (default_path && ft_putenv(minishell, default_path) == RET_ERROR)
-		exit_error(minishell, MALLOC_CREATE_ENV);
-	if (default_path)
-		ft_freestr(&default_path);
-}*/
-
 static void	copy_environnement(t_minishell *minishell, char **envp)
 {
 	size_t	i;
@@ -85,6 +70,7 @@ void	create_env(t_minishell *minishell, char **envp)
 {
 	save_exit(true, EXIT_SUCCESS);
 	save_state(true, EXIT_SUCCESS);
+	minishell->heredoc = 0;
 	minishell->env = NULL;
 	if (!(*envp))
 	{

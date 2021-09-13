@@ -48,8 +48,6 @@ SRCS =	srcs/minishell.c \
 		srcs/utils/error_builtins.c \
 		srcs/utils/print_sorted_env.c \
 		srcs/utils/expand_token_word.c \
-		srcs/utils/get_var_value.c \
-		srcs/utils/remove_quotes.c \
 		srcs/utils/signal.c
 
 OBJS =	${SRCS:.c=.o}

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 15:57:38 by user42            #+#    #+#             */
-/*   Updated: 2021/07/08 14:57:15 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/13 15:54:00 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	find_command(char **env, t_cmd *cmd)
 	int		ret;
 	char	*new;
 
-	if (!cmd->av[CMD])
+	if (!cmd || !cmd->av[CMD])
 		return ;
 	ret = is_builtin(cmd);
 	if (ret == EXIT_SUCCESS)

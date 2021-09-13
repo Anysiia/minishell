@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 17:05:35 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/07/20 15:54:59 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/13 14:37:07 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,18 @@ int	expand_token_word(char **env, t_cmd *cmd, int i)
 	int		len;
 	char	*new_word;
 
+	(void)env;
 	new_word = NULL;
 	len = ft_strlen(cmd->av[i]);
 	j = 0;
 	while (j < len)
 	{
-		if (cmd->av[i][j] == STRONG_QUOTE || cmd->av[i][j] == WEAK_QUOTE)
-			remove_quote(env, &new_word, cmd->av[i], &j);
+		if (cmd->av[i][j] == STRONG_QUOTE)
+			break ;
+		if (cmd->av[i][j] == WEAK_QUOTE)
+			break ;
 		else if (cmd->av[i][j] == ENV_VAR_SIGN)
-			get_var_value(env, &new_word, cmd->av[i], &j);
+			break ;
 		else
 			new_word = append_c_to_str(new_word, cmd->av[i][j]);
 		j++;
