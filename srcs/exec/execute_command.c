@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 14:21:52 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/13 15:38:29 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/13 17:24:54 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	execute_simple_command(t_minishell *minishell, t_cmd *command)
 	int		ret;
 	int		fd[2];
 
+	if (command->ac == 0)
+		return (get_state());
 	manage_redir(command, fd);
 	ret = expand_all_args(minishell->env, command);
 	if (ret == EXIT_FAILURE)

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:35:58 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/13 16:02:13 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/13 17:29:25 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void	create_new_command(t_minishell *minishell, t_token *list,
 	if (!new)
 		error_lexer(MALLOC_COMMAND, true, lexer_state);
 	ret = get_arg_count(list, new, lexer_state);
-	if (ret != RET_ERROR)
+	if (ret != RET_ERROR || ret != NO_CMD)
 	{
 		ret = get_arg(minishell, list, new, lexer_state);
 		if (ret == RET_ERROR)
