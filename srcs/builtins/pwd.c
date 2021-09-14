@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 17:51:57 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/05/25 11:33:57 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/14 15:24:34 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	pwd_builtin(int ac, char **av, t_minishell *minishell)
 		if (av[FIRST_ARG][0] == OPT_INDICATOR)
 		{
 			invalid_option(av[CMD], av[FIRST_ARG]);
-			builtin_usage(av[CMD], "pwd ...");
+			builtin_usage(av[CMD], "pwd [...]");
 			return (EXIT_FAILURE);
 		}
 	}

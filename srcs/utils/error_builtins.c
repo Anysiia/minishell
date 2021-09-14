@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 10:15:42 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/04/14 10:26:52 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/14 16:13:32 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,58 +14,79 @@
 
 int	argument_error(const char *command_name)
 {
+	char	str[MAX_MSG];
+
 	set_state(EXIT_FAILURE);
-	ft_putstr_fd(SHELL_NAME, STDERR);
-	ft_putstr_fd(": ", STDERR);
-	ft_putstr_fd(command_name, STDERR);
-	ft_putstr_fd(": too many arguments\n", STDERR);
-	return (EXIT_FAILURE);
+	ft_bzero(str, MAX_MSG);
+	ft_strlcpy(str, SHELL_NAME, MAX_MSG);
+	ft_strlcat(str, ": ", MAX_MSG);
+	ft_strlcat(str, command_name, MAX_MSG);
+	ft_strlcat(str, ": too many arguments\n", MAX_MSG);
+	ft_putstr_fd(str, STDERR);
+	return (get_state());
 }
 
 int	invalid_option(const char *command_name, const char *option)
 {
+	char	str[MAX_MSG];
+
 	set_state(EXIT_FAILURE);
-	ft_putstr_fd(SHELL_NAME, STDERR);
-	ft_putstr_fd(": ", STDERR);
-	ft_putstr_fd(command_name, STDERR);
-	ft_putstr_fd(": ", STDERR);
-	write(STDERR, option, 2);
-	ft_putstr_fd(": invalid option\n", STDERR);
-	return (EXIT_FAILURE);
+	ft_bzero(str, MAX_MSG);
+	ft_strlcpy(str, SHELL_NAME, MAX_MSG);
+	ft_strlcat(str, ": ", MAX_MSG);
+	ft_strlcat(str, command_name, MAX_MSG);
+	ft_strlcat(str, ": ", MAX_MSG);
+	if (ft_strlen(str) + 2 < MAX_MSG)
+		ft_strncat(str, option, 2);
+	ft_strlcat(str, ": invalid option\n", MAX_MSG);
+	ft_putstr_fd(str, STDERR);
+	return (get_state());
 }
 
 int	invalid_id(const char *command_name, const char *variable_name)
 {
+	char	str[MAX_MSG];
+
 	set_state(EXIT_FAILURE);
-	ft_putstr_fd(SHELL_NAME, STDERR);
-	ft_putstr_fd(": ", STDERR);
-	ft_putstr_fd(command_name, STDERR);
-	ft_putstr_fd(": « ", STDERR);
-	ft_putstr_fd(variable_name, STDERR);
-	ft_putstr_fd(" » : not a valid identifier\n", STDERR);
-	return (EXIT_FAILURE);
+	ft_bzero(str, MAX_MSG);
+	ft_strlcpy(str, SHELL_NAME, MAX_MSG);
+	ft_strlcat(str, ": ", MAX_MSG);
+	ft_strlcat(str, command_name, MAX_MSG);
+	ft_strlcat(str, ": « ", MAX_MSG);
+	ft_strlcat(str, variable_name, MAX_MSG);
+	ft_strlcat(str, " » : not a valid identifier\n", MAX_MSG);
+	ft_putstr_fd(str, STDERR);
+	return (get_state());
 }
 
 int	builtin_error(const char *cmd, const char *arg, const char *err, int state)
 {
+	char	str[MAX_MSG];
+
 	set_state(state);
-	ft_putstr_fd(SHELL_NAME, STDERR);
-	ft_putstr_fd(": ", STDERR);
-	ft_putstr_fd(cmd, STDERR);
-	ft_putstr_fd(": ", STDERR);
-	ft_putstr_fd(arg, STDERR);
-	ft_putstr_fd(": ", STDERR);
-	ft_putstr_fd(err, STDERR);
-	ft_putstr_fd("\n", STDERR);
-	return (state);
+	ft_bzero(str, MAX_MSG);
+	ft_strlcpy(str, SHELL_NAME, MAX_MSG);
+	ft_strlcat(str, ": ", MAX_MSG);
+	ft_strlcat(str, cmd, MAX_MSG);
+	ft_strlcat(str, ": ", MAX_MSG);
+	ft_strlcat(str, arg, MAX_MSG);
+	ft_strlcat(str, ": ", MAX_MSG);
+	ft_strlcat(str, err, MAX_MSG);
+	ft_strlcat(str, "\n", MAX_MSG);
+	ft_putstr_fd(str, STDERR);
+	return (get_state());
 }
 
 void	builtin_usage(const char *command_name, const char *error)
 {
+	char	str[MAX_MSG];
+
 	if (!command_name || !error)
 		return ;
-	ft_putstr_fd(command_name, STDERR);
-	ft_putstr_fd(": usage: ", STDERR);
-	ft_putstr_fd(error, STDERR);
-	ft_putstr_fd("\n", STDERR);
+	ft_bzero(str, MAX_MSG);
+	ft_strlcpy(str, command_name, MAX_MSG);
+	ft_strlcat(str, ": usage: ", MAX_MSG);
+	ft_strlcat(str, error, MAX_MSG);
+	ft_strlcat(str, "\n", MAX_MSG);
+	ft_putstr_fd(str, STDERR);
 }

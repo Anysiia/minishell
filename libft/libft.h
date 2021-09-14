@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 12:01:03 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/07/20 15:06:02 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/14 15:54:20 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char			*ft_strrchr(const char *s, int c);
 int				ft_strcmp(const char *s1, const char *s2);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t			ft_strlcpy(char *dst, const char *src, size_t dstsize);
+char			*ft_strncat(char *dst, const char *src, size_t n);
 size_t			ft_strlcat(char *dst, const char *src, size_t dstsize);
 char			*ft_strnstr(const char *str, const char *s, size_t len);
 int				ft_atoi(const char *str);

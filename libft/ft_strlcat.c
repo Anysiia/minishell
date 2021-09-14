@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 12:47:09 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/01/13 14:42:32 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/14 16:13:22 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,20 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	if (j < dstsize)
 		dst[i] = '\0';
 	return (j + ft_strlen(src));
+}
+
+char	*ft_strncat(char *dst, const char *src, size_t n)
+{
+	size_t	len;
+	size_t	i;
+
+	i = 0;
+	len = ft_strlen(dst);
+	while (i < n && src[i])
+	{
+		dst[len + i] = src[i];
+		i++;
+	}
+	dst[len + i] = '\0';
+	return (dst);
 }
