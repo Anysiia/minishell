@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 14:21:52 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/13 17:24:54 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/14 11:57:48 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	expand_all_args(char **env, t_cmd *command)
 				print_error(ARG_EXPANSION, 0);
 				return (EXIT_FAILURE);
 			}
-			//i = 0;
 		}
 		i++;
 	}
@@ -74,8 +73,6 @@ int	execute_simple_command(t_minishell *minishell, t_cmd *command)
 	int		ret;
 	int		fd[2];
 
-	if (command->ac == 0)
-		return (get_state());
 	manage_redir(command, fd);
 	ret = expand_all_args(minishell->env, command);
 	if (ret == EXIT_FAILURE)
@@ -92,6 +89,8 @@ int	execute_simple_command(t_minishell *minishell, t_cmd *command)
 
 int	execute_command(t_minishell *minishell, t_cmd *command)
 {
+	if (!command)
+		return (EXIT_SUCCESS);
 	if (!command->next)
 		return (execute_simple_command(minishell, command));
 	else

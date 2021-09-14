@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 10:25:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/13 15:45:01 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/14 11:39:24 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	create_env(t_minishell *minishell, char **envp)
 	save_state(true, EXIT_SUCCESS);
 	minishell->heredoc = 0;
 	minishell->env = NULL;
+	minishell->cmd = NULL;
 	if (!(*envp))
 	{
 		minishell->env = ft_calloc(2, sizeof(char *));

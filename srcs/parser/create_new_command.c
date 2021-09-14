@@ -6,13 +6,13 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:35:58 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/13 17:29:25 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/14 11:57:01 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	get_arg_count(t_token *list, t_cmd *cmd, int *lexer_state)
+static int	get_arg_count(t_token *list, int *lexer_state)
 {
 	t_token	*tmp;
 	int		arg;
@@ -35,10 +35,7 @@ static int	get_arg_count(t_token *list, t_cmd *cmd, int *lexer_state)
 		}
 		tmp = tmp->next;
 	}
-	cmd->ac = arg;
-	if (arg < 1)
-		return (NO_CMD);
-	return (EXIT_SUCCESS);
+	return (arg);
 }
 
 static int	create_heredoc(t_minishell *minishell, char *delimiter)
@@ -132,13 +129,15 @@ void	create_new_command(t_minishell *minishell, t_token *list,
 	new = malloc_command();
 	if (!new)
 		error_lexer(MALLOC_COMMAND, true, lexer_state);
-	ret = get_arg_count(list, new, lexer_state);
-	if (ret != RET_ERROR || ret != NO_CMD)
+	new->ac = get_arg_count(list, lexer_state);
+	if (new->ac > RET_ERROR)
 	{
 		ret = get_arg(minishell, list, new, lexer_state);
 		if (ret == RET_ERROR)
 			error_lexer(MALLOC_ARG_LIST, true, lexer_state);
 	}
+	if (new->ac < 1)
+		free_command(&new);
 	if (!minishell->cmd)
 		minishell->cmd = new;
 	else
