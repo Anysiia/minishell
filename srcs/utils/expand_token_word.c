@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 17:05:35 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/13 14:37:07 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/14 17:04:53 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,14 @@ int	expand_token_word(char **env, t_cmd *cmd, int i)
 		if (cmd->av[i][j] == WEAK_QUOTE)
 			break ;
 		else if (cmd->av[i][j] == ENV_VAR_SIGN)
-			break ;
+		{
+			if (!ft_strcmp(cmd->av[i], "$?"))
+			{
+				new_word = ft_itoa(get_state());
+				ft_freestr(&cmd->av[i]);
+				cmd->av[i] = ft_strdup(new_word);
+			}
+		}
 		else
 			new_word = append_c_to_str(new_word, cmd->av[i][j]);
 		j++;
