@@ -6,66 +6,84 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 17:05:35 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/14 17:04:53 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/16 16:13:44 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*append_c_to_str(char *str, char c)
+char	*cat_c_to_str(char *dst, const char c, int *len_word)
 {
-	char	*new_str;
-	size_t	len;
+	int		len;
+	char	*new_dst;
 
-	if (!str)
-	{
-		new_str = ft_strnew(2);
-		if (!new_str)
-			return (NULL);
-		new_str[0] = c;
-		return (new_str);
-	}
-	len = ft_strlen(str);
-	new_str = ft_strnew(len + 2);
-	if (!new_str)
-	{
-		ft_freestr(&str);
+	if (!dst)
 		return (NULL);
+	len = ft_strlen(dst);
+	if (len + 1 == PATH_MAX * *len_word)
+	{
+		(*len_word)++;
+		new_dst = ft_strnew(PATH_MAX * *len_word);
+		if (!new_dst)
+			return (NULL);
+		ft_strlcpy(new_dst, dst, PATH_MAX * *len_word);
 	}
-	ft_strlcpy(new_str, str, len + 2);
-	new_str[len] = c;
-	ft_freestr(&str);
-	return (new_str);
+	dst[len] = c;
+	return (dst);
 }
 
-int	expand_token_word(char **env, t_cmd *cmd, int i)
+char	*expand_strong_quote(char *new_word, int *j, const char *arg, int *len_word)
+{
+	(*j)++;
+	while (arg[*j] && arg[*j] != STRONG_QUOTE)
+	{
+		cat_c_to_str(new_word, arg[*j], len_word);
+		(*j)++;
+	}
+	return (new_word);
+}
+
+int		expand_variable(char *new_word, int *j, const char *arg, int *len_word)
+{
+	char	*exit_value;
+
+	if (arg[*j + 1] == '?')
+	{
+		exit_value = ft_itoa(get_state());
+		ft_strlcat(new_word, exit_value, PATH_MAX * *len_word);
+		ft_freestr(&exit_value);
+		(*j)++;
+	}
+	return (EXIT_SUCCESS);
+}
+
+int	expand_token_word(char **env, t_cmd *cmd, int *i)
 {
 	int		j;
-	int		len;
 	char	*new_word;
+	int		len_word;
 
 	(void)env;
-	new_word = NULL;
-	len = ft_strlen(cmd->av[i]);
+	len_word = 1;
+	new_word = ft_strnew(PATH_MAX * len_word);
+	if (!new_word)
+		return (EXIT_FAILURE);
 	j = 0;
-	while (j < len)
+	while (cmd->av[*i][j])
 	{
-		if (cmd->av[i][j] == STRONG_QUOTE)
+		if (cmd->av[*i][j] == STRONG_QUOTE)
+			expand_strong_quote(new_word, &j, cmd->av[*i], &len_word);
+		else if (cmd->av[*i][j] == WEAK_QUOTE)
 			break ;
-		if (cmd->av[i][j] == WEAK_QUOTE)
-			break ;
-		else if (cmd->av[i][j] == ENV_VAR_SIGN)
-		{
-			if (!ft_strcmp(cmd->av[i], "$?"))
-			{
-				new_word = ft_itoa(get_state());
-				ft_freestr(&cmd->av[i]);
-				cmd->av[i] = ft_strdup(new_word);
-			}
-		}
+		else if (cmd->av[*i][j] == ENV_VAR_SIGN)
+			expand_variable(new_word, &j, cmd->av[*i], &len_word);
 		else
-			new_word = append_c_to_str(new_word, cmd->av[i][j]);
+			cat_c_to_str(new_word, cmd->av[*i][j], &len_word);
 		j++;
 	}
+	if (!new_word)
+		return (EXIT_FAILURE);
+	ft_freestr(&cmd->av[*i]);
+	cmd->av[*i] = new_word;
 	return (EXIT_SUCCESS);
 }

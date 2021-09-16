@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:04:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/13 14:31:45 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/16 14:18:04 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int		get_exit(void);
 void	exit_shell(t_minishell *minishell);
 int		is_quote(const char c);
 char	*append_c_to_str(char *new_word, char c);
-int		expand_token_word(char **env, t_cmd *command, int i);
+int		expand_token_word(char **env, t_cmd *command, int *i);
 
 /*
 ERRORS
