@@ -6,11 +6,22 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 10:15:42 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/14 16:27:27 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/17 11:07:34 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static int	is_directory(const char *path)
+{
+	struct stat	buff;
+	int			ret;
+
+	ret = stat(path, &buff);
+	if (ret != RET_ERROR)
+		return (S_ISDIR(buff.st_mode));
+	return (ret);
+}
 
 void	print_errno(const char *error_command)
 {

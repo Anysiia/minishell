@@ -43,8 +43,6 @@ SRCS =	srcs/minishell.c \
 		srcs/utils/create_prompt.c \
 		srcs/utils/state.c \
 		srcs/utils/exit.c \
-		srcs/utils/utils_parser.c \
-		srcs/utils/is_directory.c \
 		srcs/utils/error_builtins.c \
 		srcs/utils/print_sorted_env.c \
 		srcs/utils/expand_token_word.c \

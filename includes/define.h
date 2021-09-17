@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:50:01 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/14 15:14:13 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/17 11:01:03 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ Errors
 # define ERR_TOKEN_REDIR "unexpected token near redirection"
 # define ERR_TOKEN_PIPE "unexpected token near pipe"
 # define INVALID_TOKEN "first token is invalid"
-# define CREATE_FILE "an error occur on opening redirection files"
 # define ARG_EXPANSION "an error occur on expansion of arguments"
 # define NUM_ARG "numeric argument required"
 # define NOT_SET "not set"

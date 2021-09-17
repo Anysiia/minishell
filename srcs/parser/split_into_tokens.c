@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 12:05:07 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/25 15:19:23 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/17 11:05:11 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ static char	*add_token_word(t_lexer *lexer, char *word, int *lexer_state)
 	add_token(lexer, word, TOKEN_WORD, lexer_state);
 	ft_freestr(&word);
 	return (NULL);
+}
+
+static int	is_quote(const char c)
+{
+	return (c == STRONG_QUOTE || c == WEAK_QUOTE);
 }
 
 void	add_token(t_lexer *lexer, char *s, int type, int *lexer_state)

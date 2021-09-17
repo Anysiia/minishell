@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:51:54 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/13 15:40:48 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/17 10:49:43 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ typedef struct s_lexer
 	size_t		size;
 	t_token		*tokens;
 }				t_lexer;
+
+typedef struct s_expand
+{
+	int		i;
+	int		len;
+	char	str;
+}			t_expand;
 
 typedef struct s_cmd		t_cmd;
 typedef struct s_minishell	t_minishell;

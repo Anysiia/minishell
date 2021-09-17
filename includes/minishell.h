@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:04:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/16 14:18:04 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/17 11:08:54 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int		export_builtin(int ac, char **av, t_minishell *minishell);
 int		env_builtin(int ac, char **av, t_minishell *minishell);
 int		unset_builtin(int ac, char **av, t_minishell *minishell);
 int		exit_builtin(int ac, char **av, t_minishell *minishell);
-int		is_directory(const char *path);
 int		print_sort_env(char **env);
 
 /*
@@ -87,7 +86,6 @@ int		save_exit(bool action, int exit);
 void	set_exit(int exit);
 int		get_exit(void);
 void	exit_shell(t_minishell *minishell);
-int		is_quote(const char c);
 char	*append_c_to_str(char *new_word, char c);
 int		expand_token_word(char **env, t_cmd *command, int *i);
 
