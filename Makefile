@@ -28,6 +28,7 @@ SRCS =	srcs/minishell.c \
 		srcs/env/ft_unsetenv.c \
 		srcs/env/utils_env.c \
 		srcs/exec/execute_command.c \
+		srcs/exec/expand_token_word.c \
 		srcs/exec/redir.c \
 		srcs/parser/find_command.c \
 		srcs/parser/relative_path.c \
@@ -45,7 +46,6 @@ SRCS =	srcs/minishell.c \
 		srcs/utils/exit.c \
 		srcs/utils/error_builtins.c \
 		srcs/utils/print_sorted_env.c \
-		srcs/utils/expand_token_word.c \
 		srcs/utils/signal.c
 
 OBJS =	${SRCS:.c=.o}

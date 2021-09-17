@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:51:54 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/17 10:49:43 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/17 11:31:10 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ typedef struct s_lexer
 
 typedef struct s_expand
 {
-	int		i;
+	int		j;
 	int		len;
-	char	str;
+	char	*str;
 }			t_expand;
 
 typedef struct s_cmd		t_cmd;

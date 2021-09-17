@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:50:01 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/17 11:01:03 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/17 11:57:27 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,12 @@
 /*
 Len max of a path (1024 on mac, 4096 on linux VM)
 */
+
 # ifndef PATH_MAX
 #  define PATH_MAX 1024
 # endif
 # define MAX_MSG 1024
+# define ARG_LEN 5
 # define NO_ARGS 1
 # define CMD 0
 # define NO_CMD -2
