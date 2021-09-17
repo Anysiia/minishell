@@ -29,6 +29,7 @@ SRCS =	srcs/minishell.c \
 		srcs/env/utils_env.c \
 		srcs/exec/execute_command.c \
 		srcs/exec/expand_token_word.c \
+		srcs/exec/expand_weak_quote.c \
 		srcs/exec/redir.c \
 		srcs/parser/find_command.c \
 		srcs/parser/relative_path.c \
