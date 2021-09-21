@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:50:01 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/17 17:08:22 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/21 14:39:41 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 /sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 
 # define METACHARACTER " \t\n><|"
+# define SPLIT_SPACE " \t\n"
 # define BACKSLASH '\\'
 # define STRONG_QUOTE '\''
 # define WEAK_QUOTE '\"'

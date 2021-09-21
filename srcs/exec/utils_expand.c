@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 12:44:32 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/21 12:51:37 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/21 15:19:26 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,33 +55,12 @@ char	*get_variable_content(t_expand *tmp, const char *arg, char **env)
 	return (content);
 }
 
-int	add_variable_content(t_expand *tmp, const char *arg, char **env)
-{
-	char	*content;
-	int		len_content;
-	int		len_str;
-
-	tmp->j++;
-	content = get_variable_content(tmp, arg, env);
-	if (!content)
-		return (NOT_FOUND);
-	len_content = ft_strlen(content);
-	len_str = ft_strlen(tmp->str);
-	if (len_content + len_str >= ARG_LEN * tmp->len)
-		if (up_expand_buffer(tmp, len_content + len_str + 1) == RET_ERROR)
-			return (RET_ERROR);
-	ft_strlcat(tmp->str, content, ARG_LEN * tmp->len);
-	ft_freestr(&content);
-	return (len_content);
-}
-
-int	get_last_exit_status(t_expand *tmp, int mode)
+int	get_last_exit_status(t_expand *tmp)
 {
 	char	*exit_value;
 	int		len;
 
-	if (mode == 1)
-		tmp->j++;
+	tmp->j++;
 	exit_value = ft_itoa(get_state());
 	if (!exit_value)
 		return (RET_ERROR);
