@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:04:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/21 10:47:31 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/21 12:52:37 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,10 @@ int		cat_c_to_str(t_expand *tmp, const char c);
 int		up_expand_buffer(t_expand *tmp, int len_required);
 int		expand_strong_quote(t_expand *tmp, const char *arg);
 int		expand_weak_quote(t_expand *tmp, const char *arg, char **env);
-int		expand_variable(t_expand *tmp, const char *arg);
+int		expand_variable(t_cmd *cmd, t_expand *tmp, int *i, char **env);
+int		get_last_exit_status(t_expand *tmp, int mode);
+char	*get_variable_content(t_expand *tmp, const char *arg, char **env);
+int		add_variable_content(t_expand *tmp, const char *arg, char **env);
 void	default_fd(int fd[2]);
 void	manage_redir(t_cmd *command, int fd[2]);
 

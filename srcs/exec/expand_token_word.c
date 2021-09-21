@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 17:05:35 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/21 10:48:19 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/21 12:17:45 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	cat_c_to_str(t_expand *tmp, const char c)
 	if (!tmp->str)
 		return (RET_ERROR);
 	len = ft_strlen(tmp->str);
-	if (len + 1 == ARG_LEN * tmp->len
+	if (len + 1 >= ARG_LEN * tmp->len
 		&& up_expand_buffer(tmp, len + 1) == RET_ERROR)
 		return (RET_ERROR);
 	tmp->str[len] = c;
@@ -54,23 +54,27 @@ int	init_expand(t_expand *expand)
 int	expand_token_word(char **env, t_cmd *cmd, int *i)
 {
 	t_expand	tmp;
+	int			ret;
 
 	if (init_expand(&tmp))
 		return (EXIT_FAILURE);
 	while (cmd->av[*i][tmp.j])
 	{
 		if (cmd->av[*i][tmp.j] == STRONG_QUOTE)
-			expand_strong_quote(&tmp, cmd->av[*i]);
+			ret = expand_strong_quote(&tmp, cmd->av[*i]);
 		else if (cmd->av[*i][tmp.j] == WEAK_QUOTE)
-			expand_weak_quote(&tmp, cmd->av[*i], env);
+			ret = expand_weak_quote(&tmp, cmd->av[*i], env);
 		else if (cmd->av[*i][tmp.j] == ENV_VAR_SIGN)
-			expand_variable(&tmp, cmd->av[*i]);
+			ret = expand_variable(cmd, &tmp, i, env);
 		else
-			cat_c_to_str(&tmp, cmd->av[*i][tmp.j]);
+			ret = cat_c_to_str(&tmp, cmd->av[*i][tmp.j]);
+		if (ret == RET_ERROR)
+		{
+			ft_freestr(&tmp.str);
+			return (EXIT_FAILURE);
+		}
 		tmp.j++;
 	}
-	if (!tmp.str)
-		return (EXIT_FAILURE);
 	ft_freestr(&cmd->av[*i]);
 	cmd->av[*i] = tmp.str;
 	return (EXIT_SUCCESS);
