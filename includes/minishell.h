@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:04:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/17 17:03:36 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/21 10:47:31 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,11 @@ EXEC
 
 int		execute_command(t_minishell *minishell, t_cmd *command);
 int		expand_token_word(char **env, t_cmd *command, int *i);
-char	*cat_c_to_str(t_expand *tmp, const char c);
+int		cat_c_to_str(t_expand *tmp, const char c);
 int		up_expand_buffer(t_expand *tmp, int len_required);
-char	*expand_strong_quote(t_expand *tmp, const char *arg);
-char	*expand_weak_quote(t_expand *tmp, const char *arg, char **env);
+int		expand_strong_quote(t_expand *tmp, const char *arg);
+int		expand_weak_quote(t_expand *tmp, const char *arg, char **env);
+int		expand_variable(t_expand *tmp, const char *arg);
 void	default_fd(int fd[2]);
 void	manage_redir(t_cmd *command, int fd[2]);
 
