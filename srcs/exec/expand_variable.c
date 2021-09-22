@@ -6,68 +6,66 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 09:58:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/22 13:50:15 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/22 16:05:21 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	set_i_line(t_cmd *cmd, t_expand *tmp, int *i, char **tabl)
-{
-	int		len;
-
-	len = ft_strlen(tmp->str) + ft_strlen(tabl[0]);
-	ft_freestr(&cmd->av[*i]);
-	cmd->av[*i] = ft_strnew(len + 1);
-	if (!cmd->av[*i])
-		return (RET_ERROR);
-	ft_strlcpy(cmd->av[*i], tmp->str, len + 1);
-	ft_strlcat(cmd->av[*i], tabl[0], len + 1);
-	return (EXIT_SUCCESS);
-}
-
-static int	save_last_arg(t_cmd *cmd, t_expand *tmp, int *i, char **tabl)
+static int	change_value(char **split, t_cmd *cmd, t_expand *tmp, int *i)
 {
 	int		len;
 	int		len_tab;
+	char	*to_parse;
 
-	len_tab = ft_len_tab(tabl);
-	len = ft_strlen(tabl[len_tab - 1]) + ft_strlen(cmd->av[*i]) - tmp->j;
-	ft_freestr(&tmp->str);
-	tmp->str = ft_strnew(len + 1);
-	if (!tmp->str)
+	len_tab = ft_len_tab(split);
+	if (len_tab < 2)
 		return (RET_ERROR);
-	ft_strlcpy(tmp->str, tabl[len_tab - 1], len + 1);
-	ft_strlcat(tmp->str, cmd->av[*i] + tmp->j + 1, len + 1);
+	len = ft_strlen(cmd->av[*i]) - tmp->j;
+	to_parse = ft_strnew(len);
+	if (!to_parse)
+		return (RET_ERROR);
+	ft_strlcpy(to_parse, cmd->av[*i] + tmp->j + 1, len);
+	ft_freestr(&cmd->av[*i]);
+	cmd->av[*i] = ft_strjoin(tmp->str, split[0]);
+	ft_freestr(&tmp->str);
+	tmp->str = ft_strdup(split[len_tab- 1]);
+	split[len_tab - 1] = ft_strjoin_free_all(split[len_tab - 1], to_parse);
+	if (!cmd->av[*i] || !tmp->str || !split[len_tab - 1])
+		return (RET_ERROR);
 	return (EXIT_SUCCESS);
+}
+
+static void	print_av(char **av)
+{
+	int i = -1;
+
+	while (av && av[++i])
+		printf("%s\n", av[i]);
 }
 
 static int	splitting_var(char *content, t_cmd *cmd, t_expand *tmp, int *i)
 {
-	char	**new_arg;
-	char	**tabl_rem;
-	char	**tabl;
-	int		len_tab;
+	char	**split;
+	char	**remove;
+	char	**arg_list;
 
-	tabl = ft_split_charset(content, SPLIT_SPACE);
+	split = ft_split_charset(content, SPLIT_SPACE);
 	ft_freestr(&content);
-	if (!tabl)
+	if (!split || change_value(split, cmd, tmp, i) == RET_ERROR)
 		return (RET_ERROR);
-	if (set_i_line(cmd, tmp, i, tabl) == RET_ERROR
-		|| save_last_arg(cmd, tmp, i, tabl) == RET_ERROR)
-	{
-		ft_free_tab(tabl);
-		return (RET_ERROR);
-	}
-	len_tab = ft_len_tab(tabl);
-	tmp->j = ft_strlen(tabl[len_tab - 1]);
-	tabl_rem = ft_remove_line_on_tab(tabl, 1);
-	ft_free_tab(tabl);
-	new_arg = ft_insert_tab_in_tab(cmd->av, tabl_rem, *i);
+	remove = ft_remove_line_on_tab(split, 0);
+	ft_putendl("remove line");
+	ft_free_tab(split);
+	arg_list = ft_insert_tab_in_tab(cmd->av, remove, *i + 1);
+	ft_putendl("insert tab");
+	tmp->j = ft_strlen(tmp->str);
+	*i += ft_len_tab(remove);
+	ft_free_tab(remove);
 	ft_free_tab(cmd->av);
-	ft_free_tab(tabl_rem);
-	cmd->av = new_arg;
-	*i += len_tab - 1;
+	cmd->av = arg_list;
+	print_av(cmd->av);
+	ft_putendl("end splitting");
 	return (EXIT_SUCCESS);
 }
 
