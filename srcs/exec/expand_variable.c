@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 09:58:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/22 16:05:21 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/22 16:43:59 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	print_av(char **av)
 	int i = -1;
 
 	while (av && av[++i])
-		printf("%s\n", av[i]);
+		ft_putendl(av[i]);
 }
 
 static int	splitting_var(char *content, t_cmd *cmd, t_expand *tmp, int *i)
@@ -56,15 +56,25 @@ static int	splitting_var(char *content, t_cmd *cmd, t_expand *tmp, int *i)
 		return (RET_ERROR);
 	remove = ft_remove_line_on_tab(split, 0);
 	ft_putendl("remove line");
+	print_av(remove);
+
 	ft_free_tab(split);
 	arg_list = ft_insert_tab_in_tab(cmd->av, remove, *i + 1);
 	ft_putendl("insert tab");
-	tmp->j = ft_strlen(tmp->str);
-	*i += ft_len_tab(remove);
-	ft_free_tab(remove);
-	ft_free_tab(cmd->av);
-	cmd->av = arg_list;
 	print_av(cmd->av);
+	ft_putendl("--");
+	cmd->av = ft_free_tab(cmd->av);
+	print_av(cmd->av);
+	if (!cmd->av)
+		ft_putendl("cmd av is null");
+	print_av(arg_list);
+	cmd->av = arg_list;
+	ft_putendl("--");
+	tmp->j = ft_strlen(tmp->str) - 1;
+	*i += ft_len_tab(remove);
+	
+	print_av(cmd->av);
+	ft_free_tab(remove);
 	ft_putendl("end splitting");
 	return (EXIT_SUCCESS);
 }

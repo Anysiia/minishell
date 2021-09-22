@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 11:03:03 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/22 14:26:04 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/22 16:26:28 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	**ft_insert_tab_in_tab(char **dest, char **src, int pos)
 
 	len = ft_len_tab(dest) + ft_len_tab(src);
 	if (pos > (int)ft_len_tab(dest))
-		return (NULL);
+		return (dest);
 	else if (pos == (int)ft_len_tab(dest))
 		return (cat_tab(dest, src, len));
 	else
