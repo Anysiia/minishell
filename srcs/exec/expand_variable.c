@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 09:58:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/22 17:10:11 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/22 21:39:20 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,13 @@ static int	change_value(char **split, t_cmd *cmd, t_expand *tmp, int *i)
 	ft_freestr(&cmd->av[*i]);
 	cmd->av[*i] = ft_strjoin(tmp->str, split[0]);
 	ft_freestr(&tmp->str);
-	tmp->str = ft_strdup(split[len_tab- 1]);
+	tmp->len = ft_strlen(split[len_tab - 1]) / ARG_LEN + 1;
+	tmp->str = ft_strnew(tmp->len);
+	if (!tmp->str)
+		return (RET_ERROR);
+	ft_strlcpy(tmp->str, split[len_tab - 1], ARG_LEN * tmp->len);
 	split[len_tab - 1] = ft_strjoin_free_all(split[len_tab - 1], to_parse);
-	if (!cmd->av[*i] || !tmp->str || !split[len_tab - 1])
+	if (!cmd->av[*i] || !split[len_tab - 1])
 		return (RET_ERROR);
 	return (EXIT_SUCCESS);
 }
@@ -67,7 +71,6 @@ static int	splitting_var(char *content, t_cmd *cmd, t_expand *tmp, int *i)
 	ft_putendl("--");
 	tmp->j = ft_strlen(tmp->str) - 1;
 	*i += ft_len_tab(split) - 1;
-	
 	print_av(cmd->av);
 	ft_free_tab(split);
 	ft_putendl("end splitting");
