@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 11:03:03 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/22 16:26:28 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/22 17:07:29 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	**cat_tab(char **dst, char **src, int len)
 	i = -1;
 	while (dst[++i])
 		new[i] = ft_strdup(dst[i]);
-	j = -1;
+	j = 0;
 	while (src[++j])
 		new[i + j] = ft_strdup(src[j]);
 	new[i + j] = NULL;
@@ -41,7 +41,7 @@ static char	**insert_tab(char **dst, char **src, int pos, int len)
 	if (!new)
 		return (NULL);
 	i = 0;
-	j = 0;
+	j = 1;
 	while (i + j < len)
 	{
 		while (i == pos && j < (int)ft_len_tab(src))

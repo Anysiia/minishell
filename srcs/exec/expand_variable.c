@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 09:58:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/22 16:43:59 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/22 17:10:11 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,14 @@ static void	print_av(char **av)
 static int	splitting_var(char *content, t_cmd *cmd, t_expand *tmp, int *i)
 {
 	char	**split;
-	char	**remove;
 	char	**arg_list;
 
 	split = ft_split_charset(content, SPLIT_SPACE);
 	ft_freestr(&content);
 	if (!split || change_value(split, cmd, tmp, i) == RET_ERROR)
 		return (RET_ERROR);
-	remove = ft_remove_line_on_tab(split, 0);
-	ft_putendl("remove line");
-	print_av(remove);
-
-	ft_free_tab(split);
-	arg_list = ft_insert_tab_in_tab(cmd->av, remove, *i + 1);
+	arg_list = ft_insert_tab_in_tab(cmd->av, split, *i + 1);
+	print_av(split);
 	ft_putendl("insert tab");
 	print_av(cmd->av);
 	ft_putendl("--");
@@ -71,11 +66,12 @@ static int	splitting_var(char *content, t_cmd *cmd, t_expand *tmp, int *i)
 	cmd->av = arg_list;
 	ft_putendl("--");
 	tmp->j = ft_strlen(tmp->str) - 1;
-	*i += ft_len_tab(remove);
+	*i += ft_len_tab(split) - 1;
 	
 	print_av(cmd->av);
-	ft_free_tab(remove);
+	ft_free_tab(split);
 	ft_putendl("end splitting");
+	cmd->ac = ft_len_tab(cmd->av);
 	return (EXIT_SUCCESS);
 }
 
