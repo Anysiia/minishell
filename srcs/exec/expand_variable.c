@@ -6,61 +6,68 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 09:58:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/21 18:03:21 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/22 13:50:15 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	splitting_var(char *content, t_cmd *cmd, t_expand *tmp, int *i)
+static int	set_i_line(t_cmd *cmd, t_expand *tmp, int *i, char **tabl)
 {
-	char	**tabl;
-	char	*word;
 	int		len;
-	int		len2;
 
-	word = ft_strnew(ft_strlen(cmd->av[*i]) - tmp->j + 1);
-	ft_putendl("1");
-	if (!word)
-		return (RET_ERROR);
-	ft_strlcpy(word, cmd->av[*i] + tmp->j + 1, ft_strlen(cmd->av[*i]) - tmp->j);
-	tabl = ft_split_charset(content, SPLIT_SPACE);
-	if (!tabl)
-	{
-		ft_freestr(&word);
-		ft_freestr(&content);
-		return (RET_ERROR);
-	}
-	ft_putendl("2");
-	ft_freestr(&cmd->av[*i]);
 	len = ft_strlen(tmp->str) + ft_strlen(tabl[0]);
+	ft_freestr(&cmd->av[*i]);
 	cmd->av[*i] = ft_strnew(len + 1);
 	if (!cmd->av[*i])
 		return (RET_ERROR);
 	ft_strlcpy(cmd->av[*i], tmp->str, len + 1);
 	ft_strlcat(cmd->av[*i], tabl[0], len + 1);
-	ft_putendl("3");
-	tabl = ft_remove_line_on_tab(tabl, 0);
-	len = ft_len_tab(tabl);
-	ft_putstr("len of tabl: ");
-	ft_putnbr(len);
-	ft_putstr("\nlast line of tab: ");
-	ft_putendl(tabl[len - 2]);
+	return (EXIT_SUCCESS);
+}
+
+static int	save_last_arg(t_cmd *cmd, t_expand *tmp, int *i, char **tabl)
+{
+	int		len;
+	int		len_tab;
+
+	len_tab = ft_len_tab(tabl);
+	len = ft_strlen(tabl[len_tab - 1]) + ft_strlen(cmd->av[*i]) - tmp->j;
 	ft_freestr(&tmp->str);
-	len2 = ft_strlen(tabl[len - 2]);
-	ft_putendl("5");
-	len2 += ft_strlen(word);
-	ft_putendl("6");
-	tmp->str = ft_strnew(len2 + 1);
+	tmp->str = ft_strnew(len + 1);
 	if (!tmp->str)
 		return (RET_ERROR);
-	ft_putendl("7");
-	ft_strlcpy(tmp->str, tabl[len - 2], len2 + 1);
-	ft_strlcat(tmp->str, word, len2 + 1);
-	tmp->j = ft_strlen(tabl[len - 2] - 1);
-	cmd->av = ft_insert_tab_in_tab(cmd->av, tabl, *i);
-	*i += len;
+	ft_strlcpy(tmp->str, tabl[len_tab - 1], len + 1);
+	ft_strlcat(tmp->str, cmd->av[*i] + tmp->j + 1, len + 1);
+	return (EXIT_SUCCESS);
+}
+
+static int	splitting_var(char *content, t_cmd *cmd, t_expand *tmp, int *i)
+{
+	char	**new_arg;
+	char	**tabl_rem;
+	char	**tabl;
+	int		len_tab;
+
+	tabl = ft_split_charset(content, SPLIT_SPACE);
+	ft_freestr(&content);
+	if (!tabl)
+		return (RET_ERROR);
+	if (set_i_line(cmd, tmp, i, tabl) == RET_ERROR
+		|| save_last_arg(cmd, tmp, i, tabl) == RET_ERROR)
+	{
+		ft_free_tab(tabl);
+		return (RET_ERROR);
+	}
+	len_tab = ft_len_tab(tabl);
+	tmp->j = ft_strlen(tabl[len_tab - 1]);
+	tabl_rem = ft_remove_line_on_tab(tabl, 1);
 	ft_free_tab(tabl);
+	new_arg = ft_insert_tab_in_tab(cmd->av, tabl_rem, *i);
+	ft_free_tab(cmd->av);
+	ft_free_tab(tabl_rem);
+	cmd->av = new_arg;
+	*i += len_tab - 1;
 	return (EXIT_SUCCESS);
 }
 
@@ -69,7 +76,6 @@ static int	add_variable(t_cmd *cmd, t_expand *tmp, int *i, char **env)
 	char	*content;
 	int		len;
 
-	ft_putendl("into add variable");
 	tmp->j++;
 	content = get_variable_content(tmp, cmd->av[*i], env);
 	if (!content)

@@ -6,22 +6,37 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 11:03:03 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/07/20 15:10:33 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/22 14:26:04 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	**ft_insert_tab_in_tab(char **dest, char **src, int pos)
+static char	**cat_tab(char **dst, char **src, int len)
 {
-	int		len;
 	char	**new;
 	int		i;
 	int		j;
 
-	len = ft_len_tab(dest) + ft_len_tab(src);
-	if (pos > (int)ft_len_tab(dest))
+	new = (char **)malloc(sizeof(*new) * (len + 1));
+	if (!new)
 		return (NULL);
+	i = -1;
+	while (dst[++i])
+		new[i] = ft_strdup(dst[i]);
+	j = -1;
+	while (src[++j])
+		new[i + j] = ft_strdup(src[j]);
+	new[i + j] = NULL;
+	return (new);
+}
+
+static char	**insert_tab(char **dst, char **src, int pos, int len)
+{
+	int		i;
+	int		j;
+	char	**new;
+
 	new = (char **)malloc(sizeof(*new) * (len + 1));
 	if (!new)
 		return (NULL);
@@ -34,9 +49,22 @@ char	**ft_insert_tab_in_tab(char **dest, char **src, int pos)
 			new[i + j] = ft_strdup(src[j]);
 			j++;
 		}
-		new[i + j] = ft_strdup(dest[i]);
+		new[i + j] = ft_strdup(dst[i]);
 		i++;
 	}
 	new[i + j] = NULL;
 	return (new);
+}
+
+char	**ft_insert_tab_in_tab(char **dest, char **src, int pos)
+{
+	int		len;
+
+	len = ft_len_tab(dest) + ft_len_tab(src);
+	if (pos > (int)ft_len_tab(dest))
+		return (NULL);
+	else if (pos == (int)ft_len_tab(dest))
+		return (cat_tab(dest, src, len));
+	else
+		return (insert_tab(dest, src, pos, len));
 }

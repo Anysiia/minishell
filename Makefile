@@ -59,7 +59,7 @@ OBJS =	${SRCS:.c=.o}
 all:	$(NAME)
 
 $(NAME):$(OBJS)
-		@$(MAKE) -C ./libft/ >/dev/null
+		@$(MAKE) -j -C ./libft/ >/dev/null
 		@$(CC) $(OBJS) $(INCLUDE) $(CFLAGS) ./libft/libft.a -lreadline -o $(NAME)
 
 clean:
