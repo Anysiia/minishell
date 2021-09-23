@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 14:21:52 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/22 11:56:31 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/23 11:09:46 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ static void	print_arg(char **tab)
 	int	i;
 
 	i = 0;
-	printf("List of arguments\n");
+	printf("List of arguments: \n");
 	while (tab && tab[i])
 	{
-		printf("index: %d, arg: %s\n", i, tab[i]);
+		ft_putendl(tab[i]);
 		i++;
 	}
 	printf("-----------\n");
