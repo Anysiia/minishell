@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:04:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/21 15:19:48 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/23 16:26:23 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int		expand_weak_quote(t_expand *tmp, const char *arg, char **env);
 int		expand_variable(t_cmd *cmd, t_expand *tmp, int *i, char **env);
 int		get_last_exit_status(t_expand *tmp);
 char	*get_variable_content(t_expand *tmp, const char *arg, char **env);
+char	**insert_split_in_av(char **av, char **split, int index);
 void	default_fd(int fd[2]);
 void	manage_redir(t_cmd *command, int fd[2]);
 

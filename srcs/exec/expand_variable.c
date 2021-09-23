@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 09:58:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/23 11:23:02 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/23 16:51:32 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ static int	change_value(char **split, t_cmd *cmd, t_expand *tmp, int *i)
 	char	*to_parse;
 
 	len_tab = ft_len_tab(split);
-	if (len_tab < 2)
-		return (RET_ERROR);
 	len = ft_strlen(cmd->av[*i]) - tmp->j;
 	to_parse = ft_strnew(len);
 	if (!to_parse)
@@ -40,30 +38,46 @@ static int	change_value(char **split, t_cmd *cmd, t_expand *tmp, int *i)
 	split[len_tab - 1] = ft_strjoin_free_all(split[len_tab - 1], to_parse);
 	if (!cmd->av[*i] || !split[len_tab - 1] || !tmp->str)
 		return (RET_ERROR);
-	printf("cmd->av[*i]: %s, tmp->str: %s, split[len_tab - 1]: %s\n", cmd->av[*i], tmp->str, split[len_tab - 1]);
 	return (EXIT_SUCCESS);
 }
 
-/*
-static void	print_av(char **av)
+static int	add_trim_content(char **split, t_expand *tmp)
 {
-	int i = -1;
+	int	len;
 
-	while (av && av[++i])
-		ft_putendl(av[i]);
-}*/
+	len = ft_strlen(split[0]) + ft_strlen(tmp->str);
+	if (len >= ARG_LEN * tmp->len)
+	{
+		if (up_expand_buffer(tmp, len + 1) == RET_ERROR)
+		{
+			ft_free_tab(split);
+			return (RET_ERROR);
+		}
+	}
+	ft_strlcat(tmp->str, split[0], ARG_LEN * tmp->len);
+	ft_free_tab(split);
+	return (EXIT_SUCCESS);
+}
 
 static int	splitting_var(char *content, t_cmd *cmd, t_expand *tmp, int *i)
 {
 	char	**split;
+	int		len;
 	char	**arg_list;
 
 	split = ft_split_charset(content, SPLIT_SPACE);
 	ft_freestr(&content);
-	if (!split || change_value(split, cmd, tmp, i) == RET_ERROR)
+	if (!split)
 		return (RET_ERROR);
-	arg_list = ft_insert_tab_in_tab(cmd->av, split, *i + 1);
-	*i += ft_len_tab(split) - 1;
+	len = ft_len_tab(split);
+	if (len == 0)
+		return (EXIT_SUCCESS);
+	if (len == 1)
+		return (add_trim_content(split, tmp));
+	if (change_value(split, cmd, tmp, i) == RET_ERROR)
+		return (RET_ERROR);
+	arg_list = insert_split_in_av(cmd->av, split, *i + 1);
+	*i += len - 1;
 	ft_free_tab(split);
 	cmd->av = ft_free_tab(cmd->av);
 	cmd->av = arg_list;

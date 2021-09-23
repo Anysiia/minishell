@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 12:01:03 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/14 15:54:20 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/23 16:32:37 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ char			**ft_insert_tab_in_tab(char **dest, char **src, int pos);
 char			**ft_remove_line_on_tab(char **tabl, int index);
 char			**ft_free_tab(char **tabl);
 size_t			ft_len_tab(char **tabl);
+void			ft_print_str_tab(char **tabl);
 char			*ft_itoa(int n);
 int				ft_check_base(char *base);
 char			*ft_itoa_base_unsigned(unsigned int n, char *base);

@@ -6,11 +6,32 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 17:05:35 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/21 12:17:45 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/23 16:10:56 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	get_last_exit_status(t_expand *tmp)
+{
+	char	*exit_value;
+	int		len;
+
+	tmp->j++;
+	exit_value = ft_itoa(get_state());
+	if (!exit_value)
+		return (RET_ERROR);
+	len = ft_strlen(exit_value) + ft_strlen(tmp->str);
+	if (len >= ARG_LEN * tmp->len
+		&& up_expand_buffer(tmp, len) == RET_ERROR)
+	{
+		ft_freestr(&exit_value);
+		return (RET_ERROR);
+	}
+	ft_strlcat(tmp->str, exit_value, ARG_LEN * tmp->len);
+	ft_freestr(&exit_value);
+	return (EXIT_SUCCESS);
+}
 
 int	up_expand_buffer(t_expand *tmp, int len_required)
 {
