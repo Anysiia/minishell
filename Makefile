@@ -28,6 +28,8 @@ SRCS =	srcs/minishell.c \
 		srcs/env/ft_unsetenv.c \
 		srcs/env/utils_env.c \
 		srcs/exec/execute_command.c \
+		srcs/exec/execute_simple_command.c \
+		srcs/exec/execute_pipe.c \
 		srcs/exec/expand_token_word.c \
 		srcs/exec/expand_quote.c \
 		srcs/exec/expand_variable.c \
