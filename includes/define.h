@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:50:01 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 12:25:41 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 15:10:22 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ Len max of a path (1024 on mac, 4096 on linux VM)
 #  define PATH_MAX 1024
 # endif
 # define MAX_MSG 1024
-# define ARG_LEN 5
+# define ARG_LEN 64
 # define NO_ARGS 1
 # define CMD 0
 # define NO_CMD -2
@@ -84,6 +84,7 @@ Errors
 # define NOT_SET "not set"
 # define NOT_A_FILE "is not a file"
 # define EOF_HEREDOC "warning: unexpected EOF on heredoc"
+# define COMMAND_NOT_FOUND "Command not found"
 
 /*
 Colors of printf

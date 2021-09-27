@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 10:15:42 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 11:50:13 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 15:12:08 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ void	print_errno(const char *error_command)
 	ft_strlcat(str, ": ", MAX_MSG);
 	ft_strlcat(str, error_command, MAX_MSG);
 	ft_strlcat(str, ": ", MAX_MSG);
-	ft_strlcat(str, strerror(errno), MAX_MSG);
+	if (errno != ENOENT)
+		ft_strlcat(str, strerror(errno), MAX_MSG);
+	else
+		ft_strlcat(str, COMMAND_NOT_FOUND, MAX_MSG);
 	ft_strlcat(str, "\n", MAX_MSG);
 	ft_putstr_fd(str, STDERR);
 }
