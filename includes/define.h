@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:50:01 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 15:10:22 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 16:11:00 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ Errors
 # define MALLOC_CREATE_ENV "fatal error: malloc environnement"
 # define MALLOC_DUP_ENV "malloc sorted environnement"
 # define MALLOC_BUILTIN_LIST "fatal error: malloc builtin list"
-# define ERR_TOKEN_REDIR "unexpected token near redirection"
-# define ERR_TOKEN_PIPE "unexpected token near pipe"
+# define ERR_TOKEN_REDIR "syntax error near unexpected token `newline'"
+# define ERR_TOKEN_PIPE "syntax error near unexpected token `newline'"
 # define INVALID_TOKEN "first token is invalid"
 # define ARG_EXPANSION "an error occur on expansion of arguments"
 # define NUM_ARG "numeric argument required"
