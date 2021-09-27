@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 09:58:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 11:32:47 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 13:00:48 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static int	add_variable(t_cmd *cmd, t_expand *tmp, int *i, char **env)
 	content = get_variable_content(tmp, cmd->av[*i], env);
 	if (!content)
 		return (NOT_FOUND);
-	if (tmp->j > 1 && cmd->av[*i][tmp->j - 2] != '='
+	if (!ft_test_set('=', cmd->av[*i])
 		&& ft_charset_in_str(SPLIT_SPACE, content))
 		return (splitting_var(content, cmd, tmp, i));
 	len = ft_strlen(content) + ft_strlen(tmp->str);
