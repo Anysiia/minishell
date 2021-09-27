@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 10:15:42 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/14 16:13:32 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 17:05:10 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	argument_error(const char *command_name)
 	ft_strlcat(str, ": ", MAX_MSG);
 	ft_strlcat(str, command_name, MAX_MSG);
 	ft_strlcat(str, ": too many arguments\n", MAX_MSG);
-	ft_putstr_fd(str, STDERR);
+	ft_putstr_fd(str, STDERR_FILENO);
 	return (get_state());
 }
 
@@ -39,7 +39,7 @@ int	invalid_option(const char *command_name, const char *option)
 	if (ft_strlen(str) + 2 < MAX_MSG)
 		ft_strncat(str, option, 2);
 	ft_strlcat(str, ": invalid option\n", MAX_MSG);
-	ft_putstr_fd(str, STDERR);
+	ft_putstr_fd(str, STDERR_FILENO);
 	return (get_state());
 }
 
@@ -55,7 +55,7 @@ int	invalid_id(const char *command_name, const char *variable_name)
 	ft_strlcat(str, ": « ", MAX_MSG);
 	ft_strlcat(str, variable_name, MAX_MSG);
 	ft_strlcat(str, " » : not a valid identifier\n", MAX_MSG);
-	ft_putstr_fd(str, STDERR);
+	ft_putstr_fd(str, STDERR_FILENO);
 	return (get_state());
 }
 
@@ -73,7 +73,7 @@ int	builtin_error(const char *cmd, const char *arg, const char *err, int state)
 	ft_strlcat(str, ": ", MAX_MSG);
 	ft_strlcat(str, err, MAX_MSG);
 	ft_strlcat(str, "\n", MAX_MSG);
-	ft_putstr_fd(str, STDERR);
+	ft_putstr_fd(str, STDERR_FILENO);
 	return (get_state());
 }
 
@@ -88,5 +88,5 @@ void	builtin_usage(const char *command_name, const char *error)
 	ft_strlcat(str, ": usage: ", MAX_MSG);
 	ft_strlcat(str, error, MAX_MSG);
 	ft_strlcat(str, "\n", MAX_MSG);
-	ft_putstr_fd(str, STDERR);
+	ft_putstr_fd(str, STDERR_FILENO);
 }

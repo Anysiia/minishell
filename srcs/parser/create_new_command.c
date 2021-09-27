@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:35:58 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 15:39:30 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 17:03:55 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ static void	handle_redir(t_minishell *minishell, t_cmd *cmd, t_token *list)
 	int		fd;
 
 	filename = list->next->data;
-	if (cmd->fd[STDOUT] != STDOUT)
-		close_fd(cmd->fd[STDOUT]);
-	if (cmd->fd[STDIN] != STDIN)
-		close_fd(cmd->fd[STDIN]);
+	if (cmd->fd[STDOUT_FILENO] != STDOUT_FILENO)
+		close_fd(cmd->fd[STDOUT_FILENO]);
+	if (cmd->fd[STDIN_FILENO] != STDIN_FILENO)
+		close_fd(cmd->fd[STDIN_FILENO]);
 	if (list->type == TOKEN_GREAT)
 		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	else if (list->type == TOKEN_DOUBLE_GREAT)
@@ -85,13 +85,12 @@ static void	handle_redir(t_minishell *minishell, t_cmd *cmd, t_token *list)
 		fd = open(filename, O_RDONLY, 0666);
 	else
 		fd = create_heredoc(minishell, filename);
-	printf("%d\n", fd);
 	if (fd == RET_ERROR)
 		print_errno(filename);
 	if (list->type == TOKEN_GREAT || list->type == TOKEN_DOUBLE_GREAT)
-		cmd->fd[STDOUT] = fd;
+		cmd->fd[STDOUT_FILENO] = fd;
 	if (list->type == TOKEN_LESS || list->type == TOKEN_DOUBLE_LESS)
-		cmd->fd[STDIN] = fd;
+		cmd->fd[STDIN_FILENO] = fd;
 }
 
 static int	get_arg(t_minishell *minishell, t_token *token, t_cmd *cmd)

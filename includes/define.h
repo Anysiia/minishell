@@ -6,16 +6,12 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:50:01 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 16:11:00 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 17:00:30 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINE_H
 # define DEFINE_H
-
-# define STDIN	0
-# define STDOUT	1
-# define STDERR 2
 
 # define SHELL_NAME "minishell"
 # define SHELL_PROMPT "[minishell] "

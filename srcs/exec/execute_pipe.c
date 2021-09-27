@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 17:36:52 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 12:02:42 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 17:00:49 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 static void	redir_file(t_minishell *minishell, t_cmd *cmd)
 {
-	if (cmd->fd[0] != STDIN)
+	if (cmd->fd[0] != STDIN_FILENO)
 	{
-		if (dup2(cmd->fd[0], STDIN) < 0)
+		if (dup2(cmd->fd[0], STDIN_FILENO) < 0)
 			exit_shell(minishell);
 		close_fd(cmd->fd[0]);
 	}
-	if (cmd->fd[1] != STDOUT)
+	if (cmd->fd[1] != STDOUT_FILENO)
 	{
-		if (dup2(cmd->fd[1], STDOUT) < 0)
+		if (dup2(cmd->fd[1], STDOUT_FILENO) < 0)
 			exit_shell(minishell);
 		close_fd(cmd->fd[1]);
 	}
@@ -32,6 +32,8 @@ static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 {
 	if (dup2(fdd, 0) < 0 || (cmd->next && dup2(fd[1], 1) < 0))
 		exit_shell(minishell);
+	close(fdd);
+	close(fd[1]);
 	redir_file(minishell, cmd);
 	if (cmd->is_builtin == true)
 		cmd->command(cmd->ac, cmd->av, minishell);
@@ -79,8 +81,8 @@ void	execute_pipe(t_minishell *minishell, t_cmd *command)
 
 	if (command->ac < 0)
 		return ;
-	backup[0] = dup(STDIN);
-	backup[1] = dup(STDOUT);
+	backup[0] = dup(STDIN_FILENO);
+	backup[1] = dup(STDOUT_FILENO);
 	if (backup[0] == RET_ERROR || backup[1] == RET_ERROR)
 	{
 		default_fd(backup);
