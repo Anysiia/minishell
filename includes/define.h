@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:50:01 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/21 14:39:41 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 12:25:41 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ Errors
 # define NUM_ARG "numeric argument required"
 # define NOT_SET "not set"
 # define NOT_A_FILE "is not a file"
+# define EOF_HEREDOC "warning: unexpected EOF on heredoc"
 
 /*
 Colors of printf

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:03:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 10:55:36 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 11:42:52 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	exit_ctrld(t_minishell *minishell)
 	exit_shell(minishell);
 }
 
-void	wait_command(t_minishell *minishell)
+static void	wait_command(t_minishell *minishell)
 {
 	int		lexer_state;
 	char	str[PATH_MAX];

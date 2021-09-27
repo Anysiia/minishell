@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:35:58 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/24 16:21:05 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 12:25:53 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,14 @@ static int	create_heredoc(t_minishell *minishell, char *delimiter)
 	fd = open(MINISHELL_HDOC, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == RET_ERROR)
 		return (RET_ERROR);
-	while (get_next_line(STDIN, &line) == 1)
+	while (1)
 	{
+		line = readline("> ");
+		if (!line)
+		{
+			print_error(EOF_HEREDOC, 0);
+			break ;
+		}
 		if (ft_strcmp(line, delimiter))
 			ft_putendl_fd(line, fd);
 		else
@@ -58,8 +64,7 @@ static int	create_heredoc(t_minishell *minishell, char *delimiter)
 	}
 	ft_freestr(&line);
 	close_fd(fd);
-	fd = open(MINISHELL_HDOC, O_RDONLY);
-	return (fd);
+	return (open(MINISHELL_HDOC, O_RDONLY));
 }
 
 static void	handle_redir(t_minishell *minishell, t_cmd *cmd, t_token *list)

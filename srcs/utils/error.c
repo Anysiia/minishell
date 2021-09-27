@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 10:15:42 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/17 11:07:34 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 11:50:13 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,11 @@ void	exit_error(t_minishell *minishell, const char *msg)
 		ft_strlcat(str, "\n", MAX_MSG);
 		ft_putstr_fd(str, STDERR);
 	}
+	exit_shell(minishell);
+}
+
+void	exit_errno(t_minishell *minishell, const char *msg)
+{
+	print_errno(msg);
 	exit_shell(minishell);
 }

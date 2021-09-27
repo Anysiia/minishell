@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:04:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/24 17:38:33 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 11:51:08 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ ERRORS
 */
 
 void	exit_error(t_minishell *minishell, const char *msg);
+void	exit_errno(t_minishell *minishell, const char *msg);
 void	error_lexer(const char *error, bool quit, int *lexer_state);
 void	print_error(const char *msg, bool quit);
 void	print_errno(const char *error_command);
