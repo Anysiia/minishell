@@ -6,13 +6,13 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 14:21:52 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/24 17:39:16 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 14:34:30 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	print_arg(char **tab)
+/*static void	print_arg(char **tab)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ static void	print_arg(char **tab)
 		i++;
 	}
 	printf("-----------\n");
-}
+}*/
 
 static int	expand_all_args(char **env, t_cmd *command)
 {
@@ -47,7 +47,7 @@ static int	expand_all_args(char **env, t_cmd *command)
 		}
 		i++;
 	}
-	print_arg(command->av);
+//	print_arg(command->av);
 	find_command(env, command);
 	return (EXIT_SUCCESS);
 }

@@ -6,13 +6,13 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:35:58 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/24 17:41:02 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 14:36:21 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	print_command_list(t_cmd *list)
+/*static void	print_command_list(t_cmd *list)
 {
 	t_cmd	*to_print;
 	int		i;
@@ -35,7 +35,7 @@ static void	print_command_list(t_cmd *list)
 		ft_putchar('\n');
 		to_print = to_print->next;
 	}
-}
+}*/
 
 static void	parse_command(t_minishell *minishell, t_token *tmp, int *lexer)
 {
@@ -56,7 +56,7 @@ static void	parse_command(t_minishell *minishell, t_token *tmp, int *lexer)
 		free_command(&minishell->cmd);
 		return ;
 	}
-	print_command_list(minishell->cmd);
+//	print_command_list(minishell->cmd);
 	execute_command(minishell, minishell->cmd);
 	free_command(&minishell->cmd);
 }

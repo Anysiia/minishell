@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 12:05:07 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/17 11:05:11 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 14:35:29 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	add_token(t_lexer *lexer, char *s, int type, int *lexer_state)
 	lexer->size++;
 }
 
-void	print_lexer(t_lexer *lexer)
+/*void	print_lexer(t_lexer *lexer)
 {
 	t_token	*to_print;
 
@@ -54,7 +54,7 @@ void	print_lexer(t_lexer *lexer)
 		printf("[%ld] %s - %d\n", lexer->size, to_print->data, to_print->type);
 		to_print = to_print->next;
 	}
-}
+}*/
 
 int	split_into_tokens(t_lexer *lexer, int *state)
 {
@@ -79,6 +79,6 @@ int	split_into_tokens(t_lexer *lexer, int *state)
 	}
 	if (word)
 		word = add_token_word(lexer, word, state);
-	print_lexer(lexer);
+//	print_lexer(lexer);
 	return (*state);
 }

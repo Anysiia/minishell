@@ -6,22 +6,11 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 15:17:26 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/04/21 13:55:45 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 14:49:31 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-t_token	create_token(const char *s, t_token_type token_type)
-{
-	t_token	token;
-
-	token.data = ft_strdup(s);
-	token.len = ft_strlen(s);
-	token.type = token_type;
-	token.next = NULL;
-	return (token);
-}
 
 t_token	*malloc_token(const char *s, t_token_type token_type)
 {
@@ -34,7 +23,7 @@ t_token	*malloc_token(const char *s, t_token_type token_type)
 		set_exit(EXIT_FAILURE);
 		return (NULL);
 	}
-	*token = create_token(s, token_type);
+	token->data = ft_strdup(s);
 	if (!token->data)
 	{
 		free(token);
@@ -42,6 +31,9 @@ t_token	*malloc_token(const char *s, t_token_type token_type)
 		set_exit(EXIT_FAILURE);
 		return (NULL);
 	}
+	token->len = ft_strlen(s);
+	token->type = token_type;
+	token->next = NULL;
 	return (token);
 }
 
