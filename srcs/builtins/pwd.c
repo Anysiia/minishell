@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 17:51:57 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/14 15:24:34 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 17:18:57 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	pwd_builtin(int ac, char **av, t_minishell *minishell)
 	}
 	if (!getcwd(pwd, PATH_MAX))
 	{
-		print_errno(av[CMD]);
+		print_errno(av[CMD], PWD);
 		return (get_state());
 	}
 	printf("%s\n", pwd);

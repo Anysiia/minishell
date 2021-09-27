@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:02:13 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/09 11:51:49 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 17:20:43 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*create_prompt(char *prompt, char **env)
 {
 	char	*path;
 
-	if (!isatty(STDERR))
+	if (!isatty(STDERR_FILENO))
 		return (NULL);
 	ft_bzero(prompt, PATH_MAX);
 	path = prompt_path(env);

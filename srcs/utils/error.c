@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 10:15:42 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 17:05:40 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 17:21:26 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	is_directory(const char *path)
 	return (ret);
 }
 
-void	print_errno(const char *error_command)
+void	print_errno(const char *error_command, int mode)
 {
 	char	str[MAX_MSG];
 
@@ -38,10 +38,10 @@ void	print_errno(const char *error_command)
 	ft_strlcat(str, ": ", MAX_MSG);
 	ft_strlcat(str, error_command, MAX_MSG);
 	ft_strlcat(str, ": ", MAX_MSG);
-	if (errno != ENOENT)
-		ft_strlcat(str, strerror(errno), MAX_MSG);
-	else
+	if (errno == ENOENT && mode == EXECVE)
 		ft_strlcat(str, COMMAND_NOT_FOUND, MAX_MSG);
+	else
+		ft_strlcat(str, strerror(errno), MAX_MSG);
 	ft_strlcat(str, "\n", MAX_MSG);
 	ft_putstr_fd(str, STDERR_FILENO);
 }
@@ -81,8 +81,8 @@ void	exit_error(t_minishell *minishell, const char *msg)
 	exit_shell(minishell);
 }
 
-void	exit_errno(t_minishell *minishell, const char *msg)
+void	exit_errno(t_minishell *minishell, const char *msg, int mode)
 {
-	print_errno(msg);
+	print_errno(msg, mode);
 	exit_shell(minishell);
 }

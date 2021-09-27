@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:03:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 11:42:52 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 17:19:37 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	exit_ctrld(t_minishell *minishell)
 {
-	ft_putendl_fd("exit", STDERR);
+	ft_putendl_fd("exit", STDERR_FILENO);
 	exit_shell(minishell);
 }
 

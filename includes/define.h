@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:50:01 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 17:00:30 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 17:19:13 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ Len max of a path (1024 on mac, 4096 on linux VM)
 # define INC_USAGE 2
 # define EXIT_STATUS_MAX 255
 # define CMD_NOT_FOUND 127
+
+# define EXECVE 1
+# define DUP 2
+# define FORK 3
+# define PIPE 4
+# define PWD 5
 
 /*
  When  a command terminates on a fatal signal whose number is N, Bash uses the

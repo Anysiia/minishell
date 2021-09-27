@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 17:32:38 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 11:53:02 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 17:18:09 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static void	fork_process(t_minishell *minishell, t_cmd *command)
 	pid = fork();
 	status = 0;
 	if (pid == RET_ERROR)
-		exit_errno(minishell, "fork");
+		exit_errno(minishell, "fork", FORK);
 	if (pid == 0)
 	{
 		execve(command->av[CMD], command->av, minishell->env);
-		exit_errno(minishell, command->av[CMD]);
+		exit_errno(minishell, command->av[CMD], EXECVE);
 	}
 	else
 		waitpid(pid, &status, 0);

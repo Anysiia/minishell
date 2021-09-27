@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:35:58 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 17:03:55 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/27 17:20:18 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static void	handle_redir(t_minishell *minishell, t_cmd *cmd, t_token *list)
 	else
 		fd = create_heredoc(minishell, filename);
 	if (fd == RET_ERROR)
-		print_errno(filename);
+		print_errno(filename, 0);
 	if (list->type == TOKEN_GREAT || list->type == TOKEN_DOUBLE_GREAT)
 		cmd->fd[STDOUT_FILENO] = fd;
 	if (list->type == TOKEN_LESS || list->type == TOKEN_DOUBLE_LESS)
