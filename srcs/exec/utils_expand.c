@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 12:44:32 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/28 11:27:01 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/28 11:36:43 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,8 @@ static char	*get_variable_name(t_expand *tmp, const char *arg)
 	while (arg[tmp->j + len]
 		&& (ft_isalnum(arg[tmp->j + len]) || arg[tmp->j + len] == '_'))
 		len++;
-	if (ft_isdigit(arg[tmp->j]))
-	{
-		tmp->j += len - 1;
+	if (len < 1 || ft_isdigit(arg[tmp->j]))
 		return (NULL);
-	}
 	name = ft_strnew(len + 1);
 	if (!name)
 		return (NULL);
