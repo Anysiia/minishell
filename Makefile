@@ -4,7 +4,7 @@ NAME =	minishell
 CC =	clang
 
 CFLAGS = -Wall -Werror -Wextra
-CFLAGS += -fsanitize=address
+#CFLAGS += -fsanitize=address
 
 INCLUDE = -I ./includes/ -I ./LIBFT_DIR/
 

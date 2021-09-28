@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 17:36:52 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 17:17:37 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/28 17:17:38 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 {
 	if (dup2(fdd, 0) < 0 || (cmd->next && dup2(fd[1], 1) < 0))
 		exit_shell(minishell);
-	close(fdd);
 	close(fd[1]);
 	redir_file(minishell, cmd);
 	if (cmd->is_builtin == true)
