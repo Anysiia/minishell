@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 17:32:38 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/29 15:19:36 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/29 16:48:48 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ static void	fork_process(t_minishell *minishell, t_cmd *command)
 		execve(command->av[CMD], command->av, minishell->env);
 		exit_errno(minishell, command->av[CMD], EXECVE);
 	}
-	else
-		waitpid(pid, &status, 0);
+	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		set_state(WEXITSTATUS(status));
 }
@@ -38,7 +37,10 @@ void	execute_simple_command(t_minishell *minishell, t_cmd *command)
 
 	backup_fd(minishell, fd);
 	if (redir_file(command) == RET_ERROR)
+	{
+		default_fd(minishell, fd);
 		return ;
+	}
 	if (command->is_builtin == true)
 		command->command(command->ac, command->av, minishell);
 	else
