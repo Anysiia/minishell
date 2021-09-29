@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 10:15:42 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 17:21:26 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/29 14:43:44 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ void	print_errno(const char *error_command, int mode)
 	ft_strlcat(str, error_command, MAX_MSG);
 	ft_strlcat(str, ": ", MAX_MSG);
 	if (errno == ENOENT && mode == EXECVE)
+	{
 		ft_strlcat(str, COMMAND_NOT_FOUND, MAX_MSG);
+		set_state(CMD_NOT_FOUND);
+	}
 	else
 		ft_strlcat(str, strerror(errno), MAX_MSG);
 	ft_strlcat(str, "\n", MAX_MSG);
