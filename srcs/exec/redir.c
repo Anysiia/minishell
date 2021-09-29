@@ -6,32 +6,58 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 15:30:16 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 17:02:36 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/29 15:17:54 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	redir(int initial, int new)
+void	default_fd(t_minishell *minishell, int fd[2])
 {
-	if (initial == new)
-		return ;
-	if (dup2(initial, new) != RET_ERROR)
-		close(initial);
+	if (fd[0] != STDIN_FILENO)
+	{
+		if (dup2(fd[0], STDIN_FILENO) == RET_ERROR)
+			exit_errno(minishell, "fatal error on dup default fd", DUP);
+		close_fd(fd[0]);
+	}
+	if (fd[1] != STDOUT_FILENO)
+	{
+		if (dup2(fd[1], STDOUT_FILENO) == RET_ERROR)
+			exit_errno(minishell, "fatal error on dup default fd", DUP);
+		close_fd(fd[1]);
+	}
 }
 
-void	default_fd(int fd[2])
-{
-	redir(fd[0], STDIN_FILENO);
-	redir(fd[1], STDOUT_FILENO);
-}
-
-void	manage_redir(t_cmd *command, int fd[2])
+void	backup_fd(t_minishell *minishell, int fd[2])
 {
 	fd[0] = dup(STDIN_FILENO);
 	fd[1] = dup(STDOUT_FILENO);
-	redir(command->fd[STDIN_FILENO], STDIN_FILENO);
-	redir(command->fd[STDOUT_FILENO], STDOUT_FILENO);
+	if (fd[0] == RET_ERROR || fd[1] == RET_ERROR)
+	{
+		default_fd(minishell, fd);
+		exit_errno(minishell, "fatal error on dup default fd", DUP);
+	}
+}
+
+int	redir_file(t_cmd *cmd)
+{
+	int	ret;
+
+	ret = EXIT_SUCCESS;
+	if (cmd->fd[0] != STDIN_FILENO)
+	{
+		if (dup2(cmd->fd[0], STDIN_FILENO) < 0)
+			ret = RET_ERROR;
+		else
+			close_fd(cmd->fd[0]);
+	}
+	if (cmd->fd[1] != STDOUT_FILENO)
+	{
+		if (dup2(cmd->fd[1], STDOUT_FILENO) < 0)
+			ret = RET_ERROR;
+		close_fd(cmd->fd[1]);
+	}
+	return (ret);
 }
 
 void	close_fd(int fd)

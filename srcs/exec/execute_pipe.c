@@ -6,34 +6,19 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 17:36:52 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/28 17:17:38 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/29 15:33:13 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	redir_file(t_minishell *minishell, t_cmd *cmd)
-{
-	if (cmd->fd[0] != STDIN_FILENO)
-	{
-		if (dup2(cmd->fd[0], STDIN_FILENO) < 0)
-			exit_shell(minishell);
-		close_fd(cmd->fd[0]);
-	}
-	if (cmd->fd[1] != STDOUT_FILENO)
-	{
-		if (dup2(cmd->fd[1], STDOUT_FILENO) < 0)
-			exit_shell(minishell);
-		close_fd(cmd->fd[1]);
-	}
-}
-
 static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 {
 	if (dup2(fdd, 0) < 0 || (cmd->next && dup2(fd[1], 1) < 0))
 		exit_shell(minishell);
-	close(fd[1]);
-	redir_file(minishell, cmd);
+	close_fd(fd[1]);
+	if (redir_file(cmd) == RET_ERROR)
+		exit_shell(minishell);
 	if (cmd->is_builtin == true)
 		cmd->command(cmd->ac, cmd->av, minishell);
 	else
@@ -80,13 +65,7 @@ void	execute_pipe(t_minishell *minishell, t_cmd *command)
 
 	if (command->ac < 0)
 		return ;
-	backup[0] = dup(STDIN_FILENO);
-	backup[1] = dup(STDOUT_FILENO);
-	if (backup[0] == RET_ERROR || backup[1] == RET_ERROR)
-	{
-		default_fd(backup);
-		return (print_errno("dup", DUP));
-	}
+	backup_fd(minishell, backup);
 	tmp = command;
 	nb_cmd = 0;
 	while (tmp)
@@ -96,5 +75,5 @@ void	execute_pipe(t_minishell *minishell, t_cmd *command)
 	}
 	tmp = command;
 	exec_pipe(minishell, tmp, nb_cmd);
-	default_fd(backup);
+	default_fd(minishell, backup);
 }

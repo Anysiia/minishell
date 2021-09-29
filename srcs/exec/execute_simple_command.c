@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 17:32:38 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/29 11:19:18 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/29 15:19:36 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,12 @@ void	execute_simple_command(t_minishell *minishell, t_cmd *command)
 {
 	int		fd[2];
 
-	manage_redir(command, fd);
+	backup_fd(minishell, fd);
+	if (redir_file(command) == RET_ERROR)
+		return ;
 	if (command->is_builtin == true)
 		command->command(command->ac, command->av, minishell);
 	else
 		fork_process(minishell, command);
-	default_fd(fd);
+	default_fd(minishell, fd);
 }

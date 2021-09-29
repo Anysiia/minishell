@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 16:21:52 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/05/11 16:03:56 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/29 15:31:20 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,12 @@ int	get_exit(void)
 
 void	exit_shell(t_minishell *minishell)
 {
-	int	state;
-
-	state = get_state();
 	if (minishell->env)
 		ft_clearenv(minishell->env);
 	if (minishell->lexer)
 		free_lexer(minishell->lexer);
 	if (minishell->cmd)
 		free_command(&minishell->cmd);
-	exit(state);
+	rl_clear_history();
+	exit(get_state());
 }
