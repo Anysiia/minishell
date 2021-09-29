@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:35:58 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 17:20:18 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/29 20:37:53 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ static void	handle_redir(t_minishell *minishell, t_cmd *cmd, t_token *list)
 	int		fd;
 
 	filename = list->next->data;
-	if (cmd->fd[STDOUT_FILENO] != STDOUT_FILENO)
-		close_fd(cmd->fd[STDOUT_FILENO]);
-	if (cmd->fd[STDIN_FILENO] != STDIN_FILENO)
-		close_fd(cmd->fd[STDIN_FILENO]);
+	if (cmd->fd_out != NO_REDIR)
+		close_fd(cmd->fd_out);
+	if (cmd->fd_in != NO_REDIR)
+		close_fd(cmd->fd_out);
 	if (list->type == TOKEN_GREAT)
 		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	else if (list->type == TOKEN_DOUBLE_GREAT)
@@ -88,9 +88,9 @@ static void	handle_redir(t_minishell *minishell, t_cmd *cmd, t_token *list)
 	if (fd == RET_ERROR)
 		print_errno(filename, 0);
 	if (list->type == TOKEN_GREAT || list->type == TOKEN_DOUBLE_GREAT)
-		cmd->fd[STDOUT_FILENO] = fd;
+		cmd->fd_out = fd;
 	if (list->type == TOKEN_LESS || list->type == TOKEN_DOUBLE_LESS)
-		cmd->fd[STDIN_FILENO] = fd;
+		cmd->fd_in = fd;
 }
 
 static int	get_arg(t_minishell *minishell, t_token *token, t_cmd *cmd)

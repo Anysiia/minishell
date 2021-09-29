@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 15:30:16 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/29 16:55:58 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/29 20:37:18 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,17 @@ void	backup_fd(t_minishell *minishell, int fd[2])
 
 int	redir_file(t_cmd *cmd)
 {
-	if (cmd->fd[0] != STDIN_FILENO)
+	if (cmd->fd_in != NO_REDIR)
 	{
-		if (dup2(cmd->fd[0], STDIN_FILENO) < 0)
-		{
-			ft_putendl("stdin redir");
+		if (dup2(cmd->fd_in, STDIN_FILENO) < 0)
 			return (RET_ERROR);
-		}
-		close_fd(cmd->fd[0]);
+		close_fd(cmd->fd_in);
 	}
-	if (cmd->fd[1] != STDOUT_FILENO)
+	if (cmd->fd_out != NO_REDIR)
 	{
-		if (dup2(cmd->fd[1], STDOUT_FILENO) < 0)
-		{
-			ft_putendl("stdout redir");
+		if (dup2(cmd->fd_out, STDOUT_FILENO) < 0)
 			return (RET_ERROR);
-		}
-		close_fd(cmd->fd[1]);
+		close_fd(cmd->fd_out);
 	}
 	return (EXIT_SUCCESS);
 }

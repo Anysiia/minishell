@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:51:54 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/17 11:31:10 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/29 20:19:00 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ struct s_cmd
 	char			**av;
 	bool			is_builtin;
 	t_function		command;
-	int				fd[2];
+	int				fd_in;
+	int				fd_out;
 	struct s_cmd	*next;
 };
 

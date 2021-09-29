@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:14:31 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 17:03:04 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/29 20:37:34 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ t_cmd	*malloc_command(void)
 	cmd->av = NULL;
 	cmd->is_builtin = false;
 	cmd->command = NULL;
-	cmd->fd[0] = STDIN_FILENO;
-	cmd->fd[1] = STDOUT_FILENO;
+	cmd->fd_in = NO_REDIR;
+	cmd->fd_out = NO_REDIR;
 	cmd->next = NULL;
 	return (cmd);
 }
