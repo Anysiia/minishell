@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:03:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 17:19:37 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/29 11:15:33 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	wait_command(t_minishell *minishell)
 	lexer_state = EXIT_SUCCESS;
 	while (1)
 	{
+		register_signal(minishell);
 		minishell->lexer->line = readline(create_prompt(str, minishell->env));
 		if (!minishell->lexer->line)
 			exit_ctrld(minishell);
@@ -54,7 +55,6 @@ int	main(int argc, char **argv, char **envp)
 		return (EXIT_FAILURE);
 	}
 	create_env(&minishell, envp);
-	register_signal(&minishell);
 	wait_command(&minishell);
 	return (get_state());
 }

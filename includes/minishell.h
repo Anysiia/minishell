@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:04:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 17:14:49 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/29 11:00:05 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ UTILS
 */
 
 void	register_signal(t_minishell *minishell);
+void	exec_signal(t_minishell *minishell);
 char	*create_prompt(char *prompt, char **env);
 int		save_state(bool action, int state);
 void	set_state(int state);

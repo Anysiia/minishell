@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 14:21:52 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 14:34:30 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/29 11:19:04 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	execute_command(t_minishell *minishell, t_cmd *command)
 		}
 		tmp = tmp->next;
 	}
+	exec_signal(minishell);
 	if (!command->next)
 		execute_simple_command(minishell, command);
 	else

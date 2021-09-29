@@ -51,7 +51,8 @@ SRCS =	srcs/minishell.c \
 		srcs/utils/exit.c \
 		srcs/utils/error_builtins.c \
 		srcs/utils/print_sorted_env.c \
-		srcs/utils/signal.c
+		srcs/utils/signal_exec.c \
+		srcs/utils/signal_input.c
 
 OBJS =	${SRCS:.c=.o}
 
@@ -75,4 +76,7 @@ fclean:
 
 re:		fclean all
 
-.PHONY:	all clean fclean re
+install:
+		sudo apt-get install libreadline-dev
+
+.PHONY:	all clean fclean re install
