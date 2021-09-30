@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 15:57:38 by user42            #+#    #+#             */
-/*   Updated: 2021/09/30 12:12:45 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/30 14:38:49 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	find_command(char **env, t_cmd *cmd)
 
 	if (!cmd || !cmd->av[CMD])
 		return ;
+	cmd->binary = ft_strdup(cmd->av[CMD]);
 	ret = is_builtin(cmd);
 	if (ret == EXIT_SUCCESS)
 		return ;
@@ -82,10 +83,12 @@ void	find_command(char **env, t_cmd *cmd)
 	{
 		new = expand_relative_path(env, cmd);
 		if (new)
+		{
+			ft_freestr(&cmd->binary);
 			cmd->binary = new;
+		}
 		return ;
 	}
-	cmd->binary = ft_strdup(cmd->av[CMD]);
 	if (is_file(cmd->av[CMD]))
 		search_binary(env, cmd);
 }

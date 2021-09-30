@@ -4,7 +4,7 @@ NAME =	minishell
 CC =	clang
 
 CFLAGS = -Wall -Werror -Wextra
-CFLAGS += -fsanitize=address
+#CFLAGS += -fsanitize=address
 
 INCLUDE = -I ./includes/ -I ./LIBFT_DIR/
 
@@ -45,6 +45,7 @@ SRCS =	srcs/minishell.c \
 		srcs/parser/parse_tokens.c \
 		srcs/parser/command.c \
 		srcs/parser/create_new_command.c \
+		srcs/parser/handle_redir.c \
 		srcs/utils/error.c \
 		srcs/utils/create_prompt.c \
 		srcs/utils/state.c \

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 17:36:52 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/30 11:57:05 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/30 15:53:10 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@ static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 	close_fd(fdd);
 	if (redir_file(cmd) == RET_ERROR)
 		exit_shell(minishell);
-	if (cmd->is_builtin == true)
+	if (!cmd->binary || (cmd->binary[0] != '/' && cmd->is_builtin != true))
+	{
+		errno = ENOENT;
+		exit_errno(minishell, cmd->av[CMD], EXECVE);
+	}
+	else if (cmd->is_builtin == true)
 		cmd->command(cmd->ac, cmd->av, minishell);
 	else
 	{

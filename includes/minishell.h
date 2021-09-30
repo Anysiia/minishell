@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:04:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/29 15:18:16 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/30 15:59:26 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,5 +144,6 @@ int		is_file(const char *name);
 int		parse_tokens(t_minishell *minishell, int *lexer_state);
 void	create_new_command(t_minishell *minishell, t_token *list, int *lexer);
 bool	is_redir(t_token *token);
+void	handle_redir(t_minishell *minishell, t_cmd *cmd, t_token *list);
 
 #endif

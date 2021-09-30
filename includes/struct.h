@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:51:54 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/30 11:06:15 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/30 15:47:04 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ struct s_cmd
 	int				fd_in;
 	int				fd_out;
 	struct s_cmd	*next;
+	struct s_cmd	*prev;
 };
 
 struct s_minishell
