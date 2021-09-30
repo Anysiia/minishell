@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:14:31 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/30 15:46:24 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/30 16:36:38 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	free_command(t_cmd **command)
 	while (current)
 	{
 		next = current->next;
+		close_fd(current->fd_in);
+		close_fd(current->fd_out);
 		ft_free_tab(current->av);
 		ft_freestr(&current->binary);
 		free(current);

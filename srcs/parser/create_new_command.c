@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:35:58 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/30 16:11:27 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/30 17:16:44 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,32 +67,10 @@ static int	get_arg(t_minishell *minishell, t_token *token, t_cmd *cmd)
 	return (EXIT_SUCCESS);
 }
 
-static void	get_cmd_value(t_minishell *minishell, t_token *list,
-	int *lexer_state, t_cmd *cmd)
+static void	push_back(t_minishell *minishell, t_cmd *new)
 {
-	int	ret;
-
-	cmd->ac = get_arg_count(list, lexer_state);
-	if (cmd->ac > RET_ERROR)
-	{
-		ret = get_arg(minishell, list, cmd);
-		if (ret == RET_ERROR)
-			error_lexer(MALLOC_ARG_LIST, true, lexer_state);
-	}
-	if (cmd->ac < 1)
-		free_command(&cmd);
-}
-
-void	create_new_command(t_minishell *minishell, t_token *list,
-	int *lexer_state)
-{
-	t_cmd	*new;
 	t_cmd	*tmp;
 
-	new = malloc_command();
-	if (!new)
-		error_lexer(MALLOC_COMMAND, true, lexer_state);
-	get_cmd_value(minishell, list, lexer_state, new);
 	if (!minishell->cmd)
 		minishell->cmd = new;
 	else
@@ -103,4 +81,25 @@ void	create_new_command(t_minishell *minishell, t_token *list,
 		new->prev = tmp;
 		tmp->next = new;
 	}
+}
+
+void	create_new_command(t_minishell *minishell, t_token *list,
+	int *lexer_state)
+{
+	t_cmd	*new;
+	int		ret;
+
+	new = malloc_command();
+	if (!new)
+		error_lexer(MALLOC_COMMAND, true, lexer_state);
+	new->ac = get_arg_count(list, lexer_state);
+	if (new->ac > RET_ERROR)
+	{
+		ret = get_arg(minishell, list, new);
+		if (ret == RET_ERROR)
+			error_lexer(MALLOC_ARG_LIST, true, lexer_state);
+	}
+	if (new->ac < 1)
+		free_command(&new);
+	push_back(minishell, new);
 }
