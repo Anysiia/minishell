@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:14:31 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/29 20:37:34 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/30 11:15:21 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_cmd	*malloc_command(void)
 	}
 	cmd->ac = -1;
 	cmd->av = NULL;
+	cmd->binary = NULL;
 	cmd->is_builtin = false;
 	cmd->command = NULL;
 	cmd->fd_in = NO_REDIR;
@@ -45,6 +46,7 @@ void	free_command(t_cmd **command)
 	{
 		next = current->next;
 		ft_free_tab(current->av);
+		ft_freestr(&current->binary);
 		free(current);
 		current = next;
 	}

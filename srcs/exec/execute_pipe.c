@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 17:36:52 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/29 15:33:13 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/30 11:57:05 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@ static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 	if (dup2(fdd, 0) < 0 || (cmd->next && dup2(fd[1], 1) < 0))
 		exit_shell(minishell);
 	close_fd(fd[1]);
+	close_fd(fdd);
 	if (redir_file(cmd) == RET_ERROR)
 		exit_shell(minishell);
 	if (cmd->is_builtin == true)
 		cmd->command(cmd->ac, cmd->av, minishell);
 	else
 	{
-		execve(cmd->av[CMD], cmd->av, minishell->env);
+		execve(cmd->binary, cmd->av, minishell->env);
 		print_errno(cmd->av[CMD], EXECVE);
 	}
 	exit_shell(minishell);
@@ -63,7 +64,7 @@ void	execute_pipe(t_minishell *minishell, t_cmd *command)
 	int		nb_cmd;
 	int		backup[2];
 
-	if (command->ac < 0)
+	if (!command)
 		return ;
 	backup_fd(minishell, backup);
 	tmp = command;

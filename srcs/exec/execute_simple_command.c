@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 17:32:38 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/29 16:48:48 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/30 11:57:13 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	fork_process(t_minishell *minishell, t_cmd *command)
 		exit_errno(minishell, "fork", FORK);
 	if (pid == 0)
 	{
-		execve(command->av[CMD], command->av, minishell->env);
+		execve(command->binary, command->av, minishell->env);
 		exit_errno(minishell, command->av[CMD], EXECVE);
 	}
 	waitpid(pid, &status, 0);
@@ -31,19 +31,19 @@ static void	fork_process(t_minishell *minishell, t_cmd *command)
 		set_state(WEXITSTATUS(status));
 }
 
-void	execute_simple_command(t_minishell *minishell, t_cmd *command)
+void	execute_simple_command(t_minishell *minishell, t_cmd *cmd)
 {
 	int		fd[2];
 
 	backup_fd(minishell, fd);
-	if (redir_file(command) == RET_ERROR)
+	if (redir_file(cmd) == RET_ERROR)
 	{
 		default_fd(minishell, fd);
 		return ;
 	}
-	if (command->is_builtin == true)
-		command->command(command->ac, command->av, minishell);
+	if (cmd->is_builtin == true)
+		cmd->command(cmd->ac, cmd->av, minishell);
 	else
-		fork_process(minishell, command);
+		fork_process(minishell, cmd);
 	default_fd(minishell, fd);
 }

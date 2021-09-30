@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:51:54 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/29 20:19:00 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/09/30 11:06:15 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef int					(*t_function)(int ac, char **av, t_minishell *mshl);
 struct s_cmd
 {
 	int				ac;
+	char			*binary;
 	char			**av;
 	bool			is_builtin;
 	t_function		command;
