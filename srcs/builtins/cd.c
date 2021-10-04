@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 17:51:57 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/06/15 10:12:19 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/04 11:41:30 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,13 @@ int	cd_builtin(int ac, char **av, t_minishell *minishell)
 	{
 		invalid_option(av[CMD], av[FIRST_ARG]);
 		builtin_usage(av[CMD], "cd [path]");
-		return (get_state());
 	}
 	else if (!ft_strcmp(av[FIRST_ARG], "-"))
 	{
 		ret = go_directory(minishell, "OLDPWD");
 		path = ft_getenv(minishell->env, "PWD");
 		if (ret == EXIT_SUCCESS)
-			printf("%s\n", path);
+			ft_putendl(path);
 		ft_freestr(&path);
 	}
 	else

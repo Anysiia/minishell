@@ -6,13 +6,13 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:02:13 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 17:20:43 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/04 11:25:55 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	*short_path(const char *pwd, char *home, int len)
+static char	*short_path(char *pwd, char *home, int len)
 {
 	char	*path;
 	int		sub_len;
@@ -20,39 +20,40 @@ static char	*short_path(const char *pwd, char *home, int len)
 
 	sub_len = ft_strlen(pwd) - len + 2;
 	path = ft_strnew(sub_len);
-	if (path)
+	if (!path)
 	{
-		i = 0;
-		path[i++] = '~';
-		while (pwd[len])
-		{
-			path[i] = pwd[len];
-			i++;
-			len++;
-		}
+		ft_freestr(&home);
+		return (pwd);
 	}
-	else
-		path = ft_strdup(pwd);
+	i = 0;
+	path[i++] = '~';
+	while (pwd[len])
+	{
+		path[i] = pwd[len];
+		i++;
+		len++;
+	}
 	ft_freestr(&home);
 	return (path);
 }
 
 static char	*prompt_path(char **env)
 {
-	char	pwd[PATH_MAX];
+	char	*pwd;
 	char	*home;
 	int		len;
 
-	if (!getcwd(pwd, PATH_MAX))
+	pwd = ft_getenv(env, "PWD");
+	if (!pwd)
 		return (NULL);
 	home = ft_getenv(env, "HOME");
 	if (!home)
-		return (ft_strdup(pwd));
+		return (pwd);
 	len = ft_strlen(home);
 	if (!ft_strncmp(home, pwd, len))
 		return (short_path(pwd, home, len));
 	ft_freestr(&home);
-	return (ft_strdup(pwd));
+	return (pwd);
 }
 
 char	*create_prompt(char *prompt, char **env)
