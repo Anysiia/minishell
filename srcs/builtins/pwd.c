@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 17:51:57 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/04 11:54:33 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/04 12:12:16 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,21 @@ static int	wrong_option(char **av)
 int	pwd_builtin(int ac, char **av, t_minishell *minishell)
 {
 	char	pwd[PATH_MAX];
-	char	*old_pwd;
+	char	*pwd2;
 
 	if (ac != NO_ARGS && wrong_option(av) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (!getcwd(pwd, PATH_MAX))
 	{
-		old_pwd = ft_getenv(minishell->env, "PWD");
-		if (old_pwd)
+		pwd2 = ft_getenv(minishell->env, "PWD");
+		if (pwd2)
 		{
-			ft_putendl(old_pwd);
-			ft_freestr(&old_pwd);
+			ft_putendl(pwd2);
+			ft_freestr(&pwd2);
 			return (save_state(true, EXIT_SUCCESS));
 		}
 		else
-			return (save_state(false, EXIT_FAILURE));
+			return (builtin_error("pwd", "PWD", NOT_SET, EXIT_FAILURE));
 	}
 	ft_putendl(pwd);
 	return (save_state(true, EXIT_SUCCESS));

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 17:51:57 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/04 11:41:30 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/04 13:40:06 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,27 @@ cd - will go back to the last folder you looked at, and the pwd is printed.
 Returns 0 if the directory is changed.
 */
 
+static int	change_old_pwd(t_minishell *minishell)
+{
+	char	*content;
+	int		ret;
+
+	content = ft_getenv(minishell->env, "PWD");
+	if (!content)
+		return (RET_ERROR);
+	ret = ft_setenv(minishell, "OLDPWD", content, 1);
+	ft_freestr(&content);
+	return (ret);
+}
+
 static int	change_directory(t_minishell *minishell, const char *path)
 {
 	int		ret;
 
-	ret = set_pwd(minishell, "OLDPWD");
+	ret = chdir(path);
 	if (ret == RET_ERROR)
 		return (builtin_error("cd", path, strerror(errno), 1));
-	ret = chdir(path);
+	ret = change_old_pwd(minishell);
 	if (ret == RET_ERROR)
 		return (builtin_error("cd", path, strerror(errno), 1));
 	ret = set_pwd(minishell, "PWD");
