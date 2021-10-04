@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 17:32:38 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/30 14:39:25 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/04 14:21:15 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ static void	fork_process(t_minishell *minishell, t_cmd *command)
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		set_state(WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+	{
+		set_state(WTERMSIG(status) + FATAL_SIGN);
+		if (WTERMSIG(status) == SIGSEGV)
+			ft_putstr_fd("Segmentation fault (Core dumped)\n", STDERR_FILENO);
+	}
 }
 
 void	execute_simple_command(t_minishell *minishell, t_cmd *cmd)
