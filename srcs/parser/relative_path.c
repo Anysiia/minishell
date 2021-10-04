@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 11:36:24 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/04 14:48:59 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/04 15:50:57 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,23 +64,39 @@ static char	*get_path(char **env, char *cmd_name, char **split_path)
 	return (cmd_name);
 }
 
+static char *get_pwd(char **env, t_cmd *cmd, char **split, char *cmd_name)
+{
+	char *pwd;
+
+	pwd = ft_getenv(env, "PWD");
+	if (!pwd)
+	{
+		ft_free_tab(split);
+		ft_freestr(&cmd_name);
+		return (ft_strdup(cmd->av[CMD]));
+	}
+	ft_bzero(cmd_name, PATH_MAX);
+	ft_strlcpy(cmd_name, pwd, PATH_MAX);
+	ft_freestr(&pwd);
+	return (cmd_name);
+}
+
 char	*expand_relative_path(char **env, t_cmd *cmd)
 {
-	char	*cmd_name;
 	char	**split;
+	char	*cmd_name;
 
 	cmd_name = ft_strnew(PATH_MAX);
 	if (!cmd_name)
-		return (cmd->av[CMD]);
+		return (ft_strdup(cmd->av[CMD]));
 	split = ft_split(cmd->av[CMD], '/');
 	if (!split)
 	{
-		ft_free_tab(&cmd_name);
-		return (cmd->av[CMD]);
+		ft_freestr(&cmd_name);
+		return (ft_strdup(cmd->av[CMD]));
 	}
-	if ((split[0] && (!ft_strcmp("..", split[0]) || !ft_strcmp(".", split[0])))
-		&& !getcwd(cmd_name, PATH_MAX))
-		return (cmd->av[CMD]);
+	if (split[0] && (!ft_strcmp("..", split[0]) || !ft_strcmp(".", split[0])))
+		get_pwd(env, cmd, split, cmd_name);
 	cmd_name = get_path(env, cmd_name, split);
 	split = ft_free_tab(split);
 	return (cmd_name);
