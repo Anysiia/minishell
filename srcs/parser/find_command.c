@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 15:57:38 by user42            #+#    #+#             */
-/*   Updated: 2021/09/30 16:44:08 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/04 14:49:12 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	find_command(char **env, t_cmd *cmd)
 		new = expand_relative_path(env, cmd);
 		if (new)
 		{
-			ft_putendl(new);
 			ft_freestr(&cmd->binary);
 			cmd->binary = new;
 		}
