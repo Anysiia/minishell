@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 17:36:52 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/30 15:53:10 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/04 16:52:17 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 {
-	if (dup2(fdd, 0) < 0 || (cmd->next && dup2(fd[1], 1) < 0))
+	if ((cmd->prev && dup2(fdd, 0) < 0) || (cmd->next && dup2(fd[1], 1) < 0))
 		exit_shell(minishell);
 	close_fd(fd[1]);
 	close_fd(fdd);
@@ -23,7 +23,7 @@ static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 	if (!cmd->binary || (cmd->binary[0] != '/' && cmd->is_builtin != true))
 	{
 		errno = ENOENT;
-		exit_errno(minishell, cmd->av[CMD], EXECVE);
+		print_errno(cmd->av[CMD], EXECVE);
 	}
 	else if (cmd->is_builtin == true)
 		cmd->command(cmd->ac, cmd->av, minishell);
@@ -33,6 +33,18 @@ static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 		print_errno(cmd->av[CMD], EXECVE);
 	}
 	exit_shell(minishell);
+}
+
+static void	status_set(int status)
+{
+	if (WIFEXITED(status))
+		set_state(WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+	{
+		set_state(WTERMSIG(status) + FATAL_SIGN);
+		if (WTERMSIG(status) == SIGSEGV)
+			ft_putstr_fd("Segmentation fault (Core dumped)\n", STDERR_FILENO);
+	}
 }
 
 static void	exec_pipe(t_minishell *minishell, t_cmd *tmp, int nb_cmd)
@@ -59,8 +71,7 @@ static void	exec_pipe(t_minishell *minishell, t_cmd *tmp, int nb_cmd)
 	close_fd(fd[0]);
 	while (nb_cmd-- > 0)
 		wait(&status);
-	if (WIFEXITED(status))
-		set_state(WEXITSTATUS(status));
+	status_set(status);
 }
 
 void	execute_pipe(t_minishell *minishell, t_cmd *command)
