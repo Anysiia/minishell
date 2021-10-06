@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 17:51:57 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/05/25 11:31:54 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/06 17:08:18 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int	export_builtin(int ac, char **av, t_minishell *minishell)
 
 	set_state(EXIT_SUCCESS);
 	if (ac == NO_ARGS)
-		return (print_sort_env(minishell->env));
+		return (print_sort_env(minishell, minishell->env));
 	i = FIRST_ARG;
 	if (av[FIRST_ARG][0] == OPT_INDICATOR)
 	{

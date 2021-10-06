@@ -6,23 +6,19 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:14:31 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/30 16:36:38 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/06 16:17:17 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_cmd	*malloc_command(void)
+t_cmd	*malloc_command(t_minishell *minishell)
 {
 	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
-	{
-		set_state(EXIT_FAILURE);
-		set_exit(EXIT_FAILURE);
-		return (NULL);
-	}
+		exit_error(minishell, MALLOC_COMMAND);
 	cmd->ac = -1;
 	cmd->av = NULL;
 	cmd->binary = NULL;

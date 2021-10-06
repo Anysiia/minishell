@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 10:15:42 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/30 11:46:46 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/06 17:03:59 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	print_errno(const char *error_command, int mode)
 	ft_putstr_fd(str, STDERR_FILENO);
 }
 
-void	print_error(const char *msg, bool quit)
+void	print_error(t_minishell *minishell, const char *msg, bool quit)
 {
 	char	str[MAX_MSG];
 
@@ -64,7 +64,7 @@ void	print_error(const char *msg, bool quit)
 		ft_putstr_fd(str, STDERR_FILENO);
 	}
 	if (quit)
-		set_exit(1);
+		exit_shell(minishell);
 }
 
 void	exit_error(t_minishell *minishell, const char *msg)

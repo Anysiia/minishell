@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:03:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/29 16:04:39 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/06 17:20:31 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	wait_command(t_minishell *minishell)
 	int		lexer_state;
 	char	str[PATH_MAX];
 
-	minishell->lexer = malloc_lexer();
+	minishell->lexer = malloc_lexer(minishell);
 	minishell->cmd = NULL;
 	lexer_state = EXIT_SUCCESS;
 	while (1)
@@ -35,12 +35,9 @@ static void	wait_command(t_minishell *minishell)
 		add_history(minishell->lexer->line);
 		if (ft_strcmp(minishell->lexer->line, EMPTY_STRING))
 		{
-			split_into_tokens(minishell->lexer, &lexer_state);
-			if (!get_exit())
-				parse_tokens(minishell, &lexer_state);
+			split_into_tokens(minishell, minishell->lexer, &lexer_state);
+			parse_tokens(minishell, &lexer_state);
 		}
-		if (get_exit())
-			exit_shell(minishell);
 		reset_lexer(minishell->lexer);
 	}
 }

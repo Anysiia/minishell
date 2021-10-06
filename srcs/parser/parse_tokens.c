@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:35:58 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 14:36:21 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/06 17:26:29 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	parse_command(t_minishell *minishell, t_token *tmp, int *lexer)
 		if (tmp && tmp->type == TOKEN_PIPE)
 		{
 			if (!tmp->next || tmp->next->type == TOKEN_PIPE)
-				error_lexer(ERR_TOKEN_PIPE, false, lexer);
+				error_lexer(minishell, ERR_TOKEN_PIPE, false, lexer);
 			tmp = tmp->next;
 		}
 	}
@@ -73,7 +73,7 @@ int	parse_tokens(t_minishell *minishell, int *lexer_state)
 
 	tmp = minishell->lexer->tokens;
 	if (tmp && tmp->type != TOKEN_WORD && !is_redir(tmp))
-		error_lexer(INVALID_TOKEN, false, lexer_state);
+		error_lexer(minishell, INVALID_TOKEN, false, lexer_state);
 	parse_command(minishell, tmp, lexer_state);
 	if (minishell->heredoc == 1)
 		unlink(MINISHELL_HDOC);

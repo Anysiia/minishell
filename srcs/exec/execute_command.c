@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 14:21:52 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/29 11:19:04 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/06 17:05:26 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 	printf("-----------\n");
 }*/
 
-static int	expand_all_args(char **env, t_cmd *command)
+static int	expand_all_args(t_minishell *minishell, char **env, t_cmd *command)
 {
 	int		i;
 	int		ret;
@@ -41,7 +41,7 @@ static int	expand_all_args(char **env, t_cmd *command)
 			ret = expand_token_word(env, command, &i);
 			if (ret)
 			{
-				print_error(ARG_EXPANSION, 0);
+				print_error(minishell, ARG_EXPANSION, 0);
 				return (EXIT_FAILURE);
 			}
 		}
@@ -56,13 +56,14 @@ void	execute_command(t_minishell *minishell, t_cmd *command)
 {
 	t_cmd	*tmp;
 	int		ret;
+	int		nb_cmd;
 
 	if (!command)
 		return ;
 	tmp = command;
 	while (tmp)
 	{
-		ret = expand_all_args(minishell->env, tmp);
+		ret = expand_all_args(minishell, minishell->env, tmp);
 		if (ret == RET_ERROR)
 		{
 			set_state(EXIT_FAILURE);
@@ -70,6 +71,14 @@ void	execute_command(t_minishell *minishell, t_cmd *command)
 		}
 		tmp = tmp->next;
 	}
+	tmp = command;
+	nb_cmd = 0;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		nb_cmd++;
+	}
+	minishell->nb_cmd = nb_cmd;
 	exec_signal(minishell);
 	if (!command->next)
 		execute_simple_command(minishell, command);

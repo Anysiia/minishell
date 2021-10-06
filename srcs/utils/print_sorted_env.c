@@ -6,13 +6,13 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 17:51:57 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/05/11 15:39:47 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/06 17:07:41 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	**sort_env(char **env)
+static char	**sort_env(t_minishell *minishell, char **env)
 {
 	char	**sorted_env;
 	int		i;
@@ -21,7 +21,7 @@ static char	**sort_env(char **env)
 	sorted_env = dup_env(env, ft_len_tab(env), 0);
 	if (!sorted_env)
 	{
-		print_error(MALLOC_DUP_ENV, true);
+		print_error(minishell, MALLOC_DUP_ENV, true);
 		return (NULL);
 	}
 	i = 0;
@@ -114,12 +114,12 @@ static int	print_env_sorted(char **env)
 	return (ret);
 }
 
-int	print_sort_env(char **env)
+int	print_sort_env(t_minishell *minishell, char **env)
 {
 	char	**new_env;
 	int		ret;
 
-	new_env = sort_env(env);
+	new_env = sort_env(minishell, env);
 	if (!new_env)
 		return (EXIT_SUCCESS);
 	ret = print_env_sorted(new_env);

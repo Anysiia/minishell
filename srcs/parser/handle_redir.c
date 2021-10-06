@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 15:57:27 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/30 15:58:21 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/06 17:05:48 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	create_heredoc(t_minishell *minishell, char *delimiter)
 		line = readline("> ");
 		if (!line)
 		{
-			print_error(EOF_HEREDOC, 0);
+			print_error(minishell, EOF_HEREDOC, 0);
 			break ;
 		}
 		if (ft_strcmp(line, delimiter))

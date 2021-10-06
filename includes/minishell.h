@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:04:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/30 15:59:26 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/06 17:24:52 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		export_builtin(int ac, char **av, t_minishell *minishell);
 int		env_builtin(int ac, char **av, t_minishell *minishell);
 int		unset_builtin(int ac, char **av, t_minishell *minishell);
 int		exit_builtin(int ac, char **av, t_minishell *minishell);
-int		print_sort_env(char **env);
+int		print_sort_env(t_minishell *minishell, char **env);
 
 /*
 ENV UTILS
@@ -96,9 +96,6 @@ char	*create_prompt(char *prompt, char **env);
 int		save_state(bool action, int state);
 void	set_state(int state);
 int		get_state(void);
-int		save_exit(bool action, int exit);
-void	set_exit(int exit);
-int		get_exit(void);
 void	exit_shell(t_minishell *minishell);
 char	*append_c_to_str(char *new_word, char c);
 
@@ -108,8 +105,8 @@ ERRORS
 
 void	exit_error(t_minishell *minishell, const char *msg);
 void	exit_errno(t_minishell *minishell, const char *msg, int mode);
-void	error_lexer(const char *error, bool quit, int *lexer_state);
-void	print_error(const char *msg, bool quit);
+void	error_lexer(t_minishell *msh, const char *error, bool quit, int *lexer);
+void	print_error(t_minishell *minishell, const char *msg, bool quit);
 void	print_errno(const char *error_command, int mode);
 void	builtin_usage(const char *command_name, const char *error);
 int		builtin_error(const char *cmd, const char *arg, const char *er, int st);
@@ -121,21 +118,19 @@ int		argument_error(const char *command_name);
 PARSER
 */
 
-t_token	create_token(const char *s, t_token_type tok_type);
-t_token	*malloc_token(const char *s, t_token_type tok_type);
+t_token	*malloc_token(t_minishell *mshl, const char *s, t_token_type tok_type);
 void	delete_first_token(t_token *tokens);
 void	delete_all_tokens(t_token **tokens);
-void	create_lexer(t_lexer *lexer);
-t_lexer	*malloc_lexer(void);
+t_lexer	*malloc_lexer(t_minishell *minishell);
 void	reset_lexer(t_lexer *lexer);
 void	free_lexer(t_lexer	*lexer);
-int		split_into_tokens(t_lexer *lexer, int *lexer_state);
+int		split_into_tokens(t_minishell *msh, t_lexer *lexer, int *lexer_state);
 void	print_lexer(t_lexer *lexer);
-char	*handle_quote(char *word, t_lexer *lexer, int *lexer_state);
-void	handle_metacharacter(t_lexer *lexer, int *lexer_state);
-char	*append_char_to_str(char *str, char c, int *lexer_state);
-void	add_token(t_lexer *lexer, char *s, int type, int *lexer_state);
-t_cmd	*malloc_command(void);
+char	*handle_quote(t_minishell *msh, char *word, t_lexer *lexer, int *state);
+void	handle_metacharacter(t_minishell *msh, t_lexer *lexer, int *lexer_stat);
+char	*append_char_to_str(t_minishell *msh, char *str, char c, int *state);
+void	add_token(t_minishell *minishell, char *s, int type, int *lexer_state);
+t_cmd	*malloc_command(t_minishell *minishell);
 void	free_command(t_cmd **cmd);
 void	find_command(char **env, t_cmd *cmd);
 int		is_builtin(t_cmd *cmd);

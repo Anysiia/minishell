@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 17:51:57 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/05/25 11:27:28 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/06 16:29:02 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,8 @@ int	exit_builtin(int ac, char **av, t_minishell *minishell)
 {
 	int		exit_status;
 
-	(void)minishell;
-	ft_putstr("exit\n");
-	set_exit(1);
+	if (minishell->nb_cmd == 1)
+		ft_putstr("exit\n");
 	if (ac != NO_ARGS)
 	{
 		if (ac > 2)
@@ -68,5 +67,6 @@ int	exit_builtin(int ac, char **av, t_minishell *minishell)
 	}
 	else
 		set_state(EXIT_SUCCESS);
+	exit_shell(minishell);
 	return (get_state());
 }

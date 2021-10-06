@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:50:01 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/29 20:37:01 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/06 16:24:29 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ Len max of a path (1024 on mac, 4096 on linux VM)
 Errors
 */
 
+# define MALLOC_LEXER "fatal error: malloc lexer"
 # define MALLOC_TOKEN "fatal error: malloc new token"
 # define MALLOC_TOKEN_DATA "fatal error: malloc token data"
 # define MALLOC_COMMAND "fatal error: malloc new command"

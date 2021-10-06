@@ -6,32 +6,23 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 12:39:12 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/04/21 13:56:11 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/06 16:24:50 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	create_lexer(t_lexer *lexer)
-{
-	lexer->line = NULL;
-	lexer->index = 0;
-	lexer->size = 0;
-	lexer->tokens = NULL;
-}
-
-t_lexer	*malloc_lexer(void)
+t_lexer	*malloc_lexer(t_minishell *minishell)
 {
 	t_lexer	*lexer;
 
 	lexer = malloc(sizeof(t_lexer));
 	if (!lexer)
-	{
-		set_state(EXIT_FAILURE);
-		set_exit(EXIT_FAILURE);
-		return (NULL);
-	}
-	create_lexer(lexer);
+		exit_error(minishell, MALLOC_LEXER);
+	lexer->line = NULL;
+	lexer->index = 0;
+	lexer->size = 0;
+	lexer->tokens = NULL;
 	return (lexer);
 }
 

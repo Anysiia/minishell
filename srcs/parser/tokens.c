@@ -6,30 +6,24 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 15:17:26 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/09/27 14:49:31 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/06 16:36:44 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_token	*malloc_token(const char *s, t_token_type token_type)
+t_token	*malloc_token(t_minishell *msh, const char *s, t_token_type token_type)
 {
 	t_token		*token;
 
 	token = malloc(sizeof(t_token));
 	if (!token)
-	{
-		set_state(EXIT_FAILURE);
-		set_exit(EXIT_FAILURE);
-		return (NULL);
-	}
+		exit_error(msh, MALLOC_TOKEN);
 	token->data = ft_strdup(s);
 	if (!token->data)
 	{
 		free(token);
-		set_state(EXIT_FAILURE);
-		set_exit(EXIT_FAILURE);
-		return (NULL);
+		exit_error(msh, MALLOC_TOKEN_DATA);
 	}
 	token->len = ft_strlen(s);
 	token->type = token_type;
