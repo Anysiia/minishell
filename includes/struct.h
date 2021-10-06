@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:51:54 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/06 16:27:14 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/06 18:38:59 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_lexer
 {
 	char		*line;
 	int			index;
-	size_t		size;
 	t_token		*tokens;
 }				t_lexer;
 
@@ -68,6 +67,7 @@ struct s_minishell
 {
 	int		heredoc;
 	int		nb_cmd;
+	int		l_state;
 	char	**env;
 	t_lexer	*lexer;
 	t_cmd	*cmd;

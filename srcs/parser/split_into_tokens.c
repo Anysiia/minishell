@@ -6,15 +6,15 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 12:05:07 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/06 17:16:56 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/06 18:39:37 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	*add_token_word(t_minishell *minishell, char *word, int *l_state)
+static char	*add_token_word(t_minishell *minishell, char *word)
 {
-	add_token(minishell, word, TOKEN_WORD, l_state);
+	add_token(minishell, word, TOKEN_WORD);
 	ft_freestr(&word);
 	return (NULL);
 }
@@ -24,14 +24,14 @@ static int	is_quote(const char c)
 	return (c == STRONG_QUOTE || c == WEAK_QUOTE);
 }
 
-void	add_token(t_minishell *minishell, char *s, int type, int *lexer_state)
+void	add_token(t_minishell *minishell, char *s, int type)
 {
 	t_token	*new;
 	t_token	*tmp;
 
 	new = malloc_token(minishell, s, type);
 	if (!new)
-		error_lexer(minishell, MALLOC_TOKEN, 1, lexer_state);
+		error_lexer(minishell, MALLOC_TOKEN, 1);
 	if (!minishell->lexer->tokens)
 		minishell->lexer->tokens = new;
 	else
@@ -41,7 +41,6 @@ void	add_token(t_minishell *minishell, char *s, int type, int *lexer_state)
 			tmp = tmp->next;
 		tmp->next = new;
 	}
-	minishell->lexer->size++;
 }
 
 /*void	print_lexer(t_lexer *lexer)
@@ -56,29 +55,29 @@ void	add_token(t_minishell *minishell, char *s, int type, int *lexer_state)
 	}
 }*/
 
-int	split_into_tokens(t_minishell *msh, t_lexer *lexer, int *state)
+int	split_into_tokens(t_minishell *msh, t_lexer *lexer)
 {
 	char	*word;
 
 	word = NULL;
-	*state = EXIT_SUCCESS;
-	while (*state == EXIT_SUCCESS && lexer->line[lexer->index]
+	msh->l_state = EXIT_SUCCESS;
+	while (msh->l_state == EXIT_SUCCESS && lexer->line[lexer->index]
 		&& lexer->line[lexer->index] != COMMENT)
 	{
 		if (is_quote(lexer->line[lexer->index]))
-			word = handle_quote(msh, word, lexer, state);
+			word = handle_quote(msh, word, lexer);
 		else if (ft_test_set(lexer->line[lexer->index], METACHARACTER))
 		{
 			if (word)
-				word = add_token_word(msh, word, state);
-			handle_metacharacter(msh, lexer, state);
+				word = add_token_word(msh, word);
+			handle_metacharacter(msh, lexer);
 		}
 		else
-			word = append_char_to_str(msh, word, lexer->line[lexer->index], state);
+			word = append_char_to_str(msh, word, lexer->line[lexer->index]);
 		lexer->index++;
 	}
 	if (word)
-		word = add_token_word(msh, word, state);
+		word = add_token_word(msh, word);
 //	print_lexer(lexer);
-	return (*state);
+	return (msh->l_state);
 }

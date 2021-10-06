@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:04:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/06 17:24:52 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/06 18:28:36 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ int		save_state(bool action, int state);
 void	set_state(int state);
 int		get_state(void);
 void	exit_shell(t_minishell *minishell);
-char	*append_c_to_str(char *new_word, char c);
 
 /*
 ERRORS
@@ -105,7 +104,7 @@ ERRORS
 
 void	exit_error(t_minishell *minishell, const char *msg);
 void	exit_errno(t_minishell *minishell, const char *msg, int mode);
-void	error_lexer(t_minishell *msh, const char *error, bool quit, int *lexer);
+void	error_lexer(t_minishell *msh, const char *error, bool quit);
 void	print_error(t_minishell *minishell, const char *msg, bool quit);
 void	print_errno(const char *error_command, int mode);
 void	builtin_usage(const char *command_name, const char *error);
@@ -124,20 +123,20 @@ void	delete_all_tokens(t_token **tokens);
 t_lexer	*malloc_lexer(t_minishell *minishell);
 void	reset_lexer(t_lexer *lexer);
 void	free_lexer(t_lexer	*lexer);
-int		split_into_tokens(t_minishell *msh, t_lexer *lexer, int *lexer_state);
+int		split_into_tokens(t_minishell *msh, t_lexer *lexer);
 void	print_lexer(t_lexer *lexer);
-char	*handle_quote(t_minishell *msh, char *word, t_lexer *lexer, int *state);
-void	handle_metacharacter(t_minishell *msh, t_lexer *lexer, int *lexer_stat);
-char	*append_char_to_str(t_minishell *msh, char *str, char c, int *state);
-void	add_token(t_minishell *minishell, char *s, int type, int *lexer_state);
+char	*handle_quote(t_minishell *msh, char *word, t_lexer *lexer);
+void	handle_metacharacter(t_minishell *msh, t_lexer *lexer);
+char	*append_char_to_str(t_minishell *msh, char *str, char c);
+void	add_token(t_minishell *minishell, char *s, int type);
 t_cmd	*malloc_command(t_minishell *minishell);
 void	free_command(t_cmd **cmd);
 void	find_command(char **env, t_cmd *cmd);
 int		is_builtin(t_cmd *cmd);
 char	*expand_relative_path(char **env, t_cmd *cmd);
 int		is_file(const char *name);
-int		parse_tokens(t_minishell *minishell, int *lexer_state);
-void	create_new_command(t_minishell *minishell, t_token *list, int *lexer);
+int		parse_tokens(t_minishell *minishell);
+void	create_new_command(t_minishell *minishell, t_token *list);
 bool	is_redir(t_token *token);
 void	handle_redir(t_minishell *minishell, t_cmd *cmd, t_token *list);
 
