@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:04:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/06 18:28:36 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/11 16:51:13 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ char	*get_variable_content(t_expand *tmp, const char *arg, char **env);
 char	**insert_split_in_av(char **av, char **split, int index);
 void	default_fd(t_minishell *minishell, int fd[2]);
 void	backup_fd(t_minishell *minishell, int fd[2]);
-int		redir_file(t_cmd *cmd);
 void	close_fd(int fd);
 
 /*

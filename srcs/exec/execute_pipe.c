@@ -6,11 +6,28 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 17:36:52 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/04 16:52:17 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/11 16:50:39 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static int	redir_file(t_cmd *cmd)
+{
+	if (cmd->fd_in != NO_REDIR)
+	{
+		if (dup2(cmd->fd_in, STDIN_FILENO) < 0)
+			return (RET_ERROR);
+		close_fd(cmd->fd_in);
+	}
+	if (cmd->fd_out != NO_REDIR)
+	{
+		if (dup2(cmd->fd_out, STDOUT_FILENO) < 0)
+			return (RET_ERROR);
+		close_fd(cmd->fd_out);
+	}
+	return (EXIT_SUCCESS);
+}
 
 static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 {
