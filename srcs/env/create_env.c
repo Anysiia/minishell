@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 10:25:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/06 18:13:38 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/11 11:47:40 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ static void	copy_environnement(t_minishell *minishell, char **envp)
 void	create_env(t_minishell *minishell, char **envp)
 {
 	save_state(true, EXIT_SUCCESS);
-	minishell->heredoc = 0;
 	minishell->l_state = EXIT_SUCCESS;
+	minishell->nb_cmd = 0;
 	minishell->env = NULL;
 	minishell->cmd = NULL;
 	if (!(*envp))

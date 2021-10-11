@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:35:58 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/06 18:29:41 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/11 11:43:23 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,5 @@ void	create_new_command(t_minishell *minishell, t_token *list)
 	if (new->ac < 1)
 		free_command(&new);
 	push_back(minishell, new);
+	minishell->nb_cmd++;
 }

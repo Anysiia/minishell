@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:50:01 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/06 16:24:29 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/11 11:28:27 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@
 # define OPT_INDICATOR '-'
 # define QUOTE_VAR '\"\'$'
 
-# define MINISHELL_HDOC "minishell_heredoc"
 # define NB_BUILTINS 7
 # define RET_ERROR -1
 # define NOT_FOUND -2

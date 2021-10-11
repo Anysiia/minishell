@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:35:58 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/06 18:28:24 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/11 11:48:12 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static void	parse_command(t_minishell *minishell, t_token *tmp)
 	}
 //	print_command_list(minishell->cmd);
 	execute_command(minishell, minishell->cmd);
+	minishell->nb_cmd = 0;
 	free_command(&minishell->cmd);
 }
 
@@ -75,8 +76,5 @@ int	parse_tokens(t_minishell *minishell)
 	if (tmp && tmp->type != TOKEN_WORD && !is_redir(tmp))
 		error_lexer(minishell, INVALID_TOKEN, false);
 	parse_command(minishell, tmp);
-	if (minishell->heredoc == 1)
-		unlink(MINISHELL_HDOC);
-	minishell->heredoc = 0;
 	return (minishell->l_state);
 }

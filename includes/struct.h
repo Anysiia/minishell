@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:51:54 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/06 18:38:59 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/11 11:30:26 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ struct s_cmd
 	int				ac;
 	char			*binary;
 	char			**av;
+	int				heredoc;
+	char			*hd_name;
 	bool			is_builtin;
 	t_function		command;
 	int				fd_in;
@@ -65,7 +67,6 @@ struct s_cmd
 
 struct s_minishell
 {
-	int		heredoc;
 	int		nb_cmd;
 	int		l_state;
 	char	**env;

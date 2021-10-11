@@ -17,6 +17,7 @@ env -i ./minishell << test avec env reduit
 cat <a <b >c >d : input b, output d
 ls | cat  >affiche ls
 cat | ls  doit afficher ls puis doit exit après un \n
+cat | cat | ls
 
 >les redir doivent être faites après les pipes
 cat a | <b cat | cat > c | cat
