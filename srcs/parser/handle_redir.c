@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 15:57:27 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/11 12:02:07 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/11 16:09:49 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,11 @@ static int	name_hd(t_minishell *minishell, t_cmd *cmd)
 	return (EXIT_SUCCESS);
 }
 
-static int	create_heredoc(t_minishell *minishell, t_cmd *cmd, char *delimiter)
+static void	get_input(t_minishell *minishell, int fd, char *delimiter)
 {
 	char	*line;
-	int		fd;
 
-	if (cmd->heredoc == 0 && name_hd(minishell, cmd) == RET_ERROR)
-		return (RET_ERROR);
 	line = NULL;
-	fd = open(cmd->hd_name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	if (fd == RET_ERROR)
-		return (RET_ERROR);
 	while (1)
 	{
 		line = readline("> ");
@@ -60,6 +54,18 @@ static int	create_heredoc(t_minishell *minishell, t_cmd *cmd, char *delimiter)
 		ft_freestr(&line);
 	}
 	ft_freestr(&line);
+}
+
+static int	create_heredoc(t_minishell *minishell, t_cmd *cmd, char *delimiter)
+{
+	int		fd;
+
+	if (cmd->heredoc == 0 && name_hd(minishell, cmd) == RET_ERROR)
+		return (RET_ERROR);
+	fd = open(cmd->hd_name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	if (fd == RET_ERROR)
+		return (RET_ERROR);
+	get_input(minishell, fd, delimiter);
 	close_fd(fd);
 	return (open(cmd->hd_name, O_RDONLY));
 }

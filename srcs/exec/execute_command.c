@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 14:21:52 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/06 17:05:26 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/11 15:56:01 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	execute_command(t_minishell *minishell, t_cmd *command)
 {
 	t_cmd	*tmp;
 	int		ret;
-	int		nb_cmd;
 
 	if (!command)
 		return ;
@@ -71,14 +70,6 @@ void	execute_command(t_minishell *minishell, t_cmd *command)
 		}
 		tmp = tmp->next;
 	}
-	tmp = command;
-	nb_cmd = 0;
-	while (tmp)
-	{
-		tmp = tmp->next;
-		nb_cmd++;
-	}
-	minishell->nb_cmd = nb_cmd;
 	exec_signal(minishell);
 	if (!command->next)
 		execute_simple_command(minishell, command);

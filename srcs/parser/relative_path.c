@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 11:36:24 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/04 15:50:57 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/11 16:02:01 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ static char	*get_path(char **env, char *cmd_name, char **split_path)
 	return (cmd_name);
 }
 
-static char *get_pwd(char **env, t_cmd *cmd, char **split, char *cmd_name)
+static char	*get_pwd(char **env, t_cmd *cmd, char **split, char *cmd_name)
 {
-	char *pwd;
+	char	*pwd;
 
 	pwd = ft_getenv(env, "PWD");
 	if (!pwd)
