@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:14:31 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/11 11:51:18 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/11 12:04:30 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ void	free_command(t_cmd **command)
 		close_fd(current->fd_in);
 		close_fd(current->fd_out);
 		if (current->heredoc == 1)
+		{
 			unlink(current->hd_name);
+			ft_freestr(&current->hd_name);
+		}
 		ft_free_tab(current->av);
 		ft_freestr(&current->binary);
 		free(current);

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 15:57:27 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/11 11:44:54 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/11 12:02:07 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int	name_hd(t_minishell *minishell, t_cmd *cmd)
 	}
 	ft_strlcpy(cmd->hd_name, "heredoc", len);
 	ft_strlcat(cmd->hd_name, number, len);
+	ft_freestr(&number);
 	cmd->heredoc = 1;
 	return (EXIT_SUCCESS);
 }
