@@ -1,0 +1,46 @@
+Fuites fd:
+
+ulimit -n #nb max de fd dispo
+
+ls /proc/self/fd  #affiche le nbre de fd utilisés
+ls | ls | ls | ls /proc/self/fd 
+>> le nbre doit etre le meme
+
+
+Autres:
+
+env -i ./minishell << test avec env reduit
+>test	<<doit créer test
+>>test << doit créer test
+<test <doit essayer d'ouvrir test
+
+cat <a <b >c >d : input b, output d
+ls | cat  >affiche ls
+cat | ls  doit afficher ls puis doit exit après un \n
+
+>les redir doivent être faites après les pipes
+cat a | <b cat | cat > c | cat
+
+execution:
+./non_exe permission denied
+./directory
+non_exe dans un dossier du path
+cat < directory
+
+parsing:
+
+export A="s -la"
+l$a
+doit executer ls -la
+
+export A=p
+export B=w
+$A"$B"d
+$A'$B'd
+
+echo "ls -la < a | grep x > b"
+
+echo ok "" ok
+echo ok "" "" "" "" "" "" "" "" "" ok
+export OK="ok            ok"
+echo $OK
