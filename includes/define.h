@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:50:01 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/11 11:28:27 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/11 16:27:44 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ Errors
 # define MALLOC_COMMAND "fatal error: malloc new command"
 # define MALLOC_ARG_LIST "fatal error: malloc arg list of a command"
 # define MULTILINES "usage: minishell doesn't support multilines"
+# define NOT_IMPLEMENTED "';' and '\\' not implemented yet"
 # define MALLOC_CREATE_ENV "fatal error: malloc environnement"
 # define MALLOC_DUP_ENV "malloc sorted environnement"
 # define MALLOC_BUILTIN_LIST "fatal error: malloc builtin list"

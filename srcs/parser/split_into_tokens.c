@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 12:05:07 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/06 18:39:37 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/11 16:26:22 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,26 +55,28 @@ void	add_token(t_minishell *minishell, char *s, int type)
 	}
 }*/
 
-int	split_into_tokens(t_minishell *msh, t_lexer *lexer)
+int	split_into_tokens(t_minishell *msh, t_lexer *lxr)
 {
 	char	*word;
 
 	word = NULL;
 	msh->l_state = EXIT_SUCCESS;
-	while (msh->l_state == EXIT_SUCCESS && lexer->line[lexer->index]
-		&& lexer->line[lexer->index] != COMMENT)
+	while (msh->l_state == EXIT_SUCCESS && lxr->line[lxr->index]
+		&& lxr->line[lxr->index] != COMMENT)
 	{
-		if (is_quote(lexer->line[lexer->index]))
-			word = handle_quote(msh, word, lexer);
-		else if (ft_test_set(lexer->line[lexer->index], METACHARACTER))
+		if (lxr->line[lxr->index] == ';' || lxr->line[lxr->index] == BACKSLASH)
+			error_lexer(msh, NOT_IMPLEMENTED, 0);
+		else if (is_quote(lxr->line[lxr->index]))
+			word = handle_quote(msh, word, lxr);
+		else if (ft_test_set(lxr->line[lxr->index], METACHARACTER))
 		{
 			if (word)
 				word = add_token_word(msh, word);
-			handle_metacharacter(msh, lexer);
+			handle_metacharacter(msh, lxr);
 		}
 		else
-			word = append_char_to_str(msh, word, lexer->line[lexer->index]);
-		lexer->index++;
+			word = append_char_to_str(msh, word, lxr->line[lxr->index]);
+		lxr->index++;
 	}
 	if (word)
 		word = add_token_word(msh, word);
