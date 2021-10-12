@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:51:54 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/11 11:30:26 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/12 15:55:44 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ struct s_cmd
 struct s_minishell
 {
 	int		nb_cmd;
+	int		back_stdin;
+	int		back_stdout;
 	int		l_state;
 	char	**env;
 	t_lexer	*lexer;

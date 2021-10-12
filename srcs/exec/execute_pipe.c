@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 17:36:52 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/11 16:50:39 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/12 17:36:27 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,29 +85,19 @@ static void	exec_pipe(t_minishell *minishell, t_cmd *tmp, int nb_cmd)
 		fdd = fd[0];
 		tmp = tmp->next;
 	}
-	close_fd(fd[0]);
 	while (nb_cmd-- > 0)
 		wait(&status);
+	close_fd(fd[0]);
 	status_set(status);
 }
 
 void	execute_pipe(t_minishell *minishell, t_cmd *command)
 {
 	t_cmd	*tmp;
-	int		nb_cmd;
-	int		backup[2];
 
 	if (!command)
 		return ;
-	backup_fd(minishell, backup);
 	tmp = command;
-	nb_cmd = 0;
-	while (tmp)
-	{
-		tmp = tmp->next;
-		nb_cmd++;
-	}
-	tmp = command;
-	exec_pipe(minishell, tmp, nb_cmd);
-	default_fd(minishell, backup);
+	exec_pipe(minishell, tmp, minishell->nb_cmd);
+	default_fd(minishell);
 }

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:04:56 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/11 16:51:13 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/12 16:07:37 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int		print_sort_env(t_minishell *minishell, char **env);
 ENV UTILS
 */
 
-void	create_env(t_minishell *minishell, char **envp);
 char	*ft_getenv(char **env, const char *name);
 int		ft_putenv(t_minishell *minishell, char *string);
 int		ft_setenv(t_minishell *msh, const char *name, const char *val, int rep);
@@ -81,8 +80,7 @@ int		expand_variable(t_cmd *cmd, t_expand *tmp, int *i, char **env);
 int		get_last_exit_status(t_expand *tmp);
 char	*get_variable_content(t_expand *tmp, const char *arg, char **env);
 char	**insert_split_in_av(char **av, char **split, int index);
-void	default_fd(t_minishell *minishell, int fd[2]);
-void	backup_fd(t_minishell *minishell, int fd[2]);
+void	default_fd(t_minishell *minishell);
 void	close_fd(int fd);
 
 /*
@@ -116,6 +114,7 @@ int		argument_error(const char *command_name);
 PARSER
 */
 
+void	init_minishell(t_minishell *minishell, char **envp);
 t_token	*malloc_token(t_minishell *mshl, const char *s, t_token_type tok_type);
 void	delete_first_token(t_token *tokens);
 void	delete_all_tokens(t_token **tokens);

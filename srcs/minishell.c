@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:03:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/06 18:25:59 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/12 15:53:02 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int argc, char **argv, char **envp)
 		builtin_usage("minishell", argv[CMD]);
 		return (EXIT_FAILURE);
 	}
-	create_env(&minishell, envp);
+	init_minishell(&minishell, envp);
 	wait_command(&minishell);
 	return (get_state());
 }

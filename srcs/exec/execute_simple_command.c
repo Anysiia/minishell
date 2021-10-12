@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 17:32:38 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/11 16:49:17 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/12 16:05:07 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	execute_simple_command(t_minishell *minishell, t_cmd *cmd)
 		print_errno(cmd->av[CMD], EXECVE);
 		return ;
 	}
-	backup_fd(minishell, fd);
 	if (do_redir(cmd) == RET_ERROR)
 	{
 		default_fd(minishell, fd);

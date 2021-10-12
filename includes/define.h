@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 09:50:01 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/11 16:27:44 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/12 16:00:42 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ Errors
 # define MULTILINES "usage: minishell doesn't support multilines"
 # define NOT_IMPLEMENTED "';' and '\\' not implemented yet"
 # define MALLOC_CREATE_ENV "fatal error: malloc environnement"
+# define DUP_STD_FILENO "fatal error: dup standard fileno"
 # define MALLOC_DUP_ENV "malloc sorted environnement"
 # define MALLOC_BUILTIN_LIST "fatal error: malloc builtin list"
 # define ERR_TOKEN_REDIR "syntax error near unexpected token `newline'"

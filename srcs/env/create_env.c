@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 10:25:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/11 11:47:40 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/12 16:02:16 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,8 @@ static void	copy_environnement(t_minishell *minishell, char **envp)
 		exit_error(minishell, MALLOC_CREATE_ENV);
 }
 
-void	create_env(t_minishell *minishell, char **envp)
+static void	create_env(t_minishell *minishell, char **envp)
 {
-	save_state(true, EXIT_SUCCESS);
-	minishell->l_state = EXIT_SUCCESS;
-	minishell->nb_cmd = 0;
-	minishell->env = NULL;
-	minishell->cmd = NULL;
 	if (!(*envp))
 	{
 		minishell->env = ft_calloc(2, sizeof(char *));
@@ -92,4 +87,19 @@ void	create_env(t_minishell *minishell, char **envp)
 			if (ft_putenv(minishell, DFT_PATH) == RET_ERROR)
 				exit_error(minishell, MALLOC_CREATE_ENV);
 	}
+}
+
+void	init_minishell(t_minishell *mshell, char **envp)
+{
+	save_state(true, EXIT_SUCCESS);
+	mshell->env = NULL;
+	mshell->lexer = NULL;
+	mshell->cmd = NULL;
+	mshell->l_state = EXIT_SUCCESS;
+	mshell->back_stdin = dup(STDIN_FILENO);
+	mshell->back_stdout = dup(STDOUT_FILENO);
+	if (mshell->back_stdin == RET_ERROR || mshell->back_stdout == RET_ERROR)
+		exit_error(mshell, DUP_STD_FILENO);
+	mshell->nb_cmd = 0;
+	create_env(mshell, envp);
 }
