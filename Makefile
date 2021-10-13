@@ -66,7 +66,7 @@ all:	$(NAME)
 $(NAME):$(OBJS)
 		@echo "\n"
 		@$(MAKE) -j -C ./libft/
-		@echo "\033[0;32mCompiling Minishell ..."
+		@echo "\n\033[0;32mCompiling Minishell ..."
 		@$(CC) $(OBJS) $(INCLUDE) $(CFLAGS) ./libft/libft.a -lreadline -o $(NAME)
 		@echo "\n\033[0;35mDone ! Use ./minishell to start"
 		@echo "\033[0m"
