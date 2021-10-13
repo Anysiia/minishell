@@ -6,14 +6,20 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:40 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:18:44 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/13 17:32:07 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	redir_file(t_cmd *cmd)
+static int	redir_file(t_cmd *cmd, int *fd, int fdd)
 {
+	if (cmd->fd_in == NO_REDIR && cmd->prev && dup2(fdd, 0) < 0)
+		return (RET_ERROR);
+	if (cmd->fd_out == NO_REDIR && cmd->next && dup2(fd[1], 1) < 0)
+		return (RET_ERROR);
+	close_fd(fd[1]);
+	close_fd(fdd);
 	if (cmd->fd_in != NO_REDIR)
 	{
 		if (dup2(cmd->fd_in, STDIN_FILENO) < 0)
@@ -31,19 +37,15 @@ static int	redir_file(t_cmd *cmd)
 
 static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 {
-	if ((cmd->prev && dup2(fdd, 0) < 0) || (cmd->next && dup2(fd[1], 1) < 0))
+	if (redir_file(cmd, fd, fdd) == RET_ERROR)
 		exit_shell(minishell);
-	close_fd(fd[1]);
-	close_fd(fdd);
-	if (redir_file(cmd) == RET_ERROR)
-		exit_shell(minishell);
-	if (!cmd->binary || (cmd->binary[0] != '/' && cmd->is_builtin != true))
+	if (cmd->is_builtin == true)
+		cmd->command(cmd->ac, cmd->av, minishell);
+	else if (!cmd->binary || cmd->binary[0] != '/')
 	{
 		errno = ENOENT;
 		print_errno(cmd->av[CMD], EXECVE);
 	}
-	else if (cmd->is_builtin == true)
-		cmd->command(cmd->ac, cmd->av, minishell);
 	else
 	{
 		execve(cmd->binary, cmd->av, minishell->env);
