@@ -6,7 +6,7 @@
 #    By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/13 15:42:19 by cmorel-a          #+#    #+#              #
-#    Updated: 2021/10/13 15:42:23 by cmorel-a         ###   ########.fr        #
+#    Updated: 2021/10/13 15:58:07 by cmorel-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,16 +88,20 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 LIBMAKER = ar rcs
 
-.c.o:
-		@${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+%.o: %.c
+		@printf "\033[0;33mGenerating libft objects ... %-33.33s\r" $@
+		@${CC} ${CFLAGS} -c $< -o $@
 
 all:	${NAME}
 
 $(NAME):${OBJS}
-		@${LIBMAKER} ${NAME} ${OBJS}
+		@echo "\n\n\033[0;32mCompiling libft ..."
+		@${LIBMAKER} ${NAME} $^
+		@ranlib $(NAME)
+		@echo "\033[0m"
 
 clean:
-		@rm -f ${OBJS} ${BONUS_OBJS}
+		@rm -f ${OBJS}
 
 fclean: clean
 		@rm -f ${NAME}

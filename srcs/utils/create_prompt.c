@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:24:23 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:24:26 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/13 16:24:56 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static char	*short_path(char *pwd, char *home, int len)
 		len++;
 	}
 	ft_freestr(&home);
+	ft_freestr(&pwd);
 	return (path);
 }
 

@@ -4,7 +4,7 @@ NAME =	minishell
 CC =	clang
 
 CFLAGS = -Wall -Werror -Wextra
-#CFLAGS += -fsanitize=address
+CFLAGS += -fsanitize=address
 
 INCLUDE = -I ./includes/ -I ./LIBFT_DIR/
 
@@ -57,23 +57,35 @@ SRCS =	srcs/minishell.c \
 
 OBJS =	${SRCS:.c=.o}
 
-.c.o:
-		@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o ${<:.c=.o}
+%.o: %.c
+		@printf "\033[0;33mGenerating minishell objects ... %-33.33s\r" $@
+		@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 all:	$(NAME)
 
 $(NAME):$(OBJS)
-		@$(MAKE) -j -C ./libft/ >/dev/null
+		@echo "\n"
+		@$(MAKE) -j -C ./libft/
+		@echo "\033[0;32mCompiling Minishell ..."
 		@$(CC) $(OBJS) $(INCLUDE) $(CFLAGS) ./libft/libft.a -lreadline -o $(NAME)
+		@echo "\n\033[0;35mDone ! Use ./minishell to start"
+		@echo "\033[0m"
 
 clean:
+		@echo "\033[0;34mCleaning Libft ..."
+		@$(MAKE) clean -C ./libft/
+		@echo "\nDeleting binaries ..."
 		@rm -rf $(OBJS)
-		@$(MAKE) clean -C ./libft/ >/dev/null
+		@echo "\033[0m"
 
 fclean:
+		@echo "\033[0;34mCleaning Libft ..."
+		@$(MAKE) fclean -C ./libft/
+		@echo "\nDeleting binaries ..."
 		@rm -rf $(OBJS)
-		@$(MAKE) fclean -C ./libft/ >/dev/null
+		@echo "\nDeleting executable ..."
 		@rm -rf $(NAME)
+		@echo "\033[0m"
 
 re:		fclean all
 
