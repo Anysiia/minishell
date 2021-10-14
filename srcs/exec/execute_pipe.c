@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:40 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 17:32:07 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/14 11:40:11 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static int	redir_file(t_cmd *cmd, int *fd, int fdd)
 	if (cmd->fd_out == NO_REDIR && cmd->next && dup2(fd[1], 1) < 0)
 		return (RET_ERROR);
 	close_fd(fd[1]);
+	close_fd(fd[0]);
 	close_fd(fdd);
 	if (cmd->fd_in != NO_REDIR)
 	{
@@ -84,12 +85,12 @@ static void	exec_pipe(t_minishell *minishell, t_cmd *tmp, int nb_cmd)
 		else if (pid == 0)
 			exec_cmd(minishell, tmp, fd, fdd);
 		close_fd(fd[1]);
+		close_fd(fdd);
 		fdd = fd[0];
 		tmp = tmp->next;
 	}
 	while (nb_cmd-- > 0)
 		wait(&status);
-	close_fd(fd[0]);
 	status_set(status);
 }
 
