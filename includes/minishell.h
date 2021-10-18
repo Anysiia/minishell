@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/18 10:53:11 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/18 16:20:54 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	execute_command(t_minishell *minishell, t_cmd *command);
 void	execute_simple_command(t_minishell *minishell, t_cmd *command);
 void	execute_pipe(t_minishell *minishell, t_cmd *command);
 int		expand_token_word(char **env, t_cmd *command, int *i);
+int		init_expand(t_expand *expand);
 int		cat_c_to_str(t_expand *tmp, const char c);
 int		up_expand_buffer(t_expand *tmp, int len_required);
 int		expand_strong_quote(t_expand *tmp, const char *arg);
@@ -137,6 +138,7 @@ int		is_file(const char *name);
 int		parse_tokens(t_minishell *minishell);
 void	create_new_command(t_minishell *minishell, t_token *list);
 bool	is_redir(t_token *token);
-void	handle_redir(t_minishell *minishell, t_cmd *cmd, t_token *list);
+int		create_heredoc(t_minishell *minishell, t_cmd *cmd, char *ending);
+int		expand_variable_heredoc(t_minishell *msh, char *line, int fd);
 
 #endif

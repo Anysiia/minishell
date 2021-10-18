@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_redir.c                                     :+:      :+:    :+:   */
+/*   create_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:22:10 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:22:13 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/18 16:13:34 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,36 @@ static int	name_hd(t_minishell *minishell, t_cmd *cmd)
 	return (EXIT_SUCCESS);
 }
 
-static void	get_input(t_minishell *minishell, int fd, char *delimiter)
+static char	*remove_all_quote(const char *str)
+{
+	char	*trim;
+	char	c;
+	int		len;
+	int		i;
+
+	i = 0;
+	while (str[i] && str[i] != STRONG_QUOTE && str[i] != WEAK_QUOTE)
+		i++;
+	c = str[i];
+	trim = ft_strnew(ft_strlen(str) - 1);
+	if (!trim)
+		return (NULL);
+	i = 0;
+	len = 0;
+	while (str[i + len])
+	{
+		if (str[i + len] == c)
+			i++;
+		else
+		{
+			trim[len] = str[i + len];
+			len++;
+		}
+	}
+	return (trim);
+}
+
+static void	get_input(t_minishell *minishell, int fd, char *ending, int mode)
 {
 	char	*line;
 
@@ -47,8 +76,13 @@ static void	get_input(t_minishell *minishell, int fd, char *delimiter)
 			print_error(minishell, EOF_HEREDOC, 0);
 			break ;
 		}
-		if (ft_strcmp(line, delimiter))
-			ft_putendl_fd(line, fd);
+		if (ft_strcmp(line, ending))
+		{
+			if (mode == 1 || (mode == 2 && !ft_test_set(ENV_VAR_SIGN, line)))
+				ft_putendl_fd(line, fd);
+			else
+				expand_variable_heredoc(minishell, line, fd);
+		}
 		else
 			break ;
 		ft_freestr(&line);
@@ -56,42 +90,29 @@ static void	get_input(t_minishell *minishell, int fd, char *delimiter)
 	ft_freestr(&line);
 }
 
-static int	create_heredoc(t_minishell *minishell, t_cmd *cmd, char *delimiter)
+int	create_heredoc(t_minishell *minishell, t_cmd *cmd, char *ending)
 {
 	int		fd;
+	char	*ending_word;
 
 	if (cmd->heredoc == 0 && name_hd(minishell, cmd) == RET_ERROR)
 		return (RET_ERROR);
 	fd = open(cmd->hd_name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (fd == RET_ERROR)
 		return (RET_ERROR);
-	get_input(minishell, fd, delimiter);
+	if (ft_test_set(WEAK_QUOTE, ending) || ft_test_set(STRONG_QUOTE, ending))
+	{
+		ending_word = remove_all_quote(ending);
+		if (!ending_word)
+		{
+			error_lexer(minishell, MALLOC_HD, 1);
+			return (RET_ERROR);
+		}
+		get_input(minishell, fd, ending_word, 1);
+		ft_freestr(&ending_word);
+	}
+	else
+		get_input(minishell, fd, ending, 2);
 	close_fd(fd);
 	return (open(cmd->hd_name, O_RDONLY));
-}
-
-void	handle_redir(t_minishell *minishell, t_cmd *cmd, t_token *list)
-{
-	char	*filename;
-	int		fd;
-
-	filename = list->next->data;
-	if (cmd->fd_out != NO_REDIR)
-		close_fd(cmd->fd_out);
-	if (cmd->fd_in != NO_REDIR)
-		close_fd(cmd->fd_out);
-	if (list->type == TOKEN_GREAT)
-		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	else if (list->type == TOKEN_DOUBLE_GREAT)
-		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
-	else if (list->type == TOKEN_LESS)
-		fd = open(filename, O_RDONLY, 0666);
-	else
-		fd = create_heredoc(minishell, cmd, filename);
-	if (fd == RET_ERROR)
-		print_errno(filename, 0);
-	if (list->type == TOKEN_GREAT || list->type == TOKEN_DOUBLE_GREAT)
-		cmd->fd_out = fd;
-	if (list->type == TOKEN_LESS || list->type == TOKEN_DOUBLE_LESS)
-		cmd->fd_in = fd;
 }

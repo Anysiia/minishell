@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:20 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/18 11:52:28 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/18 15:41:00 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define BACKSLASH '\\'
 # define STRONG_QUOTE '\''
 # define WEAK_QUOTE '\"'
+# define QUOTES '\'\"'
 # define COMMENT '#'
 # define ENV_VAR_SIGN '$'
 # define EMPTY_STRING ""
@@ -75,6 +76,7 @@ Errors
 # define MALLOC_TOKEN "fatal error: malloc new token"
 # define MALLOC_TOKEN_DATA "fatal error: malloc token data"
 # define MALLOC_COMMAND "fatal error: malloc new command"
+# define MALLOC_HD "fatal error: malloc"
 # define MALLOC_ARG_LIST "fatal error: malloc arg list of a command"
 # define MULTILINES "usage: minishell doesn't support multilines"
 # define NOT_IMPLEMENTED "';' and '\\' not implemented yet"

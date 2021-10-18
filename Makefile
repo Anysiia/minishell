@@ -45,7 +45,8 @@ SRCS =	srcs/minishell.c \
 		srcs/parser/parse_tokens.c \
 		srcs/parser/command.c \
 		srcs/parser/create_new_command.c \
-		srcs/parser/handle_redir.c \
+		srcs/parser/create_heredoc.c \
+		srcs/parser/expand_variable_heredoc.c \
 		srcs/utils/error.c \
 		srcs/utils/create_prompt.c \
 		srcs/utils/state.c \
