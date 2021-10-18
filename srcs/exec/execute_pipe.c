@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:40 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/14 11:40:11 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/18 11:43:04 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,13 @@ static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 		exit_shell(minishell);
 	if (cmd->is_builtin == true)
 		cmd->command(cmd->ac, cmd->av, minishell);
-	else if (!cmd->binary || cmd->binary[0] != '/')
+	else if (!cmd->binary || (cmd->binary[0] != '/' && cmd->binary[0] != '.'))
 	{
 		errno = ENOENT;
 		print_errno(cmd->av[CMD], EXECVE);
 	}
+	else if (cmd->binary[0] == '.')
+		print_dot_error(cmd->av[CMD]);
 	else
 	{
 		execve(cmd->binary, cmd->av, minishell->env);
@@ -89,8 +91,9 @@ static void	exec_pipe(t_minishell *minishell, t_cmd *tmp, int nb_cmd)
 		fdd = fd[0];
 		tmp = tmp->next;
 	}
-	while (nb_cmd-- > 0)
-		wait(&status);
+	waitpid(pid, &status, 0);
+	while (nb_cmd-- > 1)
+		wait(NULL);
 	status_set(status);
 }
 

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:20 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:27:23 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/18 10:52:31 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,9 @@ Errors
 # define MALLOC_BUILTIN_LIST "fatal error: malloc builtin list"
 # define ERR_TOKEN_REDIR "syntax error near unexpected token `newline'"
 # define ERR_TOKEN_PIPE "syntax error near unexpected token `newline'"
-# define INVALID_TOKEN "first token is invalid"
+# define INVALID_TOKEN "syntax error near unexpected token `newline'"
 # define ARG_EXPANSION "an error occur on expansion of arguments"
+# define ARG_REQUIRED "filename argument required"
 # define NUM_ARG "numeric argument required"
 # define NOT_SET "not set"
 # define NOT_A_FILE "is not a file"

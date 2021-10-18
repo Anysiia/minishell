@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:24:55 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:24:58 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/18 10:51:15 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,17 @@ void	exit_error(t_minishell *minishell, const char *msg)
 	exit_shell(minishell);
 }
 
-void	exit_errno(t_minishell *minishell, const char *msg, int mode)
+void	print_dot_error(const char *cmd_name)
 {
-	print_errno(msg, mode);
-	exit_shell(minishell);
+	char	str[MAX_MSG];
+
+	set_state(INC_USAGE);
+	ft_bzero(str, MAX_MSG);
+	ft_strlcpy(str, SHELL_NAME, MAX_MSG);
+	ft_strlcat(str, ": ", MAX_MSG);
+	ft_strlcat(str, cmd_name, MAX_MSG);
+	ft_strlcat(str, ": ", MAX_MSG);
+	ft_strlcat(str, ARG_REQUIRED, MAX_MSG);
+	ft_strlcat(str, "\n", MAX_MSG);
+	ft_putstr_fd(str, STDERR_FILENO);
 }
