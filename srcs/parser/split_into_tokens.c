@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:23:46 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/19 11:17:02 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/19 17:49:16 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ int	split_into_tokens(t_minishell *msh, t_lexer *lxr)
 
 	word = NULL;
 	msh->l_state = EXIT_SUCCESS;
-	while (msh->l_state == EXIT_SUCCESS && lxr->line[lxr->index]
-		&& lxr->line[lxr->index] != COMMENT)
+	while (msh->l_state == EXIT_SUCCESS && lxr->line[lxr->index])
 	{
 		if (lxr->line[lxr->index] == ';' || lxr->line[lxr->index] == BACKSLASH)
 			error_lexer(msh, NOT_IMPLEMENTED, 0);

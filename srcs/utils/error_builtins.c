@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:24:38 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:24:42 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/19 17:34:02 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	invalid_option(const char *command_name, const char *option)
 {
 	char	str[MAX_MSG];
 
-	set_state(EXIT_FAILURE);
+	set_state(INC_USAGE);
 	ft_bzero(str, MAX_MSG);
 	ft_strlcpy(str, SHELL_NAME, MAX_MSG);
 	ft_strlcat(str, ": ", MAX_MSG);
