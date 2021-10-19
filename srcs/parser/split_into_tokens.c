@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:23:46 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:23:50 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/19 11:17:02 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,5 @@ int	split_into_tokens(t_minishell *msh, t_lexer *lxr)
 	}
 	if (word)
 		word = add_token_word(msh, word);
-//	print_lexer(lexer);
 	return (msh->l_state);
 }

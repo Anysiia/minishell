@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:24:23 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 17:14:18 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/19 10:22:45 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,20 @@ static char	*prompt_path(char **env)
 	return (pwd);
 }
 
+static void	exit_code_prompt(char *prompt)
+{
+	char	*exit_code;
+
+	exit_code = ft_itoa(get_state());
+	if (!exit_code)
+		return ;
+	ft_strlcat(prompt, YEL, PATH_MAX);
+	ft_strlcat(prompt, "< ", PATH_MAX);
+	ft_strlcat(prompt, exit_code, PATH_MAX);
+	ft_strlcat(prompt, " > ", PATH_MAX);
+	ft_freestr(&exit_code);
+}
+
 char	*create_prompt(char *prompt, char **env)
 {
 	char	*path;
@@ -68,6 +82,7 @@ char	*create_prompt(char *prompt, char **env)
 	ft_strlcpy(prompt, MAG, PATH_MAX);
 	ft_strlcat(prompt, BLD, PATH_MAX);
 	ft_strlcat(prompt, SHELL_PROMPT, PATH_MAX);
+	exit_code_prompt(prompt);
 	if (path)
 	{
 		ft_strlcat(prompt, CYN, PATH_MAX);

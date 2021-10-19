@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:03:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/12 15:53:02 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/19 11:00:54 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	exit_ctrld(t_minishell *minishell)
 {
-	ft_putendl_fd("exit ctrld", STDERR_FILENO);
+	ft_putendl_fd("exit", STDERR_FILENO);
 	exit_shell(minishell);
 }
 
@@ -27,7 +27,8 @@ static void	wait_command(t_minishell *minishell)
 	while (1)
 	{
 		register_signal(minishell);
-		minishell->lexer->line = readline(create_prompt(str, minishell->env));
+		create_prompt(str, minishell->env);
+		minishell->lexer->line = readline(str);
 		if (!minishell->lexer->line)
 			exit_ctrld(minishell);
 		add_history(minishell->lexer->line);

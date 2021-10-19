@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:20 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/18 15:41:00 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/18 17:33:38 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ Errors
 # define COMMAND_NOT_FOUND "Command not found"
 
 /*
-Colors of printf
+Colors of print
 */
 # define NRM	"\x1B[0m"
 # define RED	"\x1B[31m"
