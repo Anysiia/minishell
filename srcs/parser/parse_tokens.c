@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:23:15 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/19 15:39:44 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/19 18:00:58 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	unexpected_token(t_minishell *msh, t_token *tmp)
 	char	str[MAX_MSG];
 
 	msh->l_state = EXIT_FAILURE;
-	set_state(EXIT_FAILURE);
+	set_state(INC_USAGE);
 	ft_bzero(str, MAX_MSG);
 	ft_strlcpy(str, SHELL_NAME, MAX_MSG);
 	ft_strlcat(str, ": ", MAX_MSG);
@@ -91,7 +91,10 @@ int	parse_tokens(t_minishell *minishell)
 
 	tmp = minishell->lexer->tokens;
 	if (tmp && tmp->type != TOKEN_WORD && !is_redir(tmp))
+	{
 		error_lexer(minishell, INVALID_TOKEN, false);
+		set_state(INC_USAGE);
+	}
 	parse_command(minishell, tmp);
 	return (minishell->l_state);
 }
