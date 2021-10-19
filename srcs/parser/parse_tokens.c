@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:23:15 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/19 11:16:49 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/19 15:39:44 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	parse_command(t_minishell *minishell, t_token *tmp)
 		if (tmp && tmp->type == TOKEN_PIPE)
 		{
 			if (!tmp->next || tmp->next->type == TOKEN_PIPE)
-				error_lexer(minishell, ERR_TOKEN_PIPE, false);
+				unexpected_token(minishell, tmp);
 			tmp = tmp->next;
 		}
 	}
@@ -59,6 +59,24 @@ static void	parse_command(t_minishell *minishell, t_token *tmp)
 	execute_command(minishell, minishell->cmd);
 	minishell->nb_cmd = 0;
 	free_command(&minishell->cmd);
+}
+
+void	unexpected_token(t_minishell *msh, t_token *tmp)
+{
+	char	str[MAX_MSG];
+
+	msh->l_state = EXIT_FAILURE;
+	set_state(EXIT_FAILURE);
+	ft_bzero(str, MAX_MSG);
+	ft_strlcpy(str, SHELL_NAME, MAX_MSG);
+	ft_strlcat(str, ": ", MAX_MSG);
+	ft_strlcat(str, "syntax error near unexpected token « ", MAX_MSG);
+	if (tmp->next)
+		ft_strlcat(str, tmp->next->data, MAX_MSG);
+	else
+		ft_strlcat(str, "newline", MAX_MSG);
+	ft_strlcat(str, " »\n", MAX_MSG);
+	ft_putstr_fd(str, STDERR_FILENO);
 }
 
 bool	is_redir(t_token *token)

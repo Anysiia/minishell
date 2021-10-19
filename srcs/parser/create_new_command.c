@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:21:36 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/19 14:29:04 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/19 15:42:10 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	get_arg_count(t_minishell *msh, t_token *list)
 		{
 			if (!tmp->next || tmp->next->type != TOKEN_WORD)
 			{
-				error_lexer(msh, ERR_TOKEN_REDIR, false);
+				unexpected_token(msh, tmp);
 				return (RET_ERROR);
 			}
 			else

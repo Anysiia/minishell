@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/18 16:20:54 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/19 15:41:04 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ char	*expand_relative_path(char **env, t_cmd *cmd);
 int		is_file(const char *name);
 int		parse_tokens(t_minishell *minishell);
 void	create_new_command(t_minishell *minishell, t_token *list);
+void	unexpected_token(t_minishell *minishell, t_token *list);
 bool	is_redir(t_token *token);
 int		create_heredoc(t_minishell *minishell, t_cmd *cmd, char *ending);
 int		expand_variable_heredoc(t_minishell *msh, char *line, int fd);

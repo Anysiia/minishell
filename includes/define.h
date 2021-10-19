@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:20 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/18 17:33:38 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/19 15:41:28 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,11 @@ Errors
 # define MALLOC_HD "fatal error: malloc"
 # define MALLOC_ARG_LIST "fatal error: malloc arg list of a command"
 # define MULTILINES "usage: minishell doesn't support multilines"
-# define NOT_IMPLEMENTED "';' and '\\' not implemented yet"
+# define NOT_IMPLEMENTED "usage: ';' and '\\' not implemented yet"
 # define MALLOC_CREATE_ENV "fatal error: malloc environnement"
 # define DUP_STD_FILENO "fatal error: dup standard fileno"
 # define MALLOC_DUP_ENV "malloc sorted environnement"
 # define MALLOC_BUILTIN_LIST "fatal error: malloc builtin list"
-# define ERR_TOKEN_REDIR "syntax error near unexpected token « newline »"
-# define ERR_TOKEN_PIPE "syntax error near unexpected token « newline »"
 # define INVALID_TOKEN "syntax error near unexpected token « | »"
 # define ARG_EXPANSION "an error occur on expansion of arguments"
 # define ARG_REQUIRED "filename argument required"
