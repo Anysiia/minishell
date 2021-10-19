@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:19:19 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/18 10:47:24 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/19 14:39:59 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,18 @@ void	execute_simple_command(t_minishell *minishell, t_cmd *cmd)
 {
 	if (do_redir(cmd) == RET_ERROR)
 		return (default_fd(minishell));
-	if (cmd->is_builtin == true)
+	if (cmd->ac == 0)
+	{
+		default_fd(minishell);
+		return ;
+	}
+	else if (cmd->is_builtin == true)
 		cmd->command(cmd->ac, cmd->av, minishell);
 	else if (!cmd->binary || (cmd->binary[0] != '/' && cmd->binary[0] != '.'))
 	{
 		errno = ENOENT;
 		print_errno(cmd->av[CMD], EXECVE);
+		default_fd(minishell);
 		return ;
 	}
 	else if (cmd->binary[0] == '.')

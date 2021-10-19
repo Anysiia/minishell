@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:21:36 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/18 15:44:08 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/19 14:29:04 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,6 @@ void	create_new_command(t_minishell *minishell, t_token *list)
 		if (ret == RET_ERROR)
 			error_lexer(minishell, MALLOC_ARG_LIST, true);
 	}
-	if (new->ac < 1)
-		free_command(&new);
 	push_back(minishell, new);
 	minishell->nb_cmd++;
 }
