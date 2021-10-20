@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:17:48 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:17:51 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/20 17:13:47 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ size_t	len_name_env(const char *name)
 
 	len = 0;
 	if (name[len] && ft_isdigit(name[len]))
+		return (RET_ERROR);
+	if (name[len] == '=')
 		return (RET_ERROR);
 	while (name[len] && (ft_isalnum(name[len]) || name[len] == '_'))
 		len++;
