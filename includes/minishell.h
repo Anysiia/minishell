@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/20 16:39:42 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/20 18:18:45 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,14 @@ int		find_variable_name(char **name, const char *string);
 int		find_variable_value(char **value, const char *string);
 int		ft_printenv(char **env);
 int		set_pwd(t_minishell *minishell, const char *env_name);
+
+
+/*
+ENVP UTILS
+*/
+
+void	copy_env_in_list(t_minishell *minishell, char **envp);
+void	free_envp(t_env **env);
 
 /*
 EXEC

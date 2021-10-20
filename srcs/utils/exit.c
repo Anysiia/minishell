@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:25:08 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/18 10:48:19 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/20 18:17:00 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	exit_shell(t_minishell *minishell)
 		free_lexer(minishell->lexer);
 	if (minishell->cmd)
 		free_command(&minishell->cmd);
+	if (minishell->envp)
+		free_envp(&minishell->envp);
 	close_fd(minishell->back_stdin);
 	close_fd(minishell->back_stdout);
 	rl_clear_history();
