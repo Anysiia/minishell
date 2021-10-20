@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:47 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:27:50 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/20 16:00:48 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_token
 	t_token_type	type;
 	char			*data;
 	struct s_token	*next;
-}				t_token;
+}					t_token;
 
 typedef struct s_lexer
 {
@@ -45,6 +45,14 @@ typedef struct s_expand
 	int		len;
 	char	*str;
 }			t_expand;
+
+typedef struct s_env
+{
+	char			*name;
+	char			*content;
+	struct s_env	*prev;
+	struct s_env	*next;
+}					t_env;
 
 typedef struct s_cmd		t_cmd;
 typedef struct s_minishell	t_minishell;
@@ -72,6 +80,7 @@ struct s_minishell
 	int		back_stdout;
 	int		l_state;
 	char	**env;
+	t_env	*envp;
 	t_lexer	*lexer;
 	t_cmd	*cmd;
 };
