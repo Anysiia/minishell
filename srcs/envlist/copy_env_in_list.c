@@ -6,7 +6,7 @@
 /*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 17:46:44 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/20 18:14:21 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/20 18:30:50 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,35 +48,42 @@ static void	push_back_var(t_minishell *minishell, char *name, char *value)
 	}
 }
 
-static void	get_info_of_each_env_var(t_minishell *minishell, char *var)
+void	copy_env_in_list(t_minishell *minishell, char **envp)
 {
+	int		i;
 	int		len;
 	int		len_value;
 	char	*name;
 	char	*value;
 
-	len = len_name_env(var);
-	name = ft_strnew(len + 1);
-	if (!name)
-		exit_error(minishell, MALLOC_CREATE_ENV);
-	len_value = ft_strlen(var) - len + 1;
-	value = ft_strnew(len_value);
-	if (!value)
+	i = 0;
+	while (envp && envp[i])
 	{
-		ft_freestr(&name);
-		exit_error(minishell, MALLOC_CREATE_ENV);
+		len = len_name_env(envp[i]);
+		name = ft_strnew(len + 1);
+		if (!name)
+			exit_error(minishell, MALLOC_CREATE_ENV);
+		len_value = ft_strlen(envp[i]) - len + 1;
+		value = ft_strnew(len_value);
+		if (!value)
+		{
+			ft_freestr(&name);
+			exit_error(minishell, MALLOC_CREATE_ENV);
+		}
+		ft_strlcpy(name, envp[i], len + 1);
+		ft_strlcpy(value, envp[i] + len + 1, len_value + 1);
+		push_back_var(minishell, name, value);
+		i++;
 	}
-	ft_strlcpy(name, var, len + 1);
-	ft_strlcpy(value, var + len + 1, len_value + 1);
-	push_back_var(minishell, name, value);
 }
 
-void	copy_env_in_list(t_minishell *minishell, char **envp)
+void	free_node(t_env *tmp)
 {
-	while (envp && *envp)
+	if (tmp)
 	{
-		get_info_of_each_env_var(minishell, *envp);
-		envp++;
+		ft_freestr(&tmp->name);
+		ft_freestr(&tmp->content);
+		free(tmp);
 	}
 }
 
