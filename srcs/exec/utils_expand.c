@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:21:00 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:21:03 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/20 15:18:23 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,27 @@ char	**insert_split_in_av(char **av, char **split, int index)
 	while (++i && av[i])
 		new[i + j] = ft_strdup(av[i]);
 	return (new);
+}
+
+int	expand_tilde(t_expand *tmp, const char *arg, char **env)
+{
+	char	*content;
+	int		len;
+
+	ft_putstr("into expand tilde\n");
+	if (tmp->j == 0 && (!arg[1] || arg[1] == '/'))
+	{
+		content = ft_getenv(env, "HOME");
+		if (!content)
+			return (cat_c_to_str(tmp, arg[tmp->j]));
+		len = ft_strlen(content) + ft_strlen(tmp->str);
+		if (len >= ARG_LEN * tmp->len)
+			if (up_expand_buffer(tmp, len + 1) == RET_ERROR)
+				return (RET_ERROR);
+		ft_strlcat(tmp->str, content, ARG_LEN * tmp->len);
+		ft_freestr(&content);
+		return (EXIT_SUCCESS);
+	}
+	else
+		return (cat_c_to_str(tmp, arg[tmp->j]));
 }

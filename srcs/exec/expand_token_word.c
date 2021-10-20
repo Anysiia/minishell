@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:20:05 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:20:08 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/20 15:05:18 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ int	expand_token_word(char **env, t_cmd *cmd, int *i)
 		return (EXIT_FAILURE);
 	while (cmd->av[*i][tmp.j])
 	{
-		if (cmd->av[*i][tmp.j] == STRONG_QUOTE)
-			ret = expand_strong_quote(&tmp, cmd->av[*i]);
-		else if (cmd->av[*i][tmp.j] == WEAK_QUOTE)
-			ret = expand_weak_quote(&tmp, cmd->av[*i], env);
+		if (is_quote(cmd->av[*i][tmp.j]))
+			ret = expand_quote(&tmp, cmd->av[*i], env);
+		else if (cmd->av[*i][tmp.j] == '~')
+			ret = expand_tilde(&tmp, cmd->av[*i], env);
 		else if (cmd->av[*i][tmp.j] == ENV_VAR_SIGN)
 			ret = expand_variable(cmd, &tmp, i, env);
 		else

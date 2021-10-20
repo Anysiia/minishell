@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:13:07 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/20 11:43:45 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/20 15:23:12 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,7 @@ int	cd_builtin(int ac, char **av, t_minishell *minishell)
 	set_state(EXIT_SUCCESS);
 	if (ac > 2)
 		return (argument_error(av[CMD]));
-	else if (ac == NO_ARGS || !ft_strcmp(av[FIRST_ARG], "~"))
-		ret = go_directory(minishell, "HOME");
-	else if (av[FIRST_ARG][0] == OPT_INDICATOR && ft_strlen(av[FIRST_ARG]) > 1)
+	if (av[FIRST_ARG][0] == OPT_INDICATOR && ft_strlen(av[FIRST_ARG]) > 1)
 	{
 		invalid_option(av[CMD], av[FIRST_ARG]);
 		builtin_usage(av[CMD], "cd [path]");

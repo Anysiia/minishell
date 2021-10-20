@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:23:46 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/19 17:49:16 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/20 14:58:26 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*add_token_word(t_minishell *minishell, char *word)
 	return (NULL);
 }
 
-static int	is_quote(const char c)
+int	is_quote(const char c)
 {
 	return (c == STRONG_QUOTE || c == WEAK_QUOTE);
 }

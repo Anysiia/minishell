@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:21 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/20 10:14:20 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/20 15:20:49 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	expand_all_args(t_minishell *minishell, char **env, t_cmd *command)
 	i = 0;
 	while (i < command->ac)
 	{
-		if (ft_test_set(WEAK_QUOTE, command->av[i])
+		if (command->av[i][0] == '~' || ft_test_set(WEAK_QUOTE, command->av[i])
 			|| ft_test_set(STRONG_QUOTE, command->av[i])
 			|| ft_test_set(ENV_VAR_SIGN, command->av[i]))
 		{
