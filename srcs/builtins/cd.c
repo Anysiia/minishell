@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:13:07 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:13:13 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/20 11:43:45 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ static int	change_directory(t_minishell *minishell, const char *path)
 	ret = change_old_pwd(minishell);
 	if (ret == RET_ERROR)
 		return (builtin_error("cd", path, strerror(errno), 1));
-	ret = set_pwd(minishell, "PWD");
+	if (!ft_strcmp(path, "//"))
+		ret = ft_setenv(minishell, "PWD", "//", 1);
+	else
+		ret = set_pwd(minishell, "PWD");
 	if (ret == RET_ERROR)
 		return (builtin_error("cd", path, strerror(errno), 1));
 	return (EXIT_SUCCESS);
