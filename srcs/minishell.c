@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:03:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/19 11:00:54 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/22 11:30:11 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	exit_ctrld(t_minishell *minishell)
 	exit_shell(minishell);
 }
 
-static void	wait_command(t_minishell *minishell)
+static int	wait_command(t_minishell *minishell)
 {
 	char	str[PATH_MAX];
 
@@ -39,6 +39,7 @@ static void	wait_command(t_minishell *minishell)
 		}
 		reset_lexer(minishell->lexer);
 	}
+	return (get_state());
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -51,6 +52,8 @@ int	main(int argc, char **argv, char **envp)
 		return (EXIT_FAILURE);
 	}
 	init_minishell(&minishell, envp);
-	wait_command(&minishell);
-	return (get_state());
+	copy_env_in_list(&minishell, envp);
+	ft_putstr("\n\nenv is copy in list\n list env print: \n");
+	print_env(minishell.envp);
+	return (wait_command(&minishell));
 }

@@ -4,7 +4,7 @@ NAME =	minishell
 CC =	clang
 
 CFLAGS = -Wall -Werror -Wextra
-CFLAGS += -fsanitize=address
+CFLAGS += -g -fsanitize=address
 
 INCLUDE = -I ./includes/ -I ./LIBFT_DIR/
 
@@ -27,6 +27,8 @@ SRCS =	srcs/minishell.c \
 		srcs/env/ft_setenv.c \
 		srcs/env/ft_unsetenv.c \
 		srcs/env/utils_env.c \
+		srcs/envlist/copy_env_in_list.c \
+		srcs/envlist/print_env.c \
 		srcs/exec/execute_command.c \
 		srcs/exec/execute_simple_command.c \
 		srcs/exec/execute_pipe.c \

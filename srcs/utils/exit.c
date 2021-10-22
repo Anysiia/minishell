@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:25:08 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/20 18:17:00 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/22 11:00:56 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	exit_shell(t_minishell *minishell)
 {
 	if (minishell->env)
-		ft_clearenv(minishell->env);
+		ft_free_tab(minishell->env);
 	if (minishell->lexer)
 		free_lexer(minishell->lexer);
 	if (minishell->cmd)

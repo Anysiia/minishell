@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   copy_env_in_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmorel-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/20 17:46:44 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/20 18:30:50 by cmorel-a         ###   ########.fr       */
+/*   Created: 2021/10/22 10:25:45 by cmorel-a          #+#    #+#             */
+/*   Updated: 2021/10/22 12:37:40 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,32 +48,48 @@ static void	push_back_var(t_minishell *minishell, char *name, char *value)
 	}
 }
 
+static int	get_content(char **content, char *env, int len_name)
+{
+	int		len;
+
+	len = ft_strlen(env) - len_name + 1;
+	if (len <= 0)
+	{
+		*content = NULL;
+		return (EXIT_SUCCESS);
+	}
+	*content = ft_strnew(len);
+	if (!*content)
+		return (RET_ERROR);
+	ft_strlcpy(*content, env + len_name + 1, len);
+	return (EXIT_SUCCESS);
+}
+
 void	copy_env_in_list(t_minishell *minishell, char **envp)
 {
-	int		i;
 	int		len;
-	int		len_value;
 	char	*name;
 	char	*value;
 
-	i = 0;
-	while (envp && envp[i])
+	while (envp && *envp)
 	{
-		len = len_name_env(envp[i]);
-		name = ft_strnew(len + 1);
-		if (!name)
-			exit_error(minishell, MALLOC_CREATE_ENV);
-		len_value = ft_strlen(envp[i]) - len + 1;
-		value = ft_strnew(len_value);
-		if (!value)
+		len = len_name_env(*envp);
+		if (len <= 0)
+			name = NULL;
+		else
+		{
+			name = ft_strnew(len + 1);
+			if (!name)
+				exit_error(minishell, MALLOC_CREATE_ENV);
+			ft_strlcpy(name, *envp, len + 1);
+		}
+		if (get_content(&value, *envp, len) == RET_ERROR)
 		{
 			ft_freestr(&name);
 			exit_error(minishell, MALLOC_CREATE_ENV);
 		}
-		ft_strlcpy(name, envp[i], len + 1);
-		ft_strlcpy(value, envp[i] + len + 1, len_value + 1);
 		push_back_var(minishell, name, value);
-		i++;
+		envp++;
 	}
 }
 
@@ -98,9 +114,7 @@ void	free_envp(t_env **env)
 	while (current)
 	{
 		next = current->next;
-		ft_freestr(&current->name);
-		ft_freestr(&current->content);
-		free(current);
+		free_node(current);
 		current = next;
 	}
 	*env = NULL;
