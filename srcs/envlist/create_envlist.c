@@ -1,56 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   copy_env_in_list.c                                 :+:      :+:    :+:   */
+/*   create_envlist.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 10:25:45 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/22 12:37:40 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/22 16:22:14 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static t_env	*malloc_env(t_minishell *minishell, char *name, char *value)
+static void	create_minimal_envlist(t_minishell *minishell, char *name,
+	char *content)
 {
-	t_env	*env;
-
-	env = malloc(sizeof(t_env));
-	if (!env)
-	{
-		ft_freestr(&name);
-		ft_freestr(&value);
-		exit_error(minishell, MALLOC_CREATE_ENV);
-	}
-	env->name = name;
-	env->content = value;
-	env->prev = NULL;
-	env->next = NULL;
-	return (env);
-}
-
-static void	push_back_var(t_minishell *minishell, char *name, char *value)
-{
-	t_env	*new;
 	t_env	*tmp;
 
-	new = malloc_env(minishell, name, value);
-	if (!minishell->envp)
-		minishell->envp = new;
-	else
+	tmp = minishell->envp;
+	while (tmp)
 	{
-		tmp = minishell->envp;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-		new->prev = tmp;
+		if (!ft_strcmp(name, tmp->name))
+			return ;
+		tmp = tmp->next;
 	}
+	push_back_var(minishell, ft_strdup(name), ft_strdup(content));
 }
 
-static int	get_content(char **content, char *env, int len_name)
+static int	get_content(char **content, char *env, char *name, int len_name)
 {
 	int		len;
+	int		level;
+	char	*new_level;
 
 	len = ft_strlen(env) - len_name + 1;
 	if (len <= 0)
@@ -62,10 +43,19 @@ static int	get_content(char **content, char *env, int len_name)
 	if (!*content)
 		return (RET_ERROR);
 	ft_strlcpy(*content, env + len_name + 1, len);
+	if (!ft_strcmp(name, "SHLVL"))
+	{
+		level = ft_atoi(*content) + 1;
+		if (!level)
+			return (RET_ERROR);
+		new_level = ft_itoa(level);
+		ft_freestr(content);
+		*content = new_level;
+	}
 	return (EXIT_SUCCESS);
 }
 
-void	copy_env_in_list(t_minishell *minishell, char **envp)
+static void	copy_env_in_list(t_minishell *minishell, char **envp)
 {
 	int		len;
 	char	*name;
@@ -83,7 +73,7 @@ void	copy_env_in_list(t_minishell *minishell, char **envp)
 				exit_error(minishell, MALLOC_CREATE_ENV);
 			ft_strlcpy(name, *envp, len + 1);
 		}
-		if (get_content(&value, *envp, len) == RET_ERROR)
+		if (get_content(&value, *envp, name, len) == RET_ERROR)
 		{
 			ft_freestr(&name);
 			exit_error(minishell, MALLOC_CREATE_ENV);
@@ -93,29 +83,13 @@ void	copy_env_in_list(t_minishell *minishell, char **envp)
 	}
 }
 
-void	free_node(t_env *tmp)
+void	create_envlist(t_minishell *minishell, char **envp)
 {
-	if (tmp)
-	{
-		ft_freestr(&tmp->name);
-		ft_freestr(&tmp->content);
-		free(tmp);
-	}
-}
+	char	path[PATH_MAX];
 
-void	free_envp(t_env **env)
-{
-	t_env	*next;
-	t_env	*current;
-
-	if (!env)
-		return ;
-	current = *env;
-	while (current)
-	{
-		next = current->next;
-		free_node(current);
-		current = next;
-	}
-	*env = NULL;
+	copy_env_in_list(minishell, envp);
+	create_minimal_envlist(minishell, "SHLVL", "1");
+	create_minimal_envlist(minishell, "PATH", DFT_PATH);
+	getcwd(path, PATH_MAX);
+	create_minimal_envlist(minishell, "PWD", path);
 }

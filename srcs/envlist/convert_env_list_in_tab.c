@@ -1,29 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_env.c                                        :+:      :+:    :+:   */
+/*   convert_env_list_in_tab.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 10:24:32 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/22 11:10:55 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/22 17:29:23 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	print_env(t_env *envlist)
-{
-	t_env	*tmp;
-
-	tmp = envlist;
-	while (tmp)
-	{
-		if (tmp->name && tmp->content)
-			printf("%s=%s\n", tmp->name, tmp->content);
-		tmp = tmp->next;
-	}
-}
 
 static size_t	len_envp(t_env *envp)
 {
@@ -60,7 +47,7 @@ static int	convert_var_in_str(t_minishell *minishell, t_env *tmp, int *i)
 		ft_strlcat(minishell->env[*i], "=", len);
 		ft_strlcat(minishell->env[*i], tmp->content, len);
 	}
-	i++;
+	(*i)++;
 	return (EXIT_SUCCESS);
 }
 
@@ -70,21 +57,18 @@ void	convert_env_list_in_tab(t_minishell *minishell)
 	int		len;
 	int		i;
 
+	ft_free_tab(minishell->env);
 	len = len_envp(minishell->envp);
-	tmp = minishell->envp;
-	minishell->env = (char **)malloc(sizeof(char **) * len + 1);
+	minishell->env = (char **)malloc(sizeof(char *) * (len + 1));
 	if (!minishell->env)
 		exit_error(minishell, MALLOC_CREATE_ENV);
 	i = 0;
+	tmp = minishell->envp;
 	while (tmp)
 	{
 		if (convert_var_in_str(minishell, tmp, &i) == RET_ERROR)
 			exit_error(minishell, MALLOC_CREATE_ENV);
 		tmp = tmp->next;
 	}
-	while (i < len + 1)
-	{
-		minishell->env[i] = NULL;
-		i++;
-	}
+	minishell->env[i] = NULL;
 }

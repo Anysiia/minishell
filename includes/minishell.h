@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/22 11:05:59 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/22 15:54:30 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ int		set_pwd(t_minishell *minishell, const char *env_name);
 ENVP UTILS
 */
 
-void	copy_env_in_list(t_minishell *minishell, char **envp);
+void	create_envlist(t_minishell *minishell, char **envp);
+void	push_back_var(t_minishell *minishell, char *name, char *value);
 void	free_node(t_env *tmp);
 void	free_envp(t_env **env);
 void	convert_env_list_in_tab(t_minishell *minishell);

@@ -6,12 +6,12 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:15:11 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/22 11:36:21 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/22 16:10:05 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
+/*
 static int	increase_shell_level(t_minishell *minishell)
 {
 	char	*initial_level;
@@ -87,7 +87,7 @@ static void	create_env(t_minishell *minishell, char **envp)
 			if (ft_putenv(minishell, DFT_PATH) == RET_ERROR)
 				exit_error(minishell, MALLOC_CREATE_ENV);
 	}
-}
+}*/
 
 void	init_minishell(t_minishell *mshell, char **envp)
 {
@@ -102,5 +102,6 @@ void	init_minishell(t_minishell *mshell, char **envp)
 	if (mshell->back_stdin == RET_ERROR || mshell->back_stdout == RET_ERROR)
 		exit_error(mshell, DUP_STD_FILENO);
 	mshell->nb_cmd = 0;
-	create_env(mshell, envp);
+	(void)envp;
+//	create_env(mshell, envp);
 }
