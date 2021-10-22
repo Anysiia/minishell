@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 15:07:18 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/22 15:38:57 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/22 17:40:52 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,11 @@ void	print_env(t_env *envlist)
 	while (tmp)
 	{
 		if (tmp->name && tmp->content)
-			printf("%s=%s\n", tmp->name, tmp->content);
+		{
+			ft_putstr_fd(tmp->name, STDOUT_FILENO);
+			ft_putstr_fd("=", STDOUT_FILENO);
+			ft_putendl_fd(tmp->content, STDOUT_FILENO);
+		}
 		tmp = tmp->next;
 	}
 }
