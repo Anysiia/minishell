@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:13:40 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:13:45 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/22 17:34:48 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,9 @@ of 'printenv'.
 
 int	env_builtin(int ac, char **av, t_minishell *minishell)
 {
-	int	ret;
-
+	set_state(EXIT_SUCCESS);
 	if (ac != NO_ARGS)
 		return (argument_error(av[CMD]));
-	ret = ft_printenv(minishell->env);
-	if (ret == RET_ERROR)
-		return (save_state(true, EXIT_FAILURE));
-	return (save_state(true, EXIT_SUCCESS));
+	print_env(minishell->envp);
+	return (get_state());
 }
