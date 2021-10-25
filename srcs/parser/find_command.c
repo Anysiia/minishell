@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:21:50 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/18 10:34:17 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/25 17:07:46 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,29 @@ static int	free_return(char *path, char **list, char *tmp, int ret)
 	return (ret);
 }
 
-static int	search_binary(char **env, t_cmd *cmd)
+static char	*join_path(char *str1, char *str2)
+{
+	int		len;
+	char	*path;
+
+	len = ft_strlen(str1) + ft_strlen(str2) + 2;
+	path = ft_strnew(len);
+	if (!path)
+		return (NULL);
+	ft_strlcpy(path, str1, len);
+	ft_strlcat(path, "/", len);
+	ft_strlcat(path, str2, len);
+	return (path);
+}
+
+static int	search_binary(t_env *envp, t_cmd *cmd)
 {
 	char	*path;
 	char	*tmp;
 	char	**path_list;
 	int		i;
 
-	path = ft_getenv(env, "PATH");
+	path = ft_getenv(envp, "PATH");
 	if (!path)
 		return (EXIT_FAILURE);
 	path_list = ft_split(path, ':');
@@ -39,7 +54,7 @@ static int	search_binary(char **env, t_cmd *cmd)
 	i = 0;
 	while (path_list && path_list[i])
 	{
-		tmp = join_var(path_list[i], "/", cmd->av[CMD]);
+		tmp = join_path(path_list[i], cmd->av[CMD]);
 		if (!is_file(tmp))
 		{
 			ft_freestr(&cmd->binary);
@@ -68,7 +83,7 @@ int	is_file(const char *name)
 	return (EXIT_FAILURE);
 }
 
-void	find_command(char **env, t_cmd *cmd)
+void	find_command(t_env *envp, t_cmd *cmd)
 {
 	int		ret;
 	char	*new;
@@ -83,7 +98,7 @@ void	find_command(char **env, t_cmd *cmd)
 		return ;
 	if (ft_test_set('.', cmd->av[CMD]))
 	{
-		new = expand_relative_path(env, cmd);
+		new = expand_relative_path(envp, cmd);
 		if (new)
 		{
 			ft_freestr(&cmd->binary);
@@ -92,5 +107,5 @@ void	find_command(char **env, t_cmd *cmd)
 		return ;
 	}
 	if (is_file(cmd->av[CMD]))
-		search_binary(env, cmd);
+		search_binary(envp, cmd);
 }

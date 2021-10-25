@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:24:23 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/19 10:22:45 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/25 14:51:36 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,16 @@ static char	*short_path(char *pwd, char *home, int len)
 	return (path);
 }
 
-static char	*prompt_path(char **env)
+static char	*prompt_path(t_env *envp)
 {
 	char	*pwd;
 	char	*home;
 	int		len;
 
-	pwd = ft_getenv(env, "PWD");
+	pwd = ft_getenv(envp, "PWD");
 	if (!pwd)
 		return (NULL);
-	home = ft_getenv(env, "HOME");
+	home = ft_getenv(envp, "HOME");
 	if (!home)
 		return (pwd);
 	len = ft_strlen(home);
@@ -71,14 +71,14 @@ static void	exit_code_prompt(char *prompt)
 	ft_freestr(&exit_code);
 }
 
-char	*create_prompt(char *prompt, char **env)
+char	*create_prompt(char *prompt, t_env *envp)
 {
 	char	*path;
 
 	if (!isatty(STDERR_FILENO))
 		return (NULL);
 	ft_bzero(prompt, PATH_MAX);
-	path = prompt_path(env);
+	path = prompt_path(envp);
 	ft_strlcpy(prompt, MAG, PATH_MAX);
 	ft_strlcat(prompt, BLD, PATH_MAX);
 	ft_strlcat(prompt, SHELL_PROMPT, PATH_MAX);

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:14:21 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/20 16:40:13 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/25 17:02:53 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,114 +21,70 @@ Export can add more than one variable.
 Format to add a new variable: NAME=[value] or NAME+=[value]
 */
 
-static int	add_value_to_var(t_minishell *minishell, char *to_add, int index)
+static int	get_content(char *variable, char **content, int len_name)
 {
 	int		len;
-	int		to_add_len;
-	int		len_name;
-	char	*new;
 
-	if (!ft_test_set(VAR_ENV_SEP, minishell->env[index]))
-		minishell->env[index] = ft_strjoin_free_s1(minishell->env[index], "=");
-	if (!minishell->env[index])
-		builtin_error("export", to_add, NOT_SET, EXIT_FAILURE);
-	len = ft_strlen(minishell->env[index]);
-	len_name = len_name_env(minishell->env[index]);
-	to_add_len = ft_strlen(to_add) - len_name - 2;
-	if (len_name == RET_ERROR)
-		return (RET_ERROR);
-	new = ft_strnew(len + to_add_len + 1);
-	if (!new)
-		return (RET_ERROR);
-	ft_strlcpy(new, minishell->env[index], len + 1);
-	ft_strlcat(new, to_add + len_name + 2, len + to_add_len + 1);
-	ft_freestr(&minishell->env[index]);
-	minishell->env[index] = new;
+	len = ft_strlen(variable);
+	if (!variable[len_name])
+		return (EXIT_SUCCESS);
+	*content = ft_strnew(len - len_name);
+	if (!*content)
+		return (EXIT_FAILURE);
+	if (variable[len_name] == '=')
+		ft_strlcpy(*content, variable + len_name + 1, len - len_name);
+	else if (variable[len_name] == '+' && variable[len_name + 1]
+		&& variable[len_name + 1] == '=')
+		ft_strlcpy(*content, variable + len_name + 2, len - len_name);
+	else
+	{
+		ft_freestr(content);
+		return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }
 
-static char	*remove_first_plus(char *string)
+static char	*get_name(char *variable, int len_name)
 {
-	char	*variable;
-	int		len;
-	int		i;
-	int		j;
-	bool	plus;
-
-	len = ft_strlen(string);
-	variable = ft_strnew(len);
-	i = 0;
-	j = 0;
-	plus = false;
-	while (string[i])
-	{
-		if (string[i] == '+' && !plus)
-			plus = true;
-		else
-			variable[j++] = string[i];
-		i++;
-	}
-	return (variable);
-}
-
-static int	export_add(t_minishell *minishell, char *string)
-{
-	int		line;
 	char	*name;
-	int		index;
-	int		ret;
 
-	ret = len_name_env(string);
-	if (ret < 0)
-		return (RET_ERROR);
-	name = ft_strndup(string, ret);
+	name = ft_strnew(len_name + 1);
 	if (!name)
-		return (ret);
-	index = find_variable_index(minishell->env, name);
-	ft_freestr(&name);
-	if (index == RET_ERROR)
-		return (index);
-	if (index != NOT_FOUND)
-		return (add_value_to_var(minishell, string, index));
-	line = ft_len_tab(minishell->env);
-	minishell->env = dup_env(minishell->env, line + 1, 1);
-	if (!minishell->env)
-		return (RET_ERROR);
-	minishell->env[line] = remove_first_plus(string);
-	if (!minishell->env[line])
-		return (RET_ERROR);
-	return (EXIT_SUCCESS);
+		return (NULL);
+	ft_strlcpy(name, variable, len_name + 1);
+	return (name);
 }
 
-static void	export_variable(t_minishell *minishell, char *cmd, char *variable)
+static int	export_variable(t_minishell *minishell, char *variable)
 {
 	int		ret;
 	int		len;
+	char	*name;
+	char	*content;
 
-	if (!variable)
-	{
-		save_state(true, EXIT_FAILURE);
-		return ;
-	}
 	len = len_name_env(variable);
 	if (len == RET_ERROR)
+		return (INVALID_ID);
+	name = get_name(variable, len);
+	if (!name)
+		return (RET_ERROR);
+	ret = get_content(variable, &content, len);
+	if (ret == EXIT_FAILURE)
 	{
-		invalid_id(cmd, variable);
-		return ;
+		ft_freestr(&name);
+		return (RET_ERROR);
 	}
 	if (variable[len] == '+' && variable[len + 1] && variable[len + 1] == '=')
-		ret = export_add(minishell, variable);
-	else
-		ret = ft_putenv(minishell, variable);
-	if (ret == INVALID_ID)
-		invalid_id(cmd, variable);
-	else if (ret == RET_ERROR)
-		builtin_error(cmd, variable, NOT_SET, EXIT_FAILURE);
+		ret = ft_setenv(minishell, name, content, true);
+	if (variable[len] == '=')
+		ret = ft_setenv(minishell, name, content, false);
+	return (ret);
 }
 
 int	export_builtin(int ac, char **av, t_minishell *minishell)
 {
 	int		i;
+	int		ret;
 
 	set_state(EXIT_SUCCESS);
 	if (ac == NO_ARGS)
@@ -142,7 +98,11 @@ int	export_builtin(int ac, char **av, t_minishell *minishell)
 	}
 	while (i < ac)
 	{
-		export_variable(minishell, "export", av[i]);
+		ret = export_variable(minishell, av[i]);
+		if (ret == INVALID_ID)
+			invalid_id(av[CMD], av[i]);
+		else if (ret == RET_ERROR)
+			builtin_error("export", av[i], NOT_SET, EXIT_FAILURE);
 		i++;
 	}
 	return (get_state());

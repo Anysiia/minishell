@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:14:53 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/19 11:21:24 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/25 16:14:01 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	unset_builtin(int ac, char **av, t_minishell *minishell)
 {
 	int		i;
 	int		ret;
-	char	path[PATH_MAX];
 
 	set_state(EXIT_SUCCESS);
 	if (av[FIRST_ARG] && av[FIRST_ARG][0] == OPT_INDICATOR)
@@ -40,11 +39,10 @@ int	unset_builtin(int ac, char **av, t_minishell *minishell)
 	i = 0;
 	while (i < ac)
 	{
-		if (!ft_strcmp(av[i], "PWD") && !getcwd(path, PATH_MAX))
-			chdir("/home/");
-		ret = ft_unsetenv(minishell, av[i]);
+		if (av[i])
+			ret = ft_unset(minishell, av[i]);
 		if (ret == RET_ERROR)
-			set_state(EXIT_FAILURE);
+			invalid_id(av[CMD], av[i]);
 		i++;
 	}
 	return (get_state());

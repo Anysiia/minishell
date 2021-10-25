@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:20:05 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/20 15:05:18 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/25 14:34:32 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	init_expand(t_expand *expand)
 	return (EXIT_SUCCESS);
 }
 
-int	expand_token_word(char **env, t_cmd *cmd, int *i)
+int	expand_token_word(t_env *envp, t_cmd *cmd, int *i)
 {
 	t_expand	tmp;
 	int			ret;
@@ -82,11 +82,11 @@ int	expand_token_word(char **env, t_cmd *cmd, int *i)
 	while (cmd->av[*i][tmp.j])
 	{
 		if (is_quote(cmd->av[*i][tmp.j]))
-			ret = expand_quote(&tmp, cmd->av[*i], env);
+			ret = expand_quote(&tmp, cmd->av[*i], envp);
 		else if (cmd->av[*i][tmp.j] == '~')
-			ret = expand_tilde(&tmp, cmd->av[*i], env);
+			ret = expand_tilde(&tmp, cmd->av[*i], envp);
 		else if (cmd->av[*i][tmp.j] == ENV_VAR_SIGN)
-			ret = expand_variable(cmd, &tmp, i, env);
+			ret = expand_variable(cmd, &tmp, i, envp);
 		else
 			ret = cat_c_to_str(&tmp, cmd->av[*i][tmp.j]);
 		if (ret == RET_ERROR)

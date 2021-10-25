@@ -6,13 +6,13 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:19:38 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/20 15:02:59 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/25 14:45:18 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	add_variable_content(t_expand *tmp, const char *arg, char **env)
+static int	add_variable_content(t_expand *tmp, const char *arg, t_env *env)
 {
 	char	*content;
 	int		len;
@@ -30,7 +30,7 @@ static int	add_variable_content(t_expand *tmp, const char *arg, char **env)
 	return (EXIT_SUCCESS);
 }
 
-static int	expand_weak_quote(t_expand *tmp, const char *arg, char **env)
+static int	expand_weak_quote(t_expand *tmp, const char *arg, t_env *env)
 {
 	int	ret;
 
@@ -71,7 +71,7 @@ static int	expand_strong_quote(t_expand *tmp, const char *arg)
 	return (EXIT_SUCCESS);
 }
 
-int	expand_quote(t_expand *tmp, const char *arg, char **env)
+int	expand_quote(t_expand *tmp, const char *arg, t_env *env)
 {
 	if (arg[tmp->j] == WEAK_QUOTE)
 		return (expand_weak_quote(tmp, arg, env));

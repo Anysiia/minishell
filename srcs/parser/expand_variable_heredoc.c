@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:11:36 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/18 17:02:11 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/25 17:08:29 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	expand_var_hd(t_minishell *minishell, char *line, t_expand *tmp)
 	if (!ft_isalnum(line[tmp->j + 1]))
 		return (EXIT_SUCCESS);
 	tmp->j++;
-	content = get_variable_content(tmp, line, minishell->env);
+	content = get_variable_content(tmp, line, minishell->envp);
 	if (!content)
 		return (NOT_FOUND);
 	len = ft_strlen(content) + ft_strlen(tmp->str);

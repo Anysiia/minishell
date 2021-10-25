@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/22 15:54:30 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/25 16:01:09 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,34 +47,19 @@ int		exit_builtin(int ac, char **av, t_minishell *minishell);
 int		print_sort_env(char **env);
 
 /*
-ENV UTILS
-*/
-
-char	*ft_getenv(char **env, const char *name);
-int		ft_putenv(t_minishell *minishell, char *string);
-int		ft_setenv(t_minishell *msh, const char *name, const char *val, int rep);
-char	*join_var(const char *s1, const char *s2, const char *s3);
-int		ft_unsetenv(t_minishell *minishell, const char *name);
-int		ft_clearenv(char **env);
-char	**dup_env(char **env, size_t len, int erase);
-size_t	len_name_env(const char *name);
-int		find_variable_index(char **env, const char *name);
-int		find_variable_name(char **name, const char *string);
-int		find_variable_value(char **value, const char *string);
-int		ft_printenv(char **env);
-int		set_pwd(t_minishell *minishell, const char *env_name);
-
-
-/*
 ENVP UTILS
 */
 
-void	create_envlist(t_minishell *minishell, char **envp);
+char	*ft_getenv(t_env *envp, const char *name);
+int		ft_setenv(t_minishell *msh, char *name, char *value, bool join);
+int		ft_unset(t_minishell *minishell, const char *name);
+void	init_minishell(t_minishell *minishell, char **envp);
 void	push_back_var(t_minishell *minishell, char *name, char *value);
 void	free_node(t_env *tmp);
 void	free_envp(t_env **env);
 void	convert_env_list_in_tab(t_minishell *minishell);
 void	print_env(t_env *envlist);
+size_t	len_name_env(const char *name);
 
 /*
 EXEC
@@ -83,15 +68,15 @@ EXEC
 void	execute_command(t_minishell *minishell, t_cmd *command);
 void	execute_simple_command(t_minishell *minishell, t_cmd *command);
 void	execute_pipe(t_minishell *minishell, t_cmd *command);
-int		expand_token_word(char **env, t_cmd *command, int *i);
+int		expand_token_word(t_env *envp, t_cmd *command, int *i);
 int		init_expand(t_expand *expand);
 int		cat_c_to_str(t_expand *tmp, const char c);
 int		up_expand_buffer(t_expand *tmp, int len_required);
-int		expand_quote(t_expand *tmp, const char *arg, char **env);
-int		expand_tilde(t_expand *tmp, const char *arg, char **env);
-int		expand_variable(t_cmd *cmd, t_expand *tmp, int *i, char **env);
+int		expand_quote(t_expand *tmp, const char *arg, t_env *env);
+int		expand_tilde(t_expand *tmp, const char *arg, t_env *envp);
+int		expand_variable(t_cmd *cmd, t_expand *tmp, int *i, t_env *env);
 int		get_last_exit_status(t_expand *tmp);
-char	*get_variable_content(t_expand *tmp, const char *arg, char **env);
+char	*get_variable_content(t_expand *tmp, const char *arg, t_env *env);
 char	**insert_split_in_av(char **av, char **split, int index);
 void	default_fd(t_minishell *minishell);
 void	close_fd(int fd);
@@ -102,7 +87,7 @@ UTILS
 
 void	register_signal(t_minishell *minishell);
 void	exec_signal(t_minishell *minishell);
-char	*create_prompt(char *prompt, char **env);
+char	*create_prompt(char *prompt, t_env *envp);
 int		save_state(bool action, int state);
 void	set_state(int state);
 int		get_state(void);
@@ -128,7 +113,6 @@ int		argument_error(const char *command_name);
 PARSER
 */
 
-void	init_minishell(t_minishell *minishell, char **envp);
 t_token	*malloc_token(t_minishell *mshl, const char *s, t_token_type tok_type);
 void	delete_first_token(t_token *tokens);
 void	delete_all_tokens(t_token **tokens);
@@ -144,9 +128,9 @@ char	*append_char_to_str(t_minishell *msh, char *str, char c);
 void	add_token(t_minishell *minishell, char *s, int type);
 t_cmd	*malloc_command(t_minishell *minishell);
 void	free_command(t_cmd **cmd);
-void	find_command(char **env, t_cmd *cmd);
+void	find_command(t_env *envp, t_cmd *cmd);
 int		is_builtin(t_cmd *cmd);
-char	*expand_relative_path(char **env, t_cmd *cmd);
+char	*expand_relative_path(t_env *envp, t_cmd *cmd);
 int		is_file(const char *name);
 int		parse_tokens(t_minishell *minishell);
 void	create_new_command(t_minishell *minishell, t_token *list);

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:21 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/20 15:20:49 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/25 16:16:57 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	print_arg(char **tab)
 	printf("-----------\n");
 }
 
-static int	expand_all_args(t_minishell *minishell, char **env, t_cmd *command)
+static int	expand_all_args(t_minishell *minishell, t_cmd *command)
 {
 	int		i;
 	int		ret;
@@ -38,7 +38,7 @@ static int	expand_all_args(t_minishell *minishell, char **env, t_cmd *command)
 			|| ft_test_set(STRONG_QUOTE, command->av[i])
 			|| ft_test_set(ENV_VAR_SIGN, command->av[i]))
 		{
-			ret = expand_token_word(env, command, &i);
+			ret = expand_token_word(minishell->envp, command, &i);
 			if (ret)
 			{
 				print_error(minishell, ARG_EXPANSION, 0);
@@ -47,7 +47,7 @@ static int	expand_all_args(t_minishell *minishell, char **env, t_cmd *command)
 		}
 		i++;
 	}
-	find_command(env, command);
+	find_command(minishell->envp, command);
 	print_arg(command->av);
 	return (EXIT_SUCCESS);
 }
@@ -62,7 +62,7 @@ void	execute_command(t_minishell *minishell, t_cmd *command)
 	tmp = command;
 	while (tmp)
 	{
-		ret = expand_all_args(minishell, minishell->env, tmp);
+		ret = expand_all_args(minishell, tmp);
 		if (ret == RET_ERROR)
 		{
 			set_state(EXIT_FAILURE);
@@ -71,8 +71,10 @@ void	execute_command(t_minishell *minishell, t_cmd *command)
 		tmp = tmp->next;
 	}
 	exec_signal(minishell);
+	convert_env_list_in_tab(minishell);
 	if (!command->next)
 		execute_simple_command(minishell, command);
 	else
 		execute_pipe(minishell, command);
+	minishell->env = ft_free_tab(minishell->env);
 }

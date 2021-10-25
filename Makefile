@@ -18,18 +18,10 @@ SRCS =	srcs/minishell.c \
 		srcs/builtins/export.c \
 		srcs/builtins/pwd.c \
 		srcs/builtins/unset.c \
-		srcs/env/create_env.c \
-		srcs/env/dup_env.c \
-		srcs/env/ft_clearenv.c \
-		srcs/env/ft_getenv.c \
-		srcs/env/ft_printenv.c \
-		srcs/env/ft_putenv.c \
-		srcs/env/ft_setenv.c \
-		srcs/env/ft_unsetenv.c \
-		srcs/env/utils_env.c \
-		srcs/envlist/create_envlist.c \
-		srcs/envlist/convert_env_list_in_tab.c \
-		srcs/envlist/env_list.c \
+		srcs/env/init_minishell.c \
+		srcs/env/get_env_tab.c \
+		srcs/env/env_list.c \
+		srcs/env/ft_env.c \
 		srcs/exec/execute_command.c \
 		srcs/exec/execute_simple_command.c \
 		srcs/exec/execute_pipe.c \

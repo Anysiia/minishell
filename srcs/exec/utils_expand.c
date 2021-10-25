@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:21:00 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/20 15:18:23 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/25 14:46:32 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,14 @@ static char	*get_variable_name(t_expand *tmp, const char *arg)
 	return (name);
 }
 
-char	*get_variable_content(t_expand *tmp, const char *arg, char **env)
+char	*get_variable_content(t_expand *tmp, const char *arg, t_env *env)
 {
 	char	*name;
-	char	*content;
-	int		ret;
-	int		index;
 
 	name = get_variable_name(tmp, arg);
 	if (!name)
 		return (NULL);
-	index = find_variable_index(env, name);
-	ft_freestr(&name);
-	if (index < 0)
-		return (NULL);
-	ret = find_variable_value(&content, env[index]);
-	return (content);
+	return (ft_getenv(env, name));
 }
 
 char	**insert_split_in_av(char **av, char **split, int index)
@@ -83,7 +75,7 @@ char	**insert_split_in_av(char **av, char **split, int index)
 	return (new);
 }
 
-int	expand_tilde(t_expand *tmp, const char *arg, char **env)
+int	expand_tilde(t_expand *tmp, const char *arg, t_env *envp)
 {
 	char	*content;
 	int		len;
@@ -91,7 +83,7 @@ int	expand_tilde(t_expand *tmp, const char *arg, char **env)
 	ft_putstr("into expand tilde\n");
 	if (tmp->j == 0 && (!arg[1] || arg[1] == '/'))
 	{
-		content = ft_getenv(env, "HOME");
+		content = ft_getenv(envp, "HOME");
 		if (!content)
 			return (cat_c_to_str(tmp, arg[tmp->j]));
 		len = ft_strlen(content) + ft_strlen(tmp->str);

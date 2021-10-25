@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:23:30 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:23:34 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/25 14:50:02 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*add_last_folder(char *cmd_name, char *new_folder)
 	return (cmd_name);
 }
 
-static char	*get_path(char **env, char *cmd_name, char **split_path)
+static char	*get_path(t_env *envp, char *cmd_name, char **split_path)
 {
 	char	*home;
 	int		i;
@@ -53,7 +53,7 @@ static char	*get_path(char **env, char *cmd_name, char **split_path)
 		else if (!ft_strcmp(split_path[i], "~"))
 		{
 			ft_bzero(cmd_name, PATH_MAX);
-			home = ft_getenv(env, "HOME");
+			home = ft_getenv(envp, "HOME");
 			ft_strlcpy(cmd_name, home, ft_strlen(home));
 			ft_freestr(&home);
 		}
@@ -64,11 +64,11 @@ static char	*get_path(char **env, char *cmd_name, char **split_path)
 	return (cmd_name);
 }
 
-static char	*get_pwd(char **env, t_cmd *cmd, char **split, char *cmd_name)
+static char	*get_pwd(t_env *envp, t_cmd *cmd, char **split, char *cmd_name)
 {
 	char	*pwd;
 
-	pwd = ft_getenv(env, "PWD");
+	pwd = ft_getenv(envp, "PWD");
 	if (!pwd)
 	{
 		ft_free_tab(split);
@@ -81,7 +81,7 @@ static char	*get_pwd(char **env, t_cmd *cmd, char **split, char *cmd_name)
 	return (cmd_name);
 }
 
-char	*expand_relative_path(char **env, t_cmd *cmd)
+char	*expand_relative_path(t_env *envp, t_cmd *cmd)
 {
 	char	**split;
 	char	*cmd_name;
@@ -96,8 +96,8 @@ char	*expand_relative_path(char **env, t_cmd *cmd)
 		return (ft_strdup(cmd->av[CMD]));
 	}
 	if (split[0] && (!ft_strcmp("..", split[0]) || !ft_strcmp(".", split[0])))
-		get_pwd(env, cmd, split, cmd_name);
-	cmd_name = get_path(env, cmd_name, split);
+		get_pwd(envp, cmd, split, cmd_name);
+	cmd_name = get_path(envp, cmd_name, split);
 	split = ft_free_tab(split);
 	return (cmd_name);
 }

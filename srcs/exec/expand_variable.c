@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:20:24 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:20:28 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/25 14:44:16 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static int	splitting_var(char *content, t_cmd *cmd, t_expand *tmp, int *i)
 	return (EXIT_SUCCESS);
 }
 
-static int	add_variable(t_cmd *cmd, t_expand *tmp, int *i, char **env)
+static int	add_variable(t_cmd *cmd, t_expand *tmp, int *i, t_env *env)
 {
 	char	*content;
 	int		len;
@@ -107,7 +107,7 @@ static int	add_variable(t_cmd *cmd, t_expand *tmp, int *i, char **env)
 	return (EXIT_SUCCESS);
 }
 
-int	expand_variable(t_cmd *cmd, t_expand *tmp, int *i, char **env)
+int	expand_variable(t_cmd *cmd, t_expand *tmp, int *i, t_env *env)
 {
 	(void)env;
 	if (!cmd->av[*i][tmp->j + 1])
