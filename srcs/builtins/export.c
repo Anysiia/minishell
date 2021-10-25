@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:14:21 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/25 17:02:53 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/25 17:19:34 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	get_content(char *variable, char **content, int len_name)
 		return (EXIT_SUCCESS);
 	*content = ft_strnew(len - len_name);
 	if (!*content)
-		return (EXIT_FAILURE);
+		return (RET_ERROR);
 	if (variable[len_name] == '=')
 		ft_strlcpy(*content, variable + len_name + 1, len - len_name);
 	else if (variable[len_name] == '+' && variable[len_name + 1]
@@ -39,7 +39,7 @@ static int	get_content(char *variable, char **content, int len_name)
 	else
 	{
 		ft_freestr(content);
-		return (EXIT_FAILURE);
+		return (INVALID_ID);
 	}
 	return (EXIT_SUCCESS);
 }
@@ -68,15 +68,16 @@ static int	export_variable(t_minishell *minishell, char *variable)
 	name = get_name(variable, len);
 	if (!name)
 		return (RET_ERROR);
+	content = NULL;
 	ret = get_content(variable, &content, len);
-	if (ret == EXIT_FAILURE)
+	if (ret != EXIT_SUCCESS)
 	{
 		ft_freestr(&name);
-		return (RET_ERROR);
+		return (ret);
 	}
 	if (variable[len] == '+' && variable[len + 1] && variable[len + 1] == '=')
 		ret = ft_setenv(minishell, name, content, true);
-	if (variable[len] == '=')
+	else
 		ret = ft_setenv(minishell, name, content, false);
 	return (ret);
 }
