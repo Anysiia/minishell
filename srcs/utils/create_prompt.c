@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:24:23 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/25 14:51:36 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/26 11:15:59 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,11 @@ char	*create_prompt(char *prompt, t_env *envp)
 	{
 		ft_strlcat(prompt, CYN, PATH_MAX);
 		ft_strlcat(prompt, path, PATH_MAX);
-		ft_strlcat(prompt, NRM, PATH_MAX);
-		ft_strlcat(prompt, " > ", PATH_MAX);
+		ft_strlcat(prompt, " ", PATH_MAX);
+		ft_freestr(&path);
 	}
-	else
-	{
-		ft_strlcat(prompt, NRM, PATH_MAX);
-		ft_strlcat(prompt, "> ", PATH_MAX);
-	}
-	ft_freestr(&path);
+	ft_strlcat(prompt, GRN, PATH_MAX);
+	ft_strlcat(prompt, "» ", PATH_MAX);
+	ft_strlcat(prompt, NRM, PATH_MAX);
 	return (prompt);
 }
