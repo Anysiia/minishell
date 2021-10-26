@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:20:05 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/26 13:26:42 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/26 13:31:04 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ static void	set_arg_on_tab(t_expand *tmp, t_cmd *cmd, int *i)
 	}
 	j = *i;
 	ft_freestr(&cmd->av[j]);
+	ft_freestr(&tmp->str);
 	while (j < cmd->ac)
 	{
 		cmd->av[j] = cmd->av[j + 1];
 		j++;
 	}
-	ft_freestr(&tmp->str);
 	cmd->av[j] = NULL;
 	(*i)--;
 	cmd->ac--;
