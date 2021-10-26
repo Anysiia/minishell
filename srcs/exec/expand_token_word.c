@@ -6,50 +6,33 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:20:05 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/26 11:50:45 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/26 13:26:42 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	up_expand_buffer(t_expand *tmp, int len_required)
+static void	set_arg_on_tab(t_expand *tmp, t_cmd *cmd, int *i)
 {
-	char	*new_dst;
+	int	j;
 
-	tmp->len = len_required / ARG_LEN + 1;
-	new_dst = ft_strnew(ARG_LEN * tmp->len);
-	if (!new_dst)
-		return (RET_ERROR);
-	ft_strlcpy(new_dst, tmp->str, ARG_LEN * tmp->len);
+	if (!tmp->var || (tmp->var && ft_strcmp(tmp->str, EMPTY_STRING)))
+	{
+		ft_freestr(&cmd->av[*i]);
+		cmd->av[*i] = tmp->str;
+		return ;
+	}
+	j = *i;
+	ft_freestr(&cmd->av[j]);
+	while (j < cmd->ac)
+	{
+		cmd->av[j] = cmd->av[j + 1];
+		j++;
+	}
 	ft_freestr(&tmp->str);
-	tmp->str = new_dst;
-	return (EXIT_SUCCESS);
-}
-
-int	cat_c_to_str(t_expand *tmp, const char c)
-{
-	int		len;
-
-	if (!tmp->str)
-		return (RET_ERROR);
-	len = ft_strlen(tmp->str);
-	if (len + 1 >= ARG_LEN * tmp->len
-		&& up_expand_buffer(tmp, len + 1) == RET_ERROR)
-		return (RET_ERROR);
-	tmp->str[len] = c;
-	return (EXIT_SUCCESS);
-}
-
-int	init_expand(t_expand *expand)
-{
-	expand->j = 0;
-	expand->len = 1;
-	expand->var = false;
-	expand->str = NULL;
-	expand->str = ft_strnew(ARG_LEN * expand->len);
-	if (!expand->str)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	cmd->av[j] = NULL;
+	(*i)--;
+	cmd->ac--;
 }
 
 int	expand_token_word(t_env *envp, t_cmd *cmd, int *i)
@@ -76,7 +59,6 @@ int	expand_token_word(t_env *envp, t_cmd *cmd, int *i)
 		}
 		tmp.j++;
 	}
-	ft_freestr(&cmd->av[*i]);
-	cmd->av[*i] = tmp.str;
+	set_arg_on_tab(&tmp, cmd, i);
 	return (EXIT_SUCCESS);
 }

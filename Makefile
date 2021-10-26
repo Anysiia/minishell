@@ -28,6 +28,7 @@ SRCS =	srcs/minishell.c \
 		srcs/exec/expand_token_word.c \
 		srcs/exec/expand_quote.c \
 		srcs/exec/expand_variable.c \
+		srcs/exec/buffer.c \
 		srcs/exec/utils_expand.c \
 		srcs/exec/redir.c \
 		srcs/parser/find_command.c \
