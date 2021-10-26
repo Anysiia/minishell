@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:13:07 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/25 16:07:02 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/26 11:02:03 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	change_old_pwd(t_minishell *minishell)
 		ft_freestr(&content);
 		return (RET_ERROR);
 	}
-	ret = ft_setenv(minishell, dupoldpwd, content, 1);
+	ret = ft_setenv(minishell, dupoldpwd, content, false);
 	return (ret);
 }
 
@@ -111,7 +111,9 @@ int	cd_builtin(int ac, char **av, t_minishell *minishell)
 	set_state(EXIT_SUCCESS);
 	if (ac > 2)
 		return (argument_error(av[CMD]));
-	if (av[FIRST_ARG][0] == OPT_INDICATOR && ft_strlen(av[FIRST_ARG]) > 1)
+	if (!av[FIRST_ARG])
+		ret = go_directory(minishell, "HOME");
+	else if (av[FIRST_ARG][0] == OPT_INDICATOR && ft_strlen(av[FIRST_ARG]) > 1)
 	{
 		invalid_option(av[CMD], av[FIRST_ARG]);
 		builtin_usage(av[CMD], "cd [path]");
