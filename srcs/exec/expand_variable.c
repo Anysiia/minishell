@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:20:24 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/25 14:44:16 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/26 11:51:40 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ static int	add_variable(t_cmd *cmd, t_expand *tmp, int *i, t_env *env)
 
 int	expand_variable(t_cmd *cmd, t_expand *tmp, int *i, t_env *env)
 {
-	(void)env;
+	tmp->var = true;
 	if (!cmd->av[*i][tmp->j + 1])
 		return (cat_c_to_str(tmp, '$'));
 	else if (ft_isalnum(cmd->av[*i][tmp->j + 1]))

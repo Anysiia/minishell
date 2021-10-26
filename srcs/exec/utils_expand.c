@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:21:00 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/25 14:46:32 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/26 11:47:38 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,14 @@ static char	*get_variable_name(t_expand *tmp, const char *arg)
 char	*get_variable_content(t_expand *tmp, const char *arg, t_env *env)
 {
 	char	*name;
+	char	*content;
 
 	name = get_variable_name(tmp, arg);
 	if (!name)
 		return (NULL);
-	return (ft_getenv(env, name));
+	content = ft_getenv(env, name);
+	ft_freestr(&name);
+	return (content);
 }
 
 char	**insert_split_in_av(char **av, char **split, int index)
@@ -96,4 +99,25 @@ int	expand_tilde(t_expand *tmp, const char *arg, t_env *envp)
 	}
 	else
 		return (cat_c_to_str(tmp, arg[tmp->j]));
+}
+
+int	get_last_exit_status(t_expand *tmp)
+{
+	char	*exit_value;
+	int		len;
+
+	tmp->j++;
+	exit_value = ft_itoa(get_state());
+	if (!exit_value)
+		return (RET_ERROR);
+	len = ft_strlen(exit_value) + ft_strlen(tmp->str);
+	if (len >= ARG_LEN * tmp->len
+		&& up_expand_buffer(tmp, len) == RET_ERROR)
+	{
+		ft_freestr(&exit_value);
+		return (RET_ERROR);
+	}
+	ft_strlcat(tmp->str, exit_value, ARG_LEN * tmp->len);
+	ft_freestr(&exit_value);
+	return (EXIT_SUCCESS);
 }
