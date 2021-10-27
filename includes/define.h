@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:20 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/25 14:11:54 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/27 16:51:22 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,16 +93,16 @@ Errors
 # define COMMAND_NOT_FOUND "Command not found"
 
 /*
-Colors of print
+Colors of readline
 */
-# define NRM	"\x1B[0m"
-# define RED	"\x1B[31m"
-# define GRN	"\x1B[32m"
-# define YEL	"\x1B[33m"
-# define BLU	"\x1B[34m"
-# define MAG	"\x1B[35m"
-# define CYN	"\x1B[36m"
-# define WHT	"\x1B[37m"
-# define BLD	"\x1B[1m"
+# define NRM	"\001\x1B[0m\002"
+# define RED	"\001\x1B[31m\002"
+# define GRN	"\001\x1B[32m\002"
+# define YEL	"\001\x1B[33m\002"
+# define BLU	"\001\x1B[34m\002"
+# define MAG	"\001\x1B[35m\002"
+# define CYN	"\001\x1B[36m\002"
+# define WHT	"\001\x1B[37m\002"
+# define BLD	"\001\x1B[1m\002"
 
 #endif
