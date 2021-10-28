@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 14:21:26 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/26 11:06:33 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/28 16:00:38 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,12 @@ int	ft_unset(t_minishell *minishell, const char *name)
 	{
 		if (!ft_strcmp(name, tmp->name))
 		{
-			tmp->prev->next = tmp->next;
-			tmp->next->prev = tmp->prev;
+			if (tmp->prev)
+				tmp->prev->next = tmp->next;
+			else
+				minishell->envp = tmp->next;
+			if (tmp->next)
+				tmp->next->prev = tmp->prev;
 			free_node(tmp);
 			return (EXIT_SUCCESS);
 		}

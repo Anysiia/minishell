@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:13:07 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/26 11:02:03 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/28 17:14:20 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,18 @@ static int	change_old_pwd(t_minishell *minishell)
 {
 	char	*dupoldpwd;
 	char	*content;
+	char	path[PATH_MAX];
 	int		ret;
 
-	content = ft_getenv(minishell->envp, "PWD");
-	if (!content)
-		return (RET_ERROR);
 	dupoldpwd = ft_strdup("OLDPWD");
 	if (!dupoldpwd)
-	{
-		ft_freestr(&content);
 		return (RET_ERROR);
+	content = ft_getenv(minishell->envp, "PWD");
+	if (!content && !getcwd(path, PATH_MAX))
+	{
+		if (!getcwd(path, PATH_MAX))
+			return (RET_ERROR);
+		return (ft_setenv(minishell, dupoldpwd, content, false));
 	}
 	ret = ft_setenv(minishell, dupoldpwd, content, false);
 	return (ret);
@@ -72,10 +74,10 @@ static int	change_directory(t_minishell *minishell, const char *path)
 {
 	int		ret;
 
-	ret = chdir(path);
+	ret = change_old_pwd(minishell);
 	if (ret == RET_ERROR)
 		return (builtin_error("cd", path, strerror(errno), 1));
-	ret = change_old_pwd(minishell);
+	ret = chdir(path);
 	if (ret == RET_ERROR)
 		return (builtin_error("cd", path, strerror(errno), 1));
 	if (!ft_strcmp(path, "//"))
