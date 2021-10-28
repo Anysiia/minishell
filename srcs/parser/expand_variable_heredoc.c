@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:11:36 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/25 17:08:29 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/28 11:11:03 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	expand_var_hd(t_minishell *minishell, char *line, t_expand *tmp)
 	char	*content;
 	int		len;
 
-	if (!line[tmp->j + 1])
+	if (!line[tmp->j + 1] || line[tmp->j + 1] == '$')
 		return (cat_c_to_str(tmp, '$'));
 	if (!ft_isalnum(line[tmp->j + 1]))
 		return (EXIT_SUCCESS);
