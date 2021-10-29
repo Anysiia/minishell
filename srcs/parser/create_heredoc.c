@@ -6,33 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:22:10 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/29 11:49:37 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/29 12:19:01 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static int	name_hd(t_minishell *minishell, t_cmd *cmd)
-{
-	int		len;
-	char	*number;
-
-	number = ft_itoa(minishell->nb_cmd);
-	if (!number)
-		return (RET_ERROR);
-	len = ft_strlen(number) + ft_strlen("heredoc") + 1;
-	cmd->hd_name = ft_strnew(len);
-	if (!cmd->hd_name)
-	{
-		ft_freestr(&number);
-		return (RET_ERROR);
-	}
-	ft_strlcpy(cmd->hd_name, "heredoc", len);
-	ft_strlcat(cmd->hd_name, number, len);
-	ft_freestr(&number);
-	cmd->heredoc = 1;
-	return (EXIT_SUCCESS);
-}
 
 static char	*remove_all_quote(const char *str)
 {
@@ -73,13 +51,24 @@ static int	interrupt_by_signal(void)
 	return (0);
 }
 
+static void	check_state(t_minishell *minishell, char *line)
+{
+	if (get_state() == 302)
+	{
+		set_state(130);
+		minishell->l_state = 1;
+	}
+	register_signal(minishell);
+	ft_freestr(&line);
+}
+
 static void	get_input(t_minishell *minishell, int fd, char *ending, int mode)
 {
 	char	*line;
 
 	line = NULL;
 	heredoc_signal(minishell);
-	rl_event_hook=&interrupt_by_signal;
+	rl_event_hook = &interrupt_by_signal;
 	while (get_state() != 302)
 	{
 		line = readline("heredoc » ");
@@ -96,13 +85,7 @@ static void	get_input(t_minishell *minishell, int fd, char *ending, int mode)
 			break ;
 		ft_freestr(&line);
 	}
-	if (get_state() == 302)
-	{
-		set_state(130);
-		minishell->l_state = 1;
-	}
-	register_signal(minishell);
-	ft_freestr(&line);
+	check_state(minishell, line);
 }
 
 int	create_heredoc(t_minishell *minishell, t_cmd *cmd, char *ending)

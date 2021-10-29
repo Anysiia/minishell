@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/29 10:21:59 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/29 12:19:53 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	close_fd(int fd);
 UTILS
 */
 
+int		name_hd(t_minishell *minishell, t_cmd *cmd);
 void	register_signal(t_minishell *minishell);
 void	exec_signal(t_minishell *minishell);
 void	heredoc_signal(t_minishell *minishell);
