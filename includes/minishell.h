@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/25 16:01:09 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/29 10:21:59 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ UTILS
 
 void	register_signal(t_minishell *minishell);
 void	exec_signal(t_minishell *minishell);
+void	heredoc_signal(t_minishell *minishell);
+void	handle_signal_error(t_minishell *minishell);
 char	*create_prompt(char *prompt, t_env *envp);
 int		save_state(bool action, int state);
 void	set_state(int state);
@@ -137,6 +139,6 @@ void	create_new_command(t_minishell *minishell, t_token *list);
 void	unexpected_token(t_minishell *minishell, t_token *list);
 bool	is_redir(t_token *token);
 int		create_heredoc(t_minishell *minishell, t_cmd *cmd, char *ending);
-int		expand_variable_heredoc(t_minishell *msh, char *line, int fd);
+void	write_heredoc(t_minishell *msh, char *line, int fd, int mode);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:11:36 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/28 11:11:03 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/29 10:11:35 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	expand_var_hd(t_minishell *minishell, char *line, t_expand *tmp)
 	return (EXIT_SUCCESS);
 }
 
-int	expand_variable_heredoc(t_minishell *minishell, char *line, int fd)
+static int	expand_variable_heredoc(t_minishell *minishell, char *line, int fd)
 {
 	t_expand	tmp;
 	int			ret;
@@ -58,4 +58,12 @@ int	expand_variable_heredoc(t_minishell *minishell, char *line, int fd)
 	ft_putendl_fd(tmp.str, fd);
 	ft_freestr(&tmp.str);
 	return (ret);
+}
+
+void	write_heredoc(t_minishell *minishell, char *line, int fd, int mode)
+{
+	if (mode == 1 || (mode == 2 && !ft_test_set(ENV_VAR_SIGN, line)))
+		ft_putendl_fd(line, fd);
+	else
+		expand_variable_heredoc(minishell, line, fd);
 }

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:25:49 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:25:53 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/10/29 10:21:29 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,6 @@ static void	handle_sigquit(int signal)
 {
 	set_state(FATAL_SIGN + signal);
 	ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO);
-}
-
-static void	handle_signal_error(t_minishell *minishell)
-{
-	set_state(EXIT_FAILURE);
-	exit_shell(minishell);
 }
 
 void	exec_signal(t_minishell *minishell)
