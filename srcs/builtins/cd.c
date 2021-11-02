@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:13:07 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 14:21:39 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 14:25:00 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ static int	cd_path(t_minishell *minishell, char **tabpath, char *to_go)
 	{
 		if (!ft_strcmp(tabpath[i], "."))
 		{
-			ft_freestr(&tabpath[i]);
 			if (!getcwd(current, PATH_MAX))
 				return (free_return(tabpath, current));
+			ft_freestr(&tabpath[i]);
 			tabpath[i] = ft_strdup(current);
 			if (!tabpath[i])
 				return (free_return(tabpath, NULL));
