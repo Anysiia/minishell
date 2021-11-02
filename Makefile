@@ -18,6 +18,7 @@ SRCS =	srcs/minishell.c \
 		srcs/builtins/export.c \
 		srcs/builtins/pwd.c \
 		srcs/builtins/unset.c \
+		srcs/builtins/cd_utils.c \
 		srcs/env/init_minishell.c \
 		srcs/env/get_env_tab.c \
 		srcs/env/env_list.c \

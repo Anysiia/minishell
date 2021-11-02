@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 11:01:53 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 11:48:55 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int		env_builtin(int ac, char **av, t_minishell *minishell);
 int		unset_builtin(int ac, char **av, t_minishell *minishell);
 int		exit_builtin(int ac, char **av, t_minishell *minishell);
 int		print_sort_env(char **env);
+int		change_directory(t_minishell *minishell, const char *path);
 
 /*
 ENVP UTILS
