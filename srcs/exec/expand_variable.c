@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:20:24 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/28 11:09:54 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 17:08:45 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ static int	splitting_var(char *content, t_cmd *cmd, t_expand *tmp, int *i)
 	arg_list = insert_split_in_av(cmd->av, split, *i + 1);
 	*i += len - 1;
 	ft_free_tab(split);
+	if (!arg_list)
+		return (RET_ERROR);
 	cmd->av = ft_free_tab(cmd->av);
 	cmd->av = arg_list;
 	tmp->j = ft_strlen(tmp->str) - 1;
