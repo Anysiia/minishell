@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:21:00 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/26 11:47:38 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 16:10:39 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ int	expand_tilde(t_expand *tmp, const char *arg, t_env *envp)
 	char	*content;
 	int		len;
 
-	ft_putstr("into expand tilde\n");
 	if (tmp->j == 0 && (!arg[1] || arg[1] == '/'))
 	{
 		content = ft_getenv(envp, "HOME");

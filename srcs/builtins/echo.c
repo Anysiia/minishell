@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:13:19 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:13:24 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 15:59:49 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,23 @@ static void	check_newline(char **av, int *i, int *nl)
 
 int	echo_builtin(int ac, char **av, t_minishell *minishell)
 {
-	int		i;
-	int		nl;
+	int	i;
+	int	newline;
 
 	(void)minishell;
-	nl = 0;
+	newline = 0;
 	set_state(EXIT_SUCCESS);
 	i = FIRST_ARG;
-	check_newline(av, &i, &nl);
+	check_newline(av, &i, &newline);
 	while (i < ac)
 	{
-		ft_putstr(av[i]);
-		if (i + 1 < ac)
-			ft_putstr(" ");
+		if (write(STDOUT_FILENO, av[i], ft_strlen(av[i])) == RET_ERROR)
+			set_state(EXIT_FAILURE);
+		if (i + 1 < ac && write(STDOUT_FILENO, " ", 1) == RET_ERROR)
+			set_state(EXIT_FAILURE);
 		i++;
 	}
-	if (nl == 0)
-		ft_putstr("\n");
+	if (newline == 0 && write(STDOUT_FILENO, "\n", 1) == RET_ERROR)
+		set_state(EXIT_FAILURE);
 	return (get_state());
 }

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:13:07 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 15:40:48 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 16:14:37 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	check_and_change(t_minishell *minishell, char **tabpath, int i,
 	{
 		change_directory(minishell, tmp);
 		if (getcwd(current, PATH_MAX))
-			ft_putendl(current);
+			ft_putendl_fd(current, STDOUT_FILENO);
 		free_return(tabpath, tmp);
 		return (EXIT_SUCCESS);
 	}

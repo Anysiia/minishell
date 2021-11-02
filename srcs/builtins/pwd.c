@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:14:37 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/25 14:29:24 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 16:15:56 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ int	pwd_builtin(int ac, char **av, t_minishell *minishell)
 		pwd2 = ft_getenv(minishell->envp, "PWD");
 		if (pwd2)
 		{
-			ft_putendl(pwd2);
+			ft_putendl_fd(pwd2, STDOUT_FILENO);
 			ft_freestr(&pwd2);
 			return (save_state(true, EXIT_SUCCESS));
 		}
 		else
 			return (builtin_error("pwd", "PWD", NOT_SET, EXIT_FAILURE));
 	}
-	ft_putendl(pwd);
+	ft_putendl_fd(pwd, STDOUT_FILENO);
 	return (save_state(true, EXIT_SUCCESS));
 }
