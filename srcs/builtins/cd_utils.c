@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 11:46:43 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 14:02:19 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 14:25:58 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,3 @@ void	cd_minus(t_minishell *minishell)
 		set_state(EXIT_FAILURE);
 	ft_freestr(&path);
 }
-
