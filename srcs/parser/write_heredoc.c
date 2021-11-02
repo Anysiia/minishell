@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:11:36 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 10:50:51 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 16:47:56 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,23 @@ static int	expand_var_hd(t_minishell *minishell, char *line, t_expand *tmp)
 	return (EXIT_SUCCESS);
 }
 
-static int	expand_variable_heredoc(t_minishell *minishell, char *line, int fd)
+static void	add_to_heredoc(t_minishell *minishell, int fd, char *line)
+{
+	if (write(fd, line, ft_strlen(line)) == RET_ERROR)
+	{
+		ft_putstr_fd("Write error on heredoc\n", STDERR_FILENO);
+		minishell->l_state = 1;
+	}
+}
+
+static void	expand_variable_heredoc(t_minishell *minishell, char *line, int fd)
 {
 	t_expand	tmp;
 	int			ret;
 
 	ret = EXIT_SUCCESS;
 	if (init_expand(&tmp))
-		return (RET_ERROR);
+		return (error_lexer(minishell, MALLOC_HD, 1));
 	while (line[tmp.j] && ret != RET_ERROR)
 	{
 		if (line[tmp.j] == ENV_VAR_SIGN)
@@ -55,15 +64,14 @@ static int	expand_variable_heredoc(t_minishell *minishell, char *line, int fd)
 		ft_freestr(&tmp.str);
 		error_lexer(minishell, MALLOC_HD, 1);
 	}
-	ft_putendl_fd(tmp.str, fd);
+	add_to_heredoc(minishell, fd, tmp.str);
 	ft_freestr(&tmp.str);
-	return (ret);
 }
 
 void	write_heredoc(t_minishell *minishell, char *line, int fd, int mode)
 {
 	if (mode == 1 || (mode == 2 && !ft_test_set(ENV_VAR_SIGN, line)))
-		ft_putendl_fd(line, fd);
+		add_to_heredoc(minishell, fd, line);
 	else
 		expand_variable_heredoc(minishell, line, fd);
 }

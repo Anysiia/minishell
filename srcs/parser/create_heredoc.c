@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:22:10 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 10:50:32 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 16:48:46 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	get_input(t_minishell *minishell, int fd, char *ending, int mode)
 	char	*line;
 
 	line = NULL;
-	while (1)
+	while (minishell->l_state == 0)
 	{
 		line = readline("heredoc » ");
 		if (!line)
@@ -76,12 +76,9 @@ static void	get_input(t_minishell *minishell, int fd, char *ending, int mode)
 			print_error(minishell, EOF_HEREDOC, 0);
 			break ;
 		}
-		if (line[0] == '\3')
-		{
+		else if (line[0] == '\3')
 			minishell->l_state = 1;
-			break ;
-		}
-		if (ft_strcmp(line, ending))
+		else if (ft_strcmp(line, ending))
 			write_heredoc(minishell, line, fd, mode);
 		else
 			break ;
