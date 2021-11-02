@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:22:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:23:02 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 11:02:26 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@ t_lexer	*malloc_lexer(t_minishell *minishell)
 	return (lexer);
 }
 
-void	reset_lexer(t_lexer *lexer)
+void	reset_lexer(t_lexer *lexer, t_minishell *minishell)
 {
 	lexer->index = 0;
 	delete_all_tokens(&lexer->tokens);
 	lexer->tokens = NULL;
 	ft_freestr(&lexer->line);
 	lexer->line = NULL;
+	minishell->l_state = 0;
 }
 
 void	free_lexer(t_lexer *lexer)

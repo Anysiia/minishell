@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:11:36 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/29 12:18:42 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 10:50:51 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,26 +67,3 @@ void	write_heredoc(t_minishell *minishell, char *line, int fd, int mode)
 	else
 		expand_variable_heredoc(minishell, line, fd);
 }
-
-int	name_hd(t_minishell *minishell, t_cmd *cmd)
-{
-	int		len;
-	char	*number;
-
-	number = ft_itoa(minishell->nb_cmd);
-	if (!number)
-		return (RET_ERROR);
-	len = ft_strlen(number) + ft_strlen("heredoc") + 1;
-	cmd->hd_name = ft_strnew(len);
-	if (!cmd->hd_name)
-	{
-		ft_freestr(&number);
-		return (RET_ERROR);
-	}
-	ft_strlcpy(cmd->hd_name, "heredoc", len);
-	ft_strlcat(cmd->hd_name, number, len);
-	ft_freestr(&number);
-	cmd->heredoc = 1;
-	return (EXIT_SUCCESS);
-}
-

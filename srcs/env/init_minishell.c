@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 10:25:45 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/25 14:10:36 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 11:07:57 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,10 @@ static void	create_envlist(t_minishell *minishell, char **envp)
 	copy_env_in_list(minishell, envp);
 	create_minimal_envlist(minishell, "SHLVL", "1");
 	create_minimal_envlist(minishell, "PATH", DFT_PATH);
-	getcwd(path, PATH_MAX);
-	create_minimal_envlist(minishell, "PWD", path);
+	if (getcwd(path, PATH_MAX))
+		create_minimal_envlist(minishell, "PWD", path);
+	else
+		exit_error(minishell, MALLOC_CREATE_ENV);
 }
 
 void	init_minishell(t_minishell *mshell, char **envp)
@@ -118,4 +120,6 @@ void	init_minishell(t_minishell *mshell, char **envp)
 		exit_error(mshell, DUP_STD_FILENO);
 	mshell->nb_cmd = 0;
 	create_envlist(mshell, envp);
+	rl_event_hook = &interrupt_by_signal;
+	mshell->lexer = malloc_lexer(mshell);
 }

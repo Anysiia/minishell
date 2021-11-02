@@ -6,38 +6,38 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:03:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/25 14:52:17 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 11:09:12 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	exit_ctrld(t_minishell *minishell)
+static void	exit_ctrl_d(t_minishell *minishell)
 {
 	ft_putendl_fd("exit", STDERR_FILENO);
 	exit_shell(minishell);
 }
 
-static int	wait_command(t_minishell *minishell)
+static int	wait_command(t_minishell *msh)
 {
 	char	str[PATH_MAX];
 
-	minishell->lexer = malloc_lexer(minishell);
-	minishell->cmd = NULL;
 	while (1)
 	{
-		register_signal(minishell);
-		create_prompt(str, minishell->envp);
-		minishell->lexer->line = readline(str);
-		if (!minishell->lexer->line)
-			exit_ctrld(minishell);
-		add_history(minishell->lexer->line);
-		if (ft_strcmp(minishell->lexer->line, EMPTY_STRING))
+		register_signal(msh);
+		msh->lexer->line = readline(create_prompt(str, msh->envp));
+		if (!msh->lexer->line)
+			exit_ctrl_d(msh);
+		if (msh->lexer->line[0] == '\3')
+			msh->l_state = 1;
+		if (!msh->l_state)
+			add_history(msh->lexer->line);
+		if (!msh->l_state && ft_strcmp(msh->lexer->line, EMPTY_STRING))
 		{
-			split_into_tokens(minishell, minishell->lexer);
-			parse_tokens(minishell);
+			split_into_tokens(msh, msh->lexer);
+			parse_tokens(msh);
 		}
-		reset_lexer(minishell->lexer);
+		reset_lexer(msh->lexer, msh);
 	}
 	return (get_state());
 }

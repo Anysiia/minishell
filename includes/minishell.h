@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/29 12:19:53 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 11:01:53 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,9 @@ void	close_fd(int fd);
 UTILS
 */
 
-int		name_hd(t_minishell *minishell, t_cmd *cmd);
 void	register_signal(t_minishell *minishell);
 void	exec_signal(t_minishell *minishell);
-void	heredoc_signal(t_minishell *minishell);
+int		interrupt_by_signal(void);
 void	handle_signal_error(t_minishell *minishell);
 char	*create_prompt(char *prompt, t_env *envp);
 int		save_state(bool action, int state);
@@ -120,7 +119,7 @@ t_token	*malloc_token(t_minishell *mshl, const char *s, t_token_type tok_type);
 void	delete_first_token(t_token *tokens);
 void	delete_all_tokens(t_token **tokens);
 t_lexer	*malloc_lexer(t_minishell *minishell);
-void	reset_lexer(t_lexer *lexer);
+void	reset_lexer(t_lexer *lexer, t_minishell *minishell);
 void	free_lexer(t_lexer	*lexer);
 int		split_into_tokens(t_minishell *msh, t_lexer *lexer);
 void	print_lexer(t_lexer *lexer);
