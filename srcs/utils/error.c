@@ -6,20 +6,25 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:24:55 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/18 10:51:15 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 13:53:18 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	is_directory(const char *path)
+int	is_directory(const char *path)
 {
 	struct stat	buff;
 	int			ret;
 
 	ret = stat(path, &buff);
 	if (ret != RET_ERROR)
-		return (S_ISDIR(buff.st_mode));
+	{
+		if (S_ISDIR(buff.st_mode))
+			return (1);
+		else
+			return (0);
+	}
 	return (ret);
 }
 

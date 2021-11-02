@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:21:50 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/25 17:07:46 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 13:03:54 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,6 @@ static int	free_return(char *path, char **list, char *tmp, int ret)
 	if (tmp)
 		ft_freestr(&tmp);
 	return (ret);
-}
-
-static char	*join_path(char *str1, char *str2)
-{
-	int		len;
-	char	*path;
-
-	len = ft_strlen(str1) + ft_strlen(str2) + 2;
-	path = ft_strnew(len);
-	if (!path)
-		return (NULL);
-	ft_strlcpy(path, str1, len);
-	ft_strlcat(path, "/", len);
-	ft_strlcat(path, str2, len);
-	return (path);
 }
 
 static int	search_binary(t_env *envp, t_cmd *cmd)
@@ -65,6 +50,21 @@ static int	search_binary(t_env *envp, t_cmd *cmd)
 		i++;
 	}
 	return (free_return(path, path_list, tmp, EXIT_FAILURE));
+}
+
+char	*join_path(char *str1, char *str2)
+{
+	int		len;
+	char	*path;
+
+	len = ft_strlen(str1) + ft_strlen(str2) + 2;
+	path = ft_strnew(len);
+	if (!path)
+		return (NULL);
+	ft_strlcpy(path, str1, len);
+	ft_strlcat(path, "/", len);
+	ft_strlcat(path, str2, len);
+	return (path);
 }
 
 int	is_file(const char *name)

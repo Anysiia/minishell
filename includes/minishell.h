@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 11:48:55 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 14:01:42 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int		unset_builtin(int ac, char **av, t_minishell *minishell);
 int		exit_builtin(int ac, char **av, t_minishell *minishell);
 int		print_sort_env(char **env);
 int		change_directory(t_minishell *minishell, const char *path);
+int		go_directory(t_minishell *minishell, const char *variable_name);
+void	cd_minus(t_minishell *minishell);
 
 /*
 ENVP UTILS
@@ -94,6 +96,8 @@ char	*create_prompt(char *prompt, t_env *envp);
 int		save_state(bool action, int state);
 void	set_state(int state);
 int		get_state(void);
+int		is_directory(const char *path);
+char	*join_path(char *str1, char *str2);
 void	exit_shell(t_minishell *minishell);
 
 /*

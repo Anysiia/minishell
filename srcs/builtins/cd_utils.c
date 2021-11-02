@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 11:46:43 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 11:47:45 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 14:02:19 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static int	change_old_pwd(t_minishell *minishell)
 	char	*dupoldpwd;
 	char	*content;
 	char	path[PATH_MAX];
-	int		ret;
 
 	dupoldpwd = ft_strdup("OLDPWD");
 	if (!dupoldpwd)
@@ -54,25 +53,46 @@ static int	change_old_pwd(t_minishell *minishell)
 			return (RET_ERROR);
 		return (ft_setenv(minishell, dupoldpwd, content, false));
 	}
-	ret = ft_setenv(minishell, dupoldpwd, content, false);
-	return (ret);
+	return (ft_setenv(minishell, dupoldpwd, content, false));
 }
 
 int	change_directory(t_minishell *minishell, const char *path)
 {
 	int		ret;
 
-	ret = change_old_pwd(minishell);
-	if (ret == RET_ERROR)
-		return (builtin_error("cd", path, strerror(errno), 1));
+	change_old_pwd(minishell);
 	ret = chdir(path);
 	if (ret == RET_ERROR)
 		return (builtin_error("cd", path, strerror(errno), 1));
 	if (!ft_strcmp(path, "//"))
-		ret = set_pwd(minishell, true);
+		set_pwd(minishell, true);
 	else
-		ret = set_pwd(minishell, false);
-	if (ret == RET_ERROR)
-		return (builtin_error("cd", path, strerror(errno), 1));
+		set_pwd(minishell, false);
 	return (EXIT_SUCCESS);
 }
+
+int	go_directory(t_minishell *minishell, const char *var_name)
+{
+	char	*path;
+
+	path = ft_getenv(minishell->envp, var_name);
+	if (!path)
+		return (builtin_error("cd", var_name, NOT_SET, 1));
+	change_directory(minishell, path);
+	ft_freestr(&path);
+	return (EXIT_SUCCESS);
+}
+
+void	cd_minus(t_minishell *minishell)
+{
+	char	*path;
+
+	go_directory(minishell, "OLDPWD");
+	path = ft_getenv(minishell->envp, "PWD");
+	if (path)
+		ft_putendl(path);
+	else
+		set_state(EXIT_FAILURE);
+	ft_freestr(&path);
+}
+
