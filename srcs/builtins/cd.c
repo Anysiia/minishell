@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:13:07 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 14:25:00 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/02 15:40:48 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static int	check_and_change(t_minishell *minishell, char **tabpath, int i,
 static int	cd_path(t_minishell *minishell, char **tabpath, char *to_go)
 {
 	char	current[PATH_MAX];
+	char	*tmp;
 	int		i;
 
 	i = 0;
@@ -64,10 +65,11 @@ static int	cd_path(t_minishell *minishell, char **tabpath, char *to_go)
 		{
 			if (!getcwd(current, PATH_MAX))
 				return (free_return(tabpath, current));
-			ft_freestr(&tabpath[i]);
-			tabpath[i] = ft_strdup(current);
-			if (!tabpath[i])
+			tmp = ft_strdup(current);
+			if (!tmp)
 				return (free_return(tabpath, NULL));
+			ft_freestr(&tabpath[i]);
+			tabpath[i] = tmp;
 		}
 		if (!check_and_change(minishell, tabpath, i, to_go))
 			return (get_state());
@@ -82,7 +84,7 @@ static int	change_dir(t_minishell *minishell, char *to_go)
 	char	*cdpath;
 	char	**tabpath;
 
-	if (ft_test_set('/', to_go) || ft_test_set('.', to_go))
+	if (to_go[0] == '/')
 		return (change_directory(minishell, to_go));
 	cdpath = ft_getenv(minishell->envp, "CDPATH");
 	if (!cdpath)
