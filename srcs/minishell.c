@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:03:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 11:09:12 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/03 14:26:27 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ static int	wait_command(t_minishell *msh)
 			msh->l_state = 1;
 		if (!msh->l_state)
 			add_history(msh->lexer->line);
-		if (!msh->l_state && ft_strcmp(msh->lexer->line, EMPTY_STRING))
+		if (!msh->l_state && !ft_strcmp(msh->lexer->line, EMPTY_STRING))
+			set_state(0);
+		else if (!msh->l_state && ft_strcmp(msh->lexer->line, EMPTY_STRING))
 		{
 			split_into_tokens(msh, msh->lexer);
 			parse_tokens(msh);
