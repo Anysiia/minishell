@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:19:19 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/19 14:39:59 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/03 14:32:13 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	execute_simple_command(t_minishell *minishell, t_cmd *cmd)
 		return (default_fd(minishell));
 	if (cmd->ac == 0)
 	{
+		set_state(0);
 		default_fd(minishell);
 		return ;
 	}
