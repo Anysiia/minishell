@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:21 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 14:26:27 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/03 16:08:57 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static int	expand_all_args(t_minishell *minishell, t_cmd *command)
 		i++;
 	}
 	find_command(minishell->envp, command);
-//	print_arg(command->av);
 	return (EXIT_SUCCESS);
 }
 

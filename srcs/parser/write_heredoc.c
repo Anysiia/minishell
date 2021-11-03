@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:11:36 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 16:47:56 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/03 16:31:57 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ static int	expand_var_hd(t_minishell *minishell, char *line, t_expand *tmp)
 static void	add_to_heredoc(t_minishell *minishell, int fd, char *line)
 {
 	if (write(fd, line, ft_strlen(line)) == RET_ERROR)
+	{
+		ft_putstr_fd("Write error on heredoc\n", STDERR_FILENO);
+		minishell->l_state = 1;
+	}
+	if (write(fd, "\n", 1) == RET_ERROR)
 	{
 		ft_putstr_fd("Write error on heredoc\n", STDERR_FILENO);
 		minishell->l_state = 1;
