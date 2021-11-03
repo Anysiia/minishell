@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:03:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/03 14:26:27 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/03 16:02:38 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	wait_command(t_minishell *msh)
 		msh->lexer->line = readline(create_prompt(str, msh->envp));
 		if (!msh->lexer->line)
 			exit_ctrl_d(msh);
-		if (msh->lexer->line[0] == '\3')
+		if (msh->lexer->line[0] == '\42')
 			msh->l_state = 1;
 		if (!msh->l_state)
 			add_history(msh->lexer->line);

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:26:13 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 11:10:44 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/03 16:03:17 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	interrupt_by_signal(void)
 {
 	if (get_state() == 302)
 	{
-		rl_replace_line("\3", 1);
+		rl_replace_line("\42", 1);
 		rl_done = 1;
 		set_state(130);
 	}
