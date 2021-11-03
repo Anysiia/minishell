@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convert_env_list_in_tab.c                          :+:      :+:    :+:   */
+/*   get_env_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 10:24:32 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/22 17:29:23 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/03 11:49:19 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,11 @@ static int	convert_var_in_str(t_minishell *minishell, t_env *tmp, int *i)
 	if (!tmp->name)
 		return (EXIT_SUCCESS);
 	if (tmp->name && !tmp->content)
+	{
 		minishell->env[*i] = ft_strdup(tmp->name);
-	if (!minishell->env[*i])
-		return (RET_ERROR);
+		if (!minishell->env[*i])
+			return (RET_ERROR);
+	}
 	if (tmp->name && tmp->content)
 	{
 		len = ft_strlen(tmp->name) + ft_strlen(tmp->content) + 2;
