@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:40 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/03 14:32:50 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/03 17:27:38 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,13 @@ static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 	exit_shell(minishell);
 }
 
-static void	status_set(int status)
+static void	wait_childs(pid_t pid, int nb_cmd)
 {
+	int	status;
+
+	waitpid(pid, &status, 0);
+	while (nb_cmd-- > 1)
+		wait(NULL);
 	if (WIFEXITED(status))
 		set_state(WEXITSTATUS(status));
 	if (WIFSIGNALED(status))
@@ -74,13 +79,14 @@ static void	status_set(int status)
 	}
 }
 
-static void	exec_pipe(t_minishell *minishell, t_cmd *tmp, int nb_cmd)
+void	execute_pipe(t_minishell *minishell, t_cmd *command)
 {
+	t_cmd	*tmp;
 	int		fd[2];
 	int		fdd;
-	int		status;
 	pid_t	pid;
 
+	tmp = command;
 	fdd = 0;
 	while (tmp)
 	{
@@ -96,19 +102,6 @@ static void	exec_pipe(t_minishell *minishell, t_cmd *tmp, int nb_cmd)
 		fdd = fd[0];
 		tmp = tmp->next;
 	}
-	waitpid(pid, &status, 0);
-	while (nb_cmd-- > 1)
-		wait(NULL);
-	status_set(status);
-}
-
-void	execute_pipe(t_minishell *minishell, t_cmd *command)
-{
-	t_cmd	*tmp;
-
-	if (!command)
-		return ;
-	tmp = command;
-	exec_pipe(minishell, tmp, minishell->nb_cmd);
+	wait_childs(pid, minishell->nb_cmd);
 	default_fd(minishell);
 }
