@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:20 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/29 10:20:04 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/06 11:13:14 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ Len max of a path (1024 on mac, 4096 on linux VM)
 # define INC_USAGE 2
 # define EXIT_STATUS_MAX 255
 # define CMD_NOT_FOUND 127
+# define CMD_DIRECTORY 126
 
 # define EXECVE 1
 # define DUP 2

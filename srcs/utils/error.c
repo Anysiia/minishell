@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:24:55 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 13:53:18 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/06 11:15:28 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	print_errno(const char *error_command, int mode)
 	char	str[MAX_MSG];
 
 	set_state(EXIT_FAILURE);
+	if (errno == EISDIR && mode == EXECVE)
+		set_state(CMD_DIRECTORY);
 	if (errno == EACCES)
 	{
 		if (is_directory(error_command))
