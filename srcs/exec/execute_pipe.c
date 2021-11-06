@@ -6,35 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:40 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/06 11:20:11 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/06 12:08:35 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static int	redir_file(t_cmd *cmd, int *fd, int fdd)
-{
-	if (cmd->fd_in == NO_REDIR && cmd->prev && dup2(fdd, 0) < 0)
-		return (RET_ERROR);
-	if (cmd->fd_out == NO_REDIR && cmd->next && dup2(fd[1], 1) < 0)
-		return (RET_ERROR);
-	close_fd(fd[1]);
-	close_fd(fd[0]);
-	close_fd(fdd);
-	if (cmd->fd_in != NO_REDIR)
-	{
-		if (dup2(cmd->fd_in, STDIN_FILENO) < 0)
-			return (RET_ERROR);
-		close_fd(cmd->fd_in);
-	}
-	if (cmd->fd_out != NO_REDIR)
-	{
-		if (dup2(cmd->fd_out, STDOUT_FILENO) < 0)
-			return (RET_ERROR);
-		close_fd(cmd->fd_out);
-	}
-	return (EXIT_SUCCESS);
-}
 
 static void	execve_cmd(t_minishell *minishell, t_cmd *cmd)
 {
