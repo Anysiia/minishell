@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:21 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/03 17:29:34 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/06 12:01:32 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,24 @@ static int	expand_all_args(t_minishell *minishell, t_cmd *command)
 	return (EXIT_SUCCESS);
 }
 
+static void	execute_builtin(t_minishell *minishell, t_cmd *cmd)
+{
+	if (cmd->fd_in != NO_REDIR)
+	{
+		if (dup2(cmd->fd_in, STDIN_FILENO) < 0)
+			return (default_fd(minishell));
+		close_fd(cmd->fd_in);
+	}
+	if (cmd->fd_out != NO_REDIR)
+	{
+		if (dup2(cmd->fd_out, STDOUT_FILENO) < 0)
+			return (default_fd(minishell));
+		close_fd(cmd->fd_out);
+	}
+	cmd->command(cmd->ac, cmd->av, minishell);
+	default_fd(minishell);
+}
+
 void	execute_command(t_minishell *minishell, t_cmd *command)
 {
 	t_cmd	*tmp;
@@ -71,8 +89,8 @@ void	execute_command(t_minishell *minishell, t_cmd *command)
 	}
 	exec_signal(minishell);
 	convert_env_list_in_tab(minishell);
-	if (!command->next)
-		execute_simple_command(minishell, command);
+	if (!command->next && command->is_builtin == true)
+		execute_builtin(minishell, command);
 	else
 		execute_pipe(minishell, command);
 	minishell->env = ft_free_tab(minishell->env);

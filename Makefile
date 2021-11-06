@@ -24,7 +24,6 @@ SRCS =	srcs/minishell.c \
 		srcs/env/env_list.c \
 		srcs/env/ft_env.c \
 		srcs/exec/execute_command.c \
-		srcs/exec/execute_simple_command.c \
 		srcs/exec/execute_pipe.c \
 		srcs/exec/expand_token_word.c \
 		srcs/exec/expand_quote.c \
