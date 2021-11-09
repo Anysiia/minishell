@@ -6,11 +6,27 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:40 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/09 10:41:11 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/09 11:12:36 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static int	permit(const char *path)
+{
+	struct stat		buff;
+	int				ret;
+
+	ret = stat(path, &buff);
+	if (ret != RET_ERROR)
+	{
+		if (buff.st_mode && S_IXOTH)
+			return (1);
+		else
+			return (0);
+	}
+	return (0);
+}
 
 static void	error_cmd(char *cmd_name, int errno_code)
 {
@@ -33,6 +49,8 @@ static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 		error_cmd(cmd->av[CMD], ENOENT);
 	else if (is_directory(cmd->binary))
 		error_cmd(cmd->av[CMD], EISDIR);
+	else if (permit(cmd->binary) != 1)
+		error_cmd(cmd->av[CMD], EACCES);
 	else if (cmd->binary[0] == '.')
 		print_dot_error(cmd->av[CMD]);
 	else
