@@ -6,13 +6,13 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:40 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/06 15:13:23 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/09 10:14:48 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	error_cmd(t_minishell *minishell, char *cmd_name, int errno_code)
+static void	error_cmd(char *cmd_name, int errno_code)
 {
 	errno = errno_code;
 	print_errno(cmd_name, EXECVE);
@@ -30,9 +30,9 @@ static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 	else if (cmd->is_builtin == true)
 		cmd->command(cmd->ac, cmd->av, minishell);
 	else if (!cmd->binary || (cmd->binary[0] != '/' && cmd->binary[0] != '.'))
-		error_cmd(minishell, cmd->av[CMD], ENOENT);
+		error_cmd(cmd->av[CMD], ENOENT);
 	else if (is_directory(cmd->binary))
-		error_cmd(minishell, cmd->av[CMD], EISDIR);
+		error_cmd(cmd->av[CMD], EISDIR);
 	else if (cmd->binary[0] == '.')
 		print_dot_error(cmd->av[CMD]);
 	else
