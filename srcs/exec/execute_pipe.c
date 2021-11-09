@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:40 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/09 11:16:09 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/09 11:29:07 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	permit(const char *path)
 	ret = stat(path, &buff);
 	if (ret != RET_ERROR)
 	{
-		if (buff.st_mode && S_IXOTH)
+		if (buff.st_mode & S_IXUSR)
 			return (1);
 		else
 			return (0);
