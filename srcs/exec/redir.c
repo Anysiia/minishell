@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:20:44 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/12 10:38:08 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/12 11:04:02 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,7 @@
 
 void	handle_error_redir(t_cmd *cmd)
 {
-	int	fd;
-
-	if (!cmd->type)
-		return ;
-	if (cmd->type == TOKEN_GREAT)
-		fd = open(cmd->name, O_WRONLY | O_CREAT | O_TRUNC, 0664);
-	else if (cmd->type == TOKEN_DOUBLE_GREAT)
-		fd = open(cmd->name, O_WRONLY | O_CREAT | O_APPEND, 0664);
-	else if (cmd->type == TOKEN_LESS)
-		fd = open(cmd->name, O_RDONLY, 0664);
+	errno = cmd->set_errno;
 	print_errno(cmd->name, 0);
 }
 

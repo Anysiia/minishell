@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:47 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/12 10:23:05 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/12 11:03:22 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ struct s_cmd
 	int				fd_out;
 	char			*name;
 	int				type;
+	int				set_errno;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 };
