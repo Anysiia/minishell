@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:21 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/06 14:53:13 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/12 10:43:23 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ static int	expand_all_args(t_minishell *minishell, t_cmd *command)
 
 static void	execute_builtin(t_minishell *minishell, t_cmd *cmd)
 {
+	if (cmd->type)
+		return (handle_error_redir(cmd));
 	if (cmd->fd_in != NO_REDIR)
 	{
 		if (dup2(cmd->fd_in, STDIN_FILENO) < 0)

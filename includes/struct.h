@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:47 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/26 11:50:27 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/12 10:23:05 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ struct s_cmd
 	t_function		command;
 	int				fd_in;
 	int				fd_out;
+	char			*name;
+	int				type;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 };

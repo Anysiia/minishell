@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:21:21 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:21:25 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/12 10:23:50 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ t_cmd	*malloc_command(t_minishell *minishell)
 	cmd->command = NULL;
 	cmd->fd_in = NO_REDIR;
 	cmd->fd_out = NO_REDIR;
+	cmd->name = NULL;
+	cmd->type = 0;
 	cmd->prev = NULL;
 	cmd->next = NULL;
 	return (cmd);

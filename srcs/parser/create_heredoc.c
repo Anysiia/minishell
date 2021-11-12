@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:22:10 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/03 16:03:02 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/12 10:39:03 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	create_heredoc(t_minishell *minishell, t_cmd *cmd, char *ending)
 
 	if (cmd->heredoc == 0 && name_hd(minishell, cmd) == RET_ERROR)
 		return (RET_ERROR);
-	fd = open(cmd->hd_name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	fd = open(cmd->hd_name, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	if (fd == RET_ERROR)
 		return (RET_ERROR);
 	if (ft_test_set(WEAK_QUOTE, ending) || ft_test_set(STRONG_QUOTE, ending))
