@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:40 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/12 10:41:51 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:22:21 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 		handle_error_redir(cmd);
 	else if (cmd->ac == 0)
 	{
-		set_state(0);
+		g_state = 0;
 		exit_shell(minishell);
 	}
 	else if (cmd->is_builtin == true)
@@ -71,10 +71,10 @@ static void	wait_childs(pid_t pid, int nb_cmd)
 	while (nb_cmd-- > 1)
 		wait(NULL);
 	if (WIFEXITED(status))
-		set_state(WEXITSTATUS(status));
+		g_state = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
 	{
-		set_state(WTERMSIG(status) + FATAL_SIGN);
+		g_state = (WTERMSIG(status) + FATAL_SIGN);
 		if (WTERMSIG(status) == SIGSEGV)
 			ft_putstr_fd("Segmentation fault (Core dumped)\n", STDERR_FILENO);
 	}

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:21 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/12 10:43:23 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:21:33 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	execute_command(t_minishell *minishell, t_cmd *command)
 		ret = expand_all_args(minishell, tmp);
 		if (ret == RET_ERROR)
 		{
-			set_state(EXIT_FAILURE);
+			g_state = EXIT_FAILURE;
 			return ;
 		}
 		tmp = tmp->next;

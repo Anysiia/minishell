@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:24:55 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/09 11:11:28 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:25:31 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ void	print_errno(const char *error_command, int mode)
 {
 	char	str[MAX_MSG];
 
-	set_state(EXIT_FAILURE);
+	g_state = EXIT_FAILURE;
 	if (errno == EACCES && is_directory(error_command))
 		errno = EISDIR;
 	if (errno == EISDIR && mode == EXECVE)
-		set_state(CMD_DIRECTORY);
+		g_state = CMD_DIRECTORY;
 	if (errno == EACCES && mode == EXECVE)
-		set_state(CMD_DIRECTORY);
+		g_state = CMD_DIRECTORY;
 	ft_bzero(str, MAX_MSG);
 	ft_strlcpy(str, SHELL_NAME, MAX_MSG);
 	ft_strlcat(str, ": ", MAX_MSG);
@@ -47,7 +47,7 @@ void	print_errno(const char *error_command, int mode)
 	if (errno == ENOENT && mode == EXECVE)
 	{
 		ft_strlcat(str, COMMAND_NOT_FOUND, MAX_MSG);
-		set_state(CMD_NOT_FOUND);
+		g_state = CMD_NOT_FOUND;
 	}
 	else
 		ft_strlcat(str, strerror(errno), MAX_MSG);
@@ -59,7 +59,7 @@ void	print_error(t_minishell *minishell, const char *msg, bool quit)
 {
 	char	str[MAX_MSG];
 
-	set_state(EXIT_FAILURE);
+	g_state = EXIT_FAILURE;
 	if (msg)
 	{
 		ft_bzero(str, MAX_MSG);
@@ -77,7 +77,7 @@ void	exit_error(t_minishell *minishell, const char *msg)
 {
 	char	str[MAX_MSG];
 
-	set_state(EXIT_FAILURE);
+	g_state = EXIT_FAILURE;
 	if (msg)
 	{
 		ft_bzero(str, MAX_MSG);
@@ -94,7 +94,7 @@ void	print_dot_error(const char *cmd_name)
 {
 	char	str[MAX_MSG];
 
-	set_state(INC_USAGE);
+	g_state = INC_USAGE;
 	ft_bzero(str, MAX_MSG);
 	ft_strlcpy(str, SHELL_NAME, MAX_MSG);
 	ft_strlcat(str, ": ", MAX_MSG);

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/12 10:40:00 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:28:42 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 /*
 BUILTINS
 */
+
+int		g_state;
 
 int		cd_builtin(int ac, char **av, t_minishell *minishell);
 int		echo_builtin(int ac, char **av, t_minishell *minishell);
@@ -94,9 +96,6 @@ void	exec_signal(t_minishell *minishell);
 int		interrupt_by_signal(void);
 void	handle_signal_error(t_minishell *minishell);
 char	*create_prompt(char *prompt, t_env *envp);
-int		save_state(bool action, int state);
-void	set_state(int state);
-int		get_state(void);
 int		is_directory(const char *path);
 char	*join_path(char *str1, char *str2);
 void	exit_shell(t_minishell *minishell);

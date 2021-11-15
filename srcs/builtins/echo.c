@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:13:19 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 15:59:49 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:16:16 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,18 @@ int	echo_builtin(int ac, char **av, t_minishell *minishell)
 
 	(void)minishell;
 	newline = 0;
-	set_state(EXIT_SUCCESS);
+	g_state = EXIT_SUCCESS;
 	i = FIRST_ARG;
 	check_newline(av, &i, &newline);
 	while (i < ac)
 	{
 		if (write(STDOUT_FILENO, av[i], ft_strlen(av[i])) == RET_ERROR)
-			set_state(EXIT_FAILURE);
+			g_state = EXIT_FAILURE;
 		if (i + 1 < ac && write(STDOUT_FILENO, " ", 1) == RET_ERROR)
-			set_state(EXIT_FAILURE);
+			g_state = EXIT_FAILURE;
 		i++;
 	}
 	if (newline == 0 && write(STDOUT_FILENO, "\n", 1) == RET_ERROR)
-		set_state(EXIT_FAILURE);
-	return (get_state());
+		g_state = EXIT_FAILURE;
+	return (g_state);
 }

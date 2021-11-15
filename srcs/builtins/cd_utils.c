@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 11:46:43 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 16:15:12 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:15:17 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,6 @@ void	cd_minus(t_minishell *minishell)
 	if (path)
 		ft_putendl_fd(path, STDOUT_FILENO);
 	else
-		set_state(EXIT_FAILURE);
+		g_state = EXIT_FAILURE;
 	ft_freestr(&path);
 }

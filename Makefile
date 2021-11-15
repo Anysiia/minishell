@@ -46,7 +46,6 @@ SRCS =	srcs/minishell.c \
 		srcs/parser/write_heredoc.c \
 		srcs/utils/error.c \
 		srcs/utils/create_prompt.c \
-		srcs/utils/state.c \
 		srcs/utils/exit.c \
 		srcs/utils/error_builtins.c \
 		srcs/utils/print_sorted_env.c \

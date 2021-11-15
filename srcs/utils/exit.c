@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:25:08 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/22 11:00:56 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:26:49 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	exit_shell(t_minishell *minishell)
 	close_fd(minishell->back_stdin);
 	close_fd(minishell->back_stdout);
 	rl_clear_history();
-	exit(get_state());
+	exit(g_state);
 }
 
 void	exit_errno(t_minishell *minishell, const char *msg, int mode)

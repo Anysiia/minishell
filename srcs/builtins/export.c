@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:14:21 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/25 17:19:34 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:18:41 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	export_builtin(int ac, char **av, t_minishell *minishell)
 	int		i;
 	int		ret;
 
-	set_state(EXIT_SUCCESS);
+	g_state = EXIT_SUCCESS;
 	if (ac == NO_ARGS)
 		return (print_sort_env(minishell->env));
 	i = FIRST_ARG;
@@ -95,7 +95,7 @@ int	export_builtin(int ac, char **av, t_minishell *minishell)
 	{
 		invalid_option(av[CMD], av[FIRST_ARG]);
 		builtin_usage(av[CMD], "export [name[[+]=value] ...]");
-		return (get_state());
+		return (g_state);
 	}
 	while (i < ac)
 	{
@@ -106,5 +106,5 @@ int	export_builtin(int ac, char **av, t_minishell *minishell)
 			builtin_error("export", av[i], NOT_SET, EXIT_FAILURE);
 		i++;
 	}
-	return (get_state());
+	return (g_state);
 }

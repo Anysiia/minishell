@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:03:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/03 16:02:38 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:13:50 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	wait_command(t_minishell *msh)
 		if (!msh->l_state)
 			add_history(msh->lexer->line);
 		if (!msh->l_state && !ft_strcmp(msh->lexer->line, EMPTY_STRING))
-			set_state(0);
+			g_state = EXIT_SUCCESS;
 		else if (!msh->l_state && ft_strcmp(msh->lexer->line, EMPTY_STRING))
 		{
 			split_into_tokens(msh, msh->lexer);
@@ -41,7 +41,7 @@ static int	wait_command(t_minishell *msh)
 		}
 		reset_lexer(msh->lexer, msh);
 	}
-	return (get_state());
+	return (g_state);
 }
 
 int	main(int argc, char **argv, char **envp)

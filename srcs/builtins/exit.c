@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:13:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 15:51:27 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:18:05 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	check_first_argument(char **av)
 	int		i;
 
 	if (!av[1])
-		return (save_state(true, EXIT_SUCCESS));
+		return (g_state = EXIT_SUCCESS);
 	i = 0;
 	if (!ft_isdigit(av[FIRST_ARG][i]) && av[FIRST_ARG][i] != '-'
 		&& av[FIRST_ARG][i] != '+')
@@ -63,10 +63,10 @@ int	exit_builtin(int ac, char **av, t_minishell *minishell)
 		if (ac > 2)
 			return (argument_error(av[CMD]));
 		exit_status = check_first_argument(av);
-		set_state(exit_status);
+		g_state = exit_status;
 	}
 	else
-		set_state(EXIT_SUCCESS);
+		g_state = EXIT_SUCCESS;
 	exit_shell(minishell);
-	return (get_state());
+	return (g_state);
 }

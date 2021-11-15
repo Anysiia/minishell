@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:13:07 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 16:14:37 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:14:59 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	free_return(char **tabpath, char *tmp)
 		ft_free_tab(tabpath);
 	if (tmp)
 		ft_freestr(&tmp);
-	return (get_state());
+	return (g_state);
 }
 
 static int	check_and_change(t_minishell *minishell, char **tabpath, int i,
@@ -72,7 +72,7 @@ static int	cd_path(t_minishell *minishell, char **tabpath, char *to_go)
 			tabpath[i] = tmp;
 		}
 		if (!check_and_change(minishell, tabpath, i, to_go))
-			return (get_state());
+			return (g_state);
 		i++;
 	}
 	change_directory(minishell, to_go);
@@ -94,14 +94,14 @@ static int	change_dir(t_minishell *minishell, char *to_go)
 	if (!tabpath)
 	{
 		print_error(minishell, "malloc error with CDPATH", false);
-		return (get_state());
+		return (g_state);
 	}
 	return (cd_path(minishell, tabpath, to_go));
 }
 
 int	cd_builtin(int ac, char **av, t_minishell *minishell)
 {
-	set_state(EXIT_SUCCESS);
+	g_state = EXIT_SUCCESS;
 	if (ac > 2)
 		return (argument_error(av[CMD]));
 	else if (ac == 1)
@@ -115,5 +115,5 @@ int	cd_builtin(int ac, char **av, t_minishell *minishell)
 		cd_minus(minishell);
 	else
 		change_dir(minishell, av[FIRST_ARG]);
-	return (get_state());
+	return (g_state);
 }

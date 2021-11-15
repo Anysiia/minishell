@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 10:25:45 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 11:07:57 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:12:26 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,11 @@ static void	create_envlist(t_minishell *minishell, char **envp)
 		exit_error(minishell, MALLOC_CREATE_ENV);
 }
 
+int		g_state;
+
 void	init_minishell(t_minishell *mshell, char **envp)
 {
-	save_state(true, EXIT_SUCCESS);
+	g_state = EXIT_SUCCESS;
 	mshell->env = NULL;
 	mshell->envp = NULL;
 	mshell->lexer = NULL;

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:14:53 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/25 16:14:01 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:20:17 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ int	unset_builtin(int ac, char **av, t_minishell *minishell)
 	int		i;
 	int		ret;
 
-	set_state(EXIT_SUCCESS);
+	g_state = EXIT_SUCCESS;
 	if (av[FIRST_ARG] && av[FIRST_ARG][0] == OPT_INDICATOR)
 	{
 		invalid_option(av[CMD], av[FIRST_ARG]);
 		builtin_usage(av[CMD], "unset [name ...]");
-		return (get_state());
+		return (g_state);
 	}
 	i = 0;
 	while (i < ac)
@@ -45,5 +45,5 @@ int	unset_builtin(int ac, char **av, t_minishell *minishell)
 			invalid_id(av[CMD], av[i]);
 		i++;
 	}
-	return (get_state());
+	return (g_state);
 }

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:21:00 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 17:11:15 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:22:55 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	get_last_exit_status(t_expand *tmp)
 	int		len;
 
 	tmp->j++;
-	exit_value = ft_itoa(get_state());
+	exit_value = ft_itoa(g_state);
 	if (!exit_value)
 		return (RET_ERROR);
 	len = ft_strlen(exit_value) + ft_strlen(tmp->str);

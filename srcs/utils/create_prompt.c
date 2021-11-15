@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:24:23 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/27 17:05:02 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:24:14 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	exit_code_prompt(char *prompt)
 {
 	char	*exit_code;
 
-	exit_code = ft_itoa(get_state());
+	exit_code = ft_itoa(g_state);
 	if (!exit_code)
 		return ;
 	ft_strlcat(prompt, YEL, PATH_MAX);
