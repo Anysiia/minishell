@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:21:36 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/22 14:55:00 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/22 17:25:23 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	handle_redir(t_minishell *minishell, t_cmd *cmd, t_token *list)
 {
 	int		fd;
 
-	fd = -2;
+	fd = NO_REDIR;
 	if (cmd->fd_out != NO_REDIR)
 		close_fd(cmd->fd_out);
 	if (cmd->fd_in != NO_REDIR)
