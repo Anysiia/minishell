@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 10:25:45 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/15 16:12:26 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/22 11:34:52 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ static void	copy_env_in_list(t_minishell *minishell, char **envp)
 static void	create_envlist(t_minishell *minishell, char **envp)
 {
 	char	path[PATH_MAX];
+	char	*dupshell;
+	char	*dupshellname;
 
 	copy_env_in_list(minishell, envp);
 	create_minimal_envlist(minishell, "SHLVL", "1");
@@ -104,6 +106,15 @@ static void	create_envlist(t_minishell *minishell, char **envp)
 		create_minimal_envlist(minishell, "PWD", path);
 	else
 		exit_error(minishell, MALLOC_CREATE_ENV);
+	dupshell = ft_strdup("SHELL");
+	dupshellname = ft_strdup("minishell");
+	if (!dupshell || !dupshellname)
+	{
+		ft_freestr(&dupshell);
+		ft_freestr(&dupshellname);
+		exit_error(minishell, MALLOC_CREATE_ENV);
+	}
+	ft_setenv(minishell, dupshell, dupshellname, false);
 }
 
 int		g_state;

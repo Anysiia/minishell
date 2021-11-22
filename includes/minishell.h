@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/15 16:28:42 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/22 11:30:21 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@
 # include "define.h"
 # include "struct.h"
 
+extern int	g_state;
 /*
 BUILTINS
 */
-
-int		g_state;
 
 int		cd_builtin(int ac, char **av, t_minishell *minishell);
 int		echo_builtin(int ac, char **av, t_minishell *minishell);
