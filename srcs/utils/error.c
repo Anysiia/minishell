@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:24:55 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/15 16:25:31 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/23 14:48:21 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	print_errno(const char *error_command, int mode)
 	char	str[MAX_MSG];
 
 	g_state = EXIT_FAILURE;
-	if (errno == EACCES && is_directory(error_command))
+	if (errno == EACCES && is_directory(error_command) == 1)
 		errno = EISDIR;
 	if (errno == EISDIR && mode == EXECVE)
 		g_state = CMD_DIRECTORY;
@@ -52,6 +52,8 @@ void	print_errno(const char *error_command, int mode)
 	else
 		ft_strlcat(str, strerror(errno), MAX_MSG);
 	ft_strlcat(str, "\n", MAX_MSG);
+	if (errno == ENOENT && mode == NOT_EXIST)
+		g_state = CMD_NOT_FOUND;
 	ft_putstr_fd(str, STDERR_FILENO);
 }
 

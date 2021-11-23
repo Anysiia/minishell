@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:20 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/12 10:19:18 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/23 14:47:54 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ Len max of a path (1024 on mac, 4096 on linux VM)
 # define DUP 2
 # define FORK 3
 # define PIPE 4
+# define NOT_EXIST 5
 
 # define D_LESS 1
 # define LESS 2
