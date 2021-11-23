@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:23:30 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/25 14:50:02 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/23 15:55:50 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ char	*expand_relative_path(t_env *envp, t_cmd *cmd)
 	char	**split;
 	char	*cmd_name;
 
+	if (!ft_test_set('/', cmd->av[CMD]))
+		return (ft_strdup(cmd->av[CMD]));
 	cmd_name = ft_strnew(PATH_MAX);
 	if (!cmd_name)
 		return (ft_strdup(cmd->av[CMD]));
