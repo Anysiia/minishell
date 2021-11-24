@@ -86,7 +86,4 @@ fclean:
 
 re:		fclean all
 
-install:
-		sudo apt-get install libreadline-dev
-
-.PHONY:	all clean fclean re install
+.PHONY:	all clean fclean re
