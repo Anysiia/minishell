@@ -1,4 +1,3 @@
-- Echo part : For next tests, you will need : \\\033[0;33mcd, pwd and semicolons (;).\\\033[0m
 echo
 echo echo
 eCho 
@@ -39,12 +38,8 @@ echo ''''''''''$USER''''''''''
 echo """"""""$USER""""""""
 echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER ''
 echo $USER '' $USER $USER '' $USER '' $USER -n $USER
-echo ' \' ' \'
-echo '\" ' " \"\""
-echo \\\" \\\" \\\" \\\"\\\"\\\" \\\'\\\'\\\'
 echo "$USER""$USER""$USER"
 echo text"$USER"test
-echo '$USER' "$USER" "text \' text"
 echo '$USER'
 echo $USER " "
 echo "$USER""Users/$USER/file""'$USER'"'$USER'
@@ -52,9 +47,7 @@ echo "$USER$USER$USER"
 echo '$USER'"$USER"'$USER'
 echo '"$USER"''$USER'"""$USER"
 echo " $USER  "'$PWD'
-echo " $USER  \$ "'$PWD'
 echo $USER=4
-echo $USER=thallard
 echo $USER
 echo $?
 echo $USER213
