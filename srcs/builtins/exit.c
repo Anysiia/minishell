@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:13:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/15 16:18:05 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/24 14:42:06 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ int	exit_builtin(int ac, char **av, t_minishell *minishell)
 		ft_putstr_fd("exit\n", STDERR_FILENO);
 	if (ac != NO_ARGS)
 	{
-		if (ac > 2)
-			return (argument_error(av[CMD]));
 		exit_status = check_first_argument(av);
 		g_state = exit_status;
+		if (g_state != INC_USAGE && ac > 2)
+			return (argument_error(av[CMD]));
 	}
 	else
 		g_state = EXIT_SUCCESS;

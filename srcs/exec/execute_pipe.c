@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:40 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/24 13:08:47 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/24 13:30:22 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static int	permit(const char *path)
 
 static void	error_cmd(char *cmd_name, int errno_code, bool mode)
 {
-	ft_putstr("error of cmd\n");
 	errno = errno_code;
 	if (mode == true)
 		print_errno(cmd_name, EXECVE);
@@ -40,7 +39,6 @@ static void	error_cmd(char *cmd_name, int errno_code, bool mode)
 
 static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 {
-	ft_putendl(cmd->binary);
 	if (cmd->type)
 		handle_error_redir(cmd);
 	else if (redir_file(cmd, fd, fdd, minishell->nb_cmd) == RET_ERROR)
