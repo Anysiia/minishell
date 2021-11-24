@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:14:37 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/15 16:19:50 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/24 10:48:38 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	pwd_builtin(int ac, char **av, t_minishell *minishell)
 
 	if (ac != NO_ARGS && wrong_option(av) == EXIT_FAILURE)
 		return (g_state = EXIT_FAILURE);
-	if (!getcwd(pwd, PATH_MAX))
+	if (!getcwd(pwd, PATH_MAX) || !ft_strcmp(pwd, "/"))
 	{
 		pwd2 = ft_getenv(minishell->envp, "PWD");
 		if (pwd2)
