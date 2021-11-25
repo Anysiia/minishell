@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:40 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/25 11:26:54 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/25 11:38:56 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static void	error_cmd(t_minishell *minishell, char *cmd_name, int errno_code,
 
 static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 {
-	ft_putendl(cmd->binary);
 	if (cmd->type)
 		handle_error_redir(cmd);
 	else if (redir_file(cmd, fd, fdd, minishell->nb_cmd) == RET_ERROR)
