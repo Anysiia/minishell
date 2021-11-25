@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:40 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/24 13:30:22 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/25 11:26:54 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,21 @@ static int	permit(const char *path)
 	return (0);
 }
 
-static void	error_cmd(char *cmd_name, int errno_code, bool mode)
+static void	error_cmd(t_minishell *minishell, char *cmd_name, int errno_code,
+	bool mode)
 {
+	ft_putstr("error cmd\n");
 	errno = errno_code;
 	if (mode == true)
 		print_errno(cmd_name, EXECVE);
 	else
 		print_errno(cmd_name, NOT_EXIST);
+	exit_shell(minishell);
 }
 
 static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 {
+	ft_putendl(cmd->binary);
 	if (cmd->type)
 		handle_error_redir(cmd);
 	else if (redir_file(cmd, fd, fdd, minishell->nb_cmd) == RET_ERROR)
@@ -50,13 +54,13 @@ static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 	else if (!ft_strcmp(cmd->binary, "."))
 		print_dot_error(cmd->av[CMD]);
 	else if (!cmd->binary || cmd->binary[0] != '/' || cmd->binary[0] == '.')
-		error_cmd(cmd->av[CMD], ENOENT, true);
+		return (error_cmd(minishell, cmd->av[CMD], ENOENT, true));
 	else if (is_directory(cmd->binary) == RET_ERROR)
-		error_cmd(cmd->av[CMD], ENOENT, false);
+		return (error_cmd(minishell, cmd->av[CMD], ENOENT, false));
 	else if (is_directory(cmd->binary) == 1)
-		error_cmd(cmd->av[CMD], EISDIR, true);
+		return (error_cmd(minishell, cmd->av[CMD], EISDIR, true));
 	else if (permit(cmd->binary) != 1)
-		error_cmd(cmd->av[CMD], EACCES, true);
+		return (error_cmd(minishell, cmd->av[CMD], EACCES, true));
 	else
 	{
 		execve(cmd->binary, cmd->av, minishell->env);
