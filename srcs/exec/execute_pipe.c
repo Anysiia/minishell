@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:40 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/25 11:38:56 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/11/25 14:46:28 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static int	permit(const char *path)
 static void	error_cmd(t_minishell *minishell, char *cmd_name, int errno_code,
 	bool mode)
 {
-	ft_putstr("error cmd\n");
 	errno = errno_code;
 	if (mode == true)
 		print_errno(cmd_name, EXECVE);
