@@ -45,3 +45,4 @@ echo ok "" ok
 echo ok "" "" "" "" "" "" "" "" "" ok
 export OK="ok            ok"
 echo $OK
+echo "$OK"
