@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:24:55 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/02 11:11:22 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/02 13:44:33 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,6 @@ void	print_dot_error(const char *cmd_name)
 	buffer_strlcat(str, cmd_name, MAX_MSG);
 	buffer_strlcat(str, ": ", MAX_MSG);
 	buffer_strlcat(str, ARG_REQUIRED, MAX_MSG);
-	buffer_strlcat(str, "\n", MAX_MSG);
+	buffer_strlcat(str, "\n.: usage: . filename [arguments]\n", MAX_MSG);
 	ft_putstr_fd(str, STDERR_FILENO);
 }
