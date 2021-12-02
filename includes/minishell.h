@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/22 11:30:21 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/02 10:10:35 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	exit_shell(t_minishell *minishell);
 ERRORS
 */
 
+void	buffer_strlcat(char *dst, const char *src, size_t dstsize);
 void	exit_error(t_minishell *minishell, const char *msg);
 void	exit_errno(t_minishell *minishell, const char *msg, int mode);
 void	error_lexer(t_minishell *msh, const char *error, bool quit);

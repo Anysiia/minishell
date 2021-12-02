@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:25:08 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/15 16:26:49 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/02 10:12:18 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,22 @@ void	exit_shell(t_minishell *minishell)
 void	exit_errno(t_minishell *minishell, const char *msg, int mode)
 {
 	print_errno(msg, mode);
+	exit_shell(minishell);
+}
+
+void	exit_error(t_minishell *minishell, const char *msg)
+{
+	char	str[MAX_MSG];
+
+	g_state = EXIT_FAILURE;
+	if (msg)
+	{
+		ft_bzero(str, MAX_MSG);
+		buffer_strlcat(str, SHELL_NAME, MAX_MSG);
+		buffer_strlcat(str, ": ", MAX_MSG);
+		buffer_strlcat(str, msg, MAX_MSG);
+		buffer_strlcat(str, "\n", MAX_MSG);
+		ft_putstr_fd(str, STDERR_FILENO);
+	}
 	exit_shell(minishell);
 }

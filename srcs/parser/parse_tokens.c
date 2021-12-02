@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:23:15 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/15 16:23:48 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/02 10:26:00 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ void	unexpected_token(t_minishell *msh, t_token *tmp)
 	msh->l_state = EXIT_FAILURE;
 	g_state = INC_USAGE;
 	ft_bzero(str, MAX_MSG);
-	ft_strlcpy(str, SHELL_NAME, MAX_MSG);
-	ft_strlcat(str, ": ", MAX_MSG);
-	ft_strlcat(str, "syntax error near unexpected token « ", MAX_MSG);
+	buffer_strlcat(str, SHELL_NAME, MAX_MSG);
+	buffer_strlcat(str, ": ", MAX_MSG);
+	buffer_strlcat(str, "syntax error near unexpected token « ", MAX_MSG);
 	if (tmp->next)
-		ft_strlcat(str, tmp->next->data, MAX_MSG);
+		buffer_strlcat(str, tmp->next->data, MAX_MSG);
 	else
-		ft_strlcat(str, "newline", MAX_MSG);
-	ft_strlcat(str, " »\n", MAX_MSG);
+		buffer_strlcat(str, "newline", MAX_MSG);
+	buffer_strlcat(str, " »\n", MAX_MSG);
 	ft_putstr_fd(str, STDERR_FILENO);
 }
 
