@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 15:07:18 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/15 16:20:59 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/02 11:09:25 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,32 +45,6 @@ void	push_back_var(t_minishell *minishell, char *name, char *value)
 			tmp = tmp->next;
 		tmp->next = new;
 		new->prev = tmp;
-	}
-}
-
-void	print_env(t_env *envlist)
-{
-	t_env	*tmp;
-	int		len1;
-	int		len2;
-
-	tmp = envlist;
-	while (tmp)
-	{
-		if (tmp->name && tmp->content)
-		{
-			len1 = ft_strlen(tmp->name);
-			len2 = ft_strlen(tmp->content);
-			if (write(STDOUT_FILENO, tmp->name, len1) == -1)
-				g_state = 2;
-			if (write(STDOUT_FILENO, "=", 1) == -1)
-				g_state = 2;
-			if (write(STDOUT_FILENO, tmp->content, len2) == -1)
-				g_state = 2;
-			if (write(STDOUT_FILENO, "\n", 1) == -1)
-				g_state = 2;
-		}
-		tmp = tmp->next;
 	}
 }
 

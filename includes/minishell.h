@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/02 10:10:35 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/02 11:09:46 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	push_back_var(t_minishell *minishell, char *name, char *value);
 void	free_node(t_env *tmp);
 void	free_envp(t_env **env);
 void	convert_env_list_in_tab(t_minishell *minishell);
-void	print_env(t_env *envlist);
 size_t	len_name_env(const char *name);
 
 /*

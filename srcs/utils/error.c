@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:24:55 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/02 10:41:35 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/02 11:11:22 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	buffer_strlcat(char *dst, const char *src, size_t dstsize)
 
 	len_dst = ft_strlen(dst);
 	len_src = ft_strlen(src);
-	if (len_src >= dstsize || len_src + len_dst >= dstsize)
+	if (len_src + len_dst >= dstsize)
 	{
 		ft_putstr_fd(dst, STDERR_FILENO);
 		ft_putstr_fd(src, STDERR_FILENO);
