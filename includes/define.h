@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:20 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/23 14:47:54 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/02 09:12:35 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ Errors
 # define MALLOC_ARG_LIST "fatal error: malloc arg list of a command"
 # define SIGN_ERR "fatal error: signal"
 # define MULTILINES "usage: minishell doesn't support multilines"
-# define NOT_IMPLEMENTED "usage: ';' and '\\' not implemented yet"
 # define MALLOC_CREATE_ENV "fatal error: malloc environnement"
 # define DUP_STD_FILENO "fatal error: dup standard fileno"
 # define MALLOC_DUP_ENV "malloc sorted environnement"

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:13:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/24 14:42:06 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/02 09:17:07 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ int	exit_builtin(int ac, char **av, t_minishell *minishell)
 		if (g_state != INC_USAGE && ac > 2)
 			return (argument_error(av[CMD]));
 	}
-	else
-		g_state = EXIT_SUCCESS;
 	exit_shell(minishell);
 	return (g_state);
 }

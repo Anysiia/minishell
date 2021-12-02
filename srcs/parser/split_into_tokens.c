@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:23:46 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/03 11:35:38 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/02 09:12:29 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ int	split_into_tokens(t_minishell *msh, t_lexer *lxr)
 
 	word = NULL;
 	msh->l_state = EXIT_SUCCESS;
-	if (ft_charset_in_str(";\\", lxr->line))
-		error_lexer(msh, NOT_IMPLEMENTED, 0);
 	while (msh->l_state == EXIT_SUCCESS && lxr->line[lxr->index])
 	{
 		if (is_quote(lxr->line[lxr->index]))
