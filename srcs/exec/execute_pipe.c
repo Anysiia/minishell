@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:40 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/25 14:46:28 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/03 11:25:56 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 	else if (permit(cmd->binary) != 1)
 		return (error_cmd(minishell, cmd->av[CMD], EACCES, true));
 	else
-	{
-		execve(cmd->binary, cmd->av, minishell->env);
-		print_errno(cmd->av[CMD], EXECVE);
-	}
+		execve_cmd(minishell, cmd);
 	exit_shell(minishell);
 }
 
