@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:20 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/04 08:42:58 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/04 09:32:55 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ Errors
 # define SIGN_ERR "fatal error: signal"
 # define SEMI_BACKSLASH "warning: ';' and '\\' are not implemented yet - \
 they are considered as normal char\n"
-# define MULTILINES "usage: minishell doesn't support multilines"
+# define INVALID_NEWLINE "syntax error near unexpected token « newline »"
 # define MALLOC_CREATE_ENV "fatal error: malloc environnement"
 # define DUP_STD_FILENO "fatal error: dup standard fileno"
 # define MALLOC_DUP_ENV "malloc sorted environnement"
