@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 11:12:02 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/03 11:21:57 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/04 08:16:50 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,9 @@ void	execve_cmd(t_minishell *minishell, t_cmd *cmd)
 	minishell->cmd = NULL;
 	execve(cmd_name, cmd_arg, minishell->env);
 	print_errno(cmd->av[CMD], EXECVE);
+	ft_freestr(&cmd_name);
+	ft_free_tab(cmd_arg);
+	ft_free_tab(minishell->env);
+	minishell->env = NULL;
+	exit(g_state);
 }
