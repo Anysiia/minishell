@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:23:15 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/02 10:26:00 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/05 16:03:05 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,8 @@ static void	parse_command(t_minishell *minishell, t_token *tmp)
 		}
 	}
 	if (minishell->l_state == EXIT_FAILURE)
-	{
-		free_command(&minishell->cmd);
 		return ;
-	}
 	execute_command(minishell, minishell->cmd);
-	minishell->nb_cmd = 0;
-	free_command(&minishell->cmd);
 }
 
 void	unexpected_token(t_minishell *msh, t_token *tmp)
