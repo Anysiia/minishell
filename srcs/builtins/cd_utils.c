@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 11:46:43 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/15 16:15:17 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/05 13:32:39 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,11 @@ void	cd_minus(t_minishell *minishell)
 {
 	char	*path;
 
-	go_directory(minishell, "OLDPWD");
+	if (go_directory(minishell, "OLDPWD"))
+	{
+		g_state = EXIT_FAILURE;
+		return ;
+	}
 	path = ft_getenv(minishell->envp, "PWD");
 	if (path)
 		ft_putendl_fd(path, STDOUT_FILENO);
