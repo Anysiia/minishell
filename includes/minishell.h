@@ -6,27 +6,17 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/03 11:23:23 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:37:11 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdlib.h>
-# include <stdio.h>
 # include <stdbool.h>
-# include <unistd.h>
-# include <sys/types.h>
 # include <sys/wait.h>
-# include <signal.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-# include <dirent.h>
-# include <string.h>
-# include <stdarg.h>
-# include <errno.h>
-# include <limits.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"

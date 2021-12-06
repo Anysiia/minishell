@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:25:08 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/02 10:12:18 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:48:58 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 void	exit_shell(t_minishell *minishell)
 {

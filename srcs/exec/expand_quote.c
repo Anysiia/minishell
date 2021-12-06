@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:19:38 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/25 14:45:18 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:43:27 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static int	add_variable_content(t_expand *tmp, const char *arg, t_env *env)
 {

@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 15:07:18 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/02 11:09:25 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:42:06 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static t_env	*malloc_env(t_minishell *minishell, char *name, char *value)
 {

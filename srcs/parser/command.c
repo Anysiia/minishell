@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:21:21 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/12 10:23:50 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:44:32 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 t_cmd	*malloc_command(t_minishell *minishell)
 {

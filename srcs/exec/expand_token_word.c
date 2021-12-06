@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:20:05 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/26 13:31:04 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:43:35 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static void	set_arg_on_tab(t_expand *tmp, t_cmd *cmd, int *i)
 {

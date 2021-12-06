@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:24:38 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/02 10:16:41 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:48:47 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 int	argument_error(const char *command_name)
 {

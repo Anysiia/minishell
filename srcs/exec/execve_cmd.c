@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 11:12:02 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/04 08:16:50 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:43:17 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static void	free_cmd_list(t_minishell *minishell, t_cmd *cmd)
 {

@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:13:19 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/15 16:16:16 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:40:39 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 /*
 Recode echo builtin with option -n.

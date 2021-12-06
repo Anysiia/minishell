@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:22:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/05 16:03:00 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:45:28 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 t_lexer	*malloc_lexer(t_minishell *minishell)
 {

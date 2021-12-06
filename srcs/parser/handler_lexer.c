@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:22:29 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/04 09:34:12 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:45:08 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 void	error_lexer(t_minishell *msh, const char *error, bool quit)
 {

@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:11:36 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/03 16:31:57 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:46:28 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static int	expand_var_hd(t_minishell *minishell, char *line, t_expand *tmp)
 {

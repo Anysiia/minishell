@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 10:25:45 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/22 11:34:52 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:42:33 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static void	create_minimal_envlist(t_minishell *minishell, char *name,
 	char *content)

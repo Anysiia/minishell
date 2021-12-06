@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:21:40 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/02 17:21:43 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:43:56 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static char	**check_fail(char **new, int len_tab)
 {

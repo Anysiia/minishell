@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:25:23 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/20 16:51:09 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:49:10 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static int	**sort_env(char **env)
 {

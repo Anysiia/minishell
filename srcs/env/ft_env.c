@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 14:21:26 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/28 16:00:38 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:42:14 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static int	free_var(char *name, char *value)
 {

@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:24:02 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/13 15:24:05 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:46:11 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 t_token	*malloc_token(t_minishell *msh, const char *s, t_token_type token_type)
 {

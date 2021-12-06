@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:14:21 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/15 16:18:41 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:41:05 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 /*
 Recode the export builtin.

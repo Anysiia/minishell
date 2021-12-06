@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 10:24:32 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/03 11:49:19 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:42:25 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static size_t	len_envp(t_env *envp)
 {

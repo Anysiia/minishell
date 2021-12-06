@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:14:37 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/24 10:48:38 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:41:14 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 /*
 Recode pwd builtin. No options.

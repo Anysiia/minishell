@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 13:18:57 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/10/26 13:21:13 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:42:52 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 int	init_expand(t_expand *expand)
 {

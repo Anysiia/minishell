@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:25:49 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/11/15 16:27:17 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:49:18 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 /*
 On waiting command:

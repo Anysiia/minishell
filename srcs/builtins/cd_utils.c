@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 11:46:43 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/05 13:32:39 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/06 08:40:31 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static int	set_pwd(t_minishell *minishell, bool special_case)
 {
