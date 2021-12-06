@@ -4,7 +4,6 @@ NAME =	minishell
 CC =	clang
 
 CFLAGS = -Wall -Werror -Wextra
-#CFLAGS += -fsanitize=address
 
 INCLUDE = -I ./includes/ -I ./LIBFT_DIR/
 
@@ -66,7 +65,7 @@ $(NAME):$(OBJS)
 		@$(MAKE) -j -C ./libft/
 		@echo "\n\033[0;32mCompiling Minishell ..."
 		@$(CC) $(OBJS) $(INCLUDE) $(CFLAGS) ./libft/libft.a -lreadline -o $(NAME)
-		@echo "\n\033[0;35mDone ! Use ./minishell to start"
+		@echo "\n\033[0;35mDone !\nUse ./minishell to start"
 		@echo "\033[0m"
 
 clean:
