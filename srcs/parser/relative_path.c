@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:23:30 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/06 08:45:46 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/07 14:58:25 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,17 @@ static char	*get_path(t_env *envp, char *cmd_name, char **split_path)
 	return (cmd_name);
 }
 
-static char	*get_pwd(t_env *envp, t_cmd *cmd, char **split, char *cmd_name)
+static char	*get_pwd(char *cmd_name)
 {
-	char	*pwd;
+	char	pwd[PATH_MAX];
 
-	pwd = ft_getenv(envp, "PWD");
-	if (!pwd)
+	if (!getcwd(pwd, PATH_MAX))
 	{
-		ft_free_tab(split);
 		ft_freestr(&cmd_name);
-		return (ft_strdup(cmd->av[CMD]));
+		return (NULL);
 	}
 	ft_bzero(cmd_name, PATH_MAX);
 	ft_strlcpy(cmd_name, pwd, PATH_MAX);
-	ft_freestr(&pwd);
 	return (cmd_name);
 }
 
@@ -98,7 +95,7 @@ char	*expand_relative_path(t_env *envp, t_cmd *cmd)
 		return (ft_strdup(cmd->av[CMD]));
 	}
 	if (split[0] && (!ft_strcmp("..", split[0]) || !ft_strcmp(".", split[0])))
-		get_pwd(envp, cmd, split, cmd_name);
+		get_pwd(cmd_name);
 	cmd_name = get_path(envp, cmd_name, split);
 	split = ft_free_tab(split);
 	return (cmd_name);
