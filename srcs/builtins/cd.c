@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:13:07 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/06 08:40:24 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/07 15:16:01 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,15 @@ static int	check_and_change(t_minishell *minishell, char **tabpath, int i,
 {
 	char	*tmp;
 	char	current[PATH_MAX];
+	int		len;
 
-	tmp = join_path(tabpath[i], to_go);
+	len = ft_strlen(tabpath[i]) + ft_strlen(to_go) + 2;
+	tmp = ft_strnew(len);
+	if (!tmp)
+		return (EXIT_FAILURE);
+	ft_strlcpy(tmp, tabpath[i], len);
+	ft_strlcat(tmp, "/", len);
+	ft_strlcat(tmp, to_go, len);
 	if (is_directory(tmp) == 1)
 	{
 		change_directory(minishell, tmp);
