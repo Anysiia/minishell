@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:22:10 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/07 10:20:32 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/07 16:10:05 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	get_input(t_minishell *minishell, int fd, char *ending, int mode)
 			print_error(minishell, EOF_HEREDOC, 0);
 			break ;
 		}
-		else if (line[0] == '\42')
+		else if (line[0] == '\006')
 		{
 			minishell->l_state = 1;
 			return (EXIT_FAILURE);
