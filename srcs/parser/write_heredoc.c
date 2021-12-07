@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:11:36 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/06 08:46:28 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/07 16:50:58 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	add_to_heredoc(t_minishell *minishell, int fd, char *line)
 	}
 }
 
-static void	expand_variable_heredoc(t_minishell *minishell, char *line, int fd)
+static void	expand_variable_iofile(t_minishell *minishell, char *line, int fd)
 {
 	t_expand	tmp;
 	int			ret;
@@ -78,5 +78,5 @@ void	write_heredoc(t_minishell *minishell, char *line, int fd, int mode)
 	if (mode == 1 || (mode == 2 && !ft_test_set(ENV_VAR_SIGN, line)))
 		add_to_heredoc(minishell, fd, line);
 	else
-		expand_variable_heredoc(minishell, line, fd);
+		expand_variable_iofile(minishell, line, fd);
 }
