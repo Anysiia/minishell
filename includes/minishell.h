@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/06 08:37:11 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/07 15:02:01 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ t_cmd	*malloc_command(t_minishell *minishell);
 void	free_command(t_cmd **cmd);
 void	find_command(t_env *envp, t_cmd *cmd);
 int		is_builtin(t_cmd *cmd);
-char	*expand_relative_path(t_env *envp, t_cmd *cmd);
+char	*expand_relative_path(t_env *envp, char *cmd);
 int		is_file(const char *name);
 int		parse_tokens(t_minishell *minishell);
 void	create_new_command(t_minishell *minishell, t_token *list);

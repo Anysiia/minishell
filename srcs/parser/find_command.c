@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:21:50 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/06 08:44:59 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/07 15:03:23 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	find_command(t_env *envp, t_cmd *cmd)
 		return ;
 	if (ft_test_set('.', cmd->av[CMD]))
 	{
-		new = expand_relative_path(envp, cmd);
+		new = expand_relative_path(envp, cmd->av[CMD]);
 		if (new)
 		{
 			ft_freestr(&cmd->binary);
