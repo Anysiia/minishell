@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:22:10 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/07 16:10:05 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/07 17:45:24 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static int	get_input(t_minishell *minishell, int fd, char *ending, int mode)
 		else if (line[0] == '\006')
 		{
 			minishell->l_state = 1;
-			return (EXIT_FAILURE);
+			return (RET_ERROR);
 		}
 		else if (ft_strcmp(line, ending))
 			write_heredoc(minishell, line, fd, mode);
@@ -89,6 +89,13 @@ static int	get_input(t_minishell *minishell, int fd, char *ending, int mode)
 	}
 	ft_freestr(&line);
 	return (EXIT_SUCCESS);
+}
+
+static int	open_heredoc(int ret)
+{
+	if (ret)
+		return (ret);
+	return (open(cmd->hd_name, O_RDONLY));
 }
 
 int	create_heredoc(t_minishell *minishell, t_cmd *cmd, char *ending)
@@ -101,7 +108,7 @@ int	create_heredoc(t_minishell *minishell, t_cmd *cmd, char *ending)
 		return (RET_ERROR);
 	fd = open(cmd->hd_name, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	if (fd == RET_ERROR)
-		return (RET_ERROR);
+		return (fd);
 	if (ft_test_set(WEAK_QUOTE, ending) || ft_test_set(STRONG_QUOTE, ending))
 	{
 		ending_word = remove_all_quote(ending);
@@ -116,7 +123,5 @@ int	create_heredoc(t_minishell *minishell, t_cmd *cmd, char *ending)
 	else
 		ret = get_input(minishell, fd, ending, 2);
 	close_fd(fd);
-	if (ret == EXIT_FAILURE)
-		return (RET_ERROR);
-	return (open(cmd->hd_name, O_RDONLY));
+	return (open_heredoc(ret));
 }

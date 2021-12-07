@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:22:29 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/07 15:47:16 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/07 17:40:02 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*handle_quote(t_minishell *msh, char *word, t_lexer *lexer)
 		error_lexer(msh, INVALID_NEWLINE, 0);
 		g_state = 2;
 	}
-	else;
+	else
 		word = append_char_to_str(msh, word, lexer->line[lexer->index]);
 	return (word);
 }
