@@ -9,6 +9,8 @@ echo stop barking
 echo "bonjour"
 echo bonjour
 echo 'bonjour'
+echo - truc
+echo -
 echo -n bonjour
 echo -nn bonjour
 echo -n -n -n bonjour
