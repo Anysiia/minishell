@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:22:10 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/06 08:44:39 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/07 10:20:32 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static char	*remove_all_quote(const char *str)
 	return (trim);
 }
 
-static void	get_input(t_minishell *minishell, int fd, char *ending, int mode)
+static int	get_input(t_minishell *minishell, int fd, char *ending, int mode)
 {
 	char	*line;
 
@@ -77,7 +77,10 @@ static void	get_input(t_minishell *minishell, int fd, char *ending, int mode)
 			break ;
 		}
 		else if (line[0] == '\42')
+		{
 			minishell->l_state = 1;
+			return (EXIT_FAILURE);
+		}
 		else if (ft_strcmp(line, ending))
 			write_heredoc(minishell, line, fd, mode);
 		else
@@ -85,11 +88,13 @@ static void	get_input(t_minishell *minishell, int fd, char *ending, int mode)
 		ft_freestr(&line);
 	}
 	ft_freestr(&line);
+	return (EXIT_SUCCESS);
 }
 
 int	create_heredoc(t_minishell *minishell, t_cmd *cmd, char *ending)
 {
 	int		fd;
+	int		ret;
 	char	*ending_word;
 
 	if (cmd->heredoc == 0 && name_hd(minishell, cmd) == RET_ERROR)
@@ -105,11 +110,13 @@ int	create_heredoc(t_minishell *minishell, t_cmd *cmd, char *ending)
 			error_lexer(minishell, MALLOC_HD, 1);
 			return (RET_ERROR);
 		}
-		get_input(minishell, fd, ending_word, 1);
+		ret = get_input(minishell, fd, ending_word, 1);
 		ft_freestr(&ending_word);
 	}
 	else
-		get_input(minishell, fd, ending, 2);
+		ret = get_input(minishell, fd, ending, 2);
 	close_fd(fd);
+	if (ret == EXIT_FAILURE)
+		return (RET_ERROR);
 	return (open(cmd->hd_name, O_RDONLY));
 }
