@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:03:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/08 11:49:39 by mjacq            ###   ########.fr       */
+/*   Updated: 2021/12/08 12:02:03 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	wait_command(t_minishell *msh)
 		}
 		reset_lexer(msh->lexer, msh);
 		if (!isatty(0))
-			break ;
+			exit_shell(msh);
 	}
 	return (g_state);
 }
