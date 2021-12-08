@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:55:03 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/08 11:36:23 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/08 12:20:23 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,13 @@ static void	get_filename(t_minishell *minishell, t_cmd *cmd, t_token *token,
 	}
 }
 
+static void	error_manager(t_cmd *cmd, char *filename, t_token *list)
+{
+	cmd->name = filename;
+	cmd->type = list->type;
+	cmd->set_errno = errno;
+}
+
 void	handle_redir(t_minishell *minishell, t_cmd *cmd, t_token *list)
 {
 	int		fd;
@@ -110,9 +117,8 @@ void	handle_redir(t_minishell *minishell, t_cmd *cmd, t_token *list)
 		fd = create_heredoc(minishell, cmd, list->next->data);
 	if (!cmd->type && fd == RET_ERROR)
 	{
-		cmd->name = list->next->data;
-		cmd->type = list->type;
-		cmd->set_errno = errno;
+		error_manager(cmd, filename, list);
+		return ;
 	}
 	if (list->type == TOKEN_GREAT || list->type == TOKEN_DOUBLE_GREAT)
 		cmd->fd_out = fd;

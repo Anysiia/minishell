@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:21:21 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/06 08:44:32 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/08 12:16:39 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	free_command(t_cmd **command)
 		}
 		ft_free_tab(current->av);
 		ft_freestr(&current->binary);
+		ft_freestr(&current->name);
 		free(current);
 		current = next;
 	}
