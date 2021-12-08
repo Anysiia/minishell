@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:21:50 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/07 15:26:40 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/08 10:43:34 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static char	*join_path(t_env *envp, char *path_env, char *cmd)
 		return (NULL);
 	}
 	ft_strlcpy(path, relative_path, len);
+	ft_freestr(&relative_path);
 	ft_strlcat(path, "/", len);
 	ft_strlcat(path, cmd, len);
 	return (path);

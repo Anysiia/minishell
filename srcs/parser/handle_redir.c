@@ -6,12 +6,12 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:55:03 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/08 10:04:18 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/08 10:39:41 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-/*
+
 static int	expand_var_iofile(t_minishell *minishell, char *line, t_expand *tmp)
 {
 	char	*content;
@@ -25,7 +25,7 @@ static int	expand_var_iofile(t_minishell *minishell, char *line, t_expand *tmp)
 	content = get_variable_content(tmp, line, minishell->envp);
 	if (!content)
 		return (NOT_FOUND);
-	ft_charset_in_str(SPLIT_SPACE, content);
+	if (ft_charset_in_str(SPLIT_SPACE, content))
 	{
 		ft_freestr(&content);
 		return (ENV_ERROR);
@@ -41,11 +41,14 @@ static int	expand_var_iofile(t_minishell *minishell, char *line, t_expand *tmp)
 
 static int	expand_quote_iofile(t_env *envp, char *line, t_expand *tmp)
 {
-
-
+	(void)envp;
+	(void)line;
+	(void)tmp;
+	return (EXIT_SUCCESS);
 }
 
-static int	expand_variable_iofile(t_minishell *minishell, t_token *filename)
+static int	expand_iofile(t_minishell *minishell, t_token *filename
+	, char **new_filename)
 {
 	t_expand	tmp;
 	int			ret;
@@ -59,6 +62,8 @@ static int	expand_variable_iofile(t_minishell *minishell, t_token *filename)
 			ret = expand_var_iofile(minishell, filename->data, &tmp);
 		else if (is_quote(filename->data[tmp.j]))
 			ret = expand_quote_iofile(minishell->envp, filename->data, &tmp);
+		else if (filename->data[tmp.j] == '~')
+			ret = expand_tilde(&tmp, filename->data, minishell->envp);
 		else
 			ret = cat_c_to_str(&tmp, filename->data[tmp.j]);
 		tmp.j++;
@@ -69,35 +74,40 @@ static int	expand_variable_iofile(t_minishell *minishell, t_token *filename)
 		error_lexer(minishell, MALLOC_IOFILE, 1);
 	}
 	ft_putstr_fd(tmp.str, STDERR_FILENO);
-	ft_freestr(&tmp.str);
+	*new_filename = tmp.str;
 	return (ret);
-}*/
+}
 
-static void	close_previous_fd(t_cmd *cmd)
+static void	get_filename(t_minishell *minishell, t_cmd *cmd, t_token *token,
+	char **filename)
 {
 	if (cmd->fd_out != NO_REDIR)
 		close_fd(cmd->fd_out);
 	if (cmd->fd_in != NO_REDIR)
 		close_fd(cmd->fd_out);
+	if (token->type == TOKEN_DOUBLE_LESS)
+		return ;
+	if (expand_iofile(minishell, token->next, filename) == ENV_ERROR)
+	{
+		cmd->name = token->next->data;;
+		cmd->type = token->type;
+		cmd->set_errno = ENV_ERROR;
+	}
 }
 
 void	handle_redir(t_minishell *minishell, t_cmd *cmd, t_token *list)
 {
 	int		fd;
+	char	*filename;
 
 	fd = NO_REDIR;
-	close_previous_fd(cmd);
-//	if (expand_variable_iofile(minishell, list->next) == ENV_ERROR)
-//	{
-//		cmd->name = list->next
-//
-//	}
+	get_filename(minishell, cmd, list, &filename);
 	if (!cmd->type && list->type == TOKEN_GREAT)
-		fd = open(list->next->data, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	else if (!cmd->type && list->type == TOKEN_DOUBLE_GREAT)
-		fd = open(list->next->data, O_WRONLY | O_CREAT | O_APPEND, 0664);
+		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0664);
 	else if (!cmd->type && list->type == TOKEN_LESS)
-		fd = open(list->next->data, O_RDONLY, 0664);
+		fd = open(filename, O_RDONLY, 0664);
 	else if (list->type == TOKEN_DOUBLE_LESS)
 		fd = create_heredoc(minishell, cmd, list->next->data);
 	if (!cmd->type && fd == RET_ERROR)
