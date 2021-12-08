@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:55:03 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/08 10:39:41 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/08 11:36:23 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static int	expand_var_iofile(t_minishell *minishell, char *line, t_expand *tmp)
 		return (NOT_FOUND);
 	if (ft_charset_in_str(SPLIT_SPACE, content))
 	{
+		ft_freestr(&tmp->str);
 		ft_freestr(&content);
 		return (ENV_ERROR);
 	}
@@ -39,57 +40,53 @@ static int	expand_var_iofile(t_minishell *minishell, char *line, t_expand *tmp)
 	return (EXIT_SUCCESS);
 }
 
-static int	expand_quote_iofile(t_env *envp, char *line, t_expand *tmp)
+static int	expand_iofile(t_minishell *minishell, char *name,
+	char **new_filename, t_expand *tmp)
 {
-	(void)envp;
-	(void)line;
-	(void)tmp;
-	return (EXIT_SUCCESS);
-}
-
-static int	expand_iofile(t_minishell *minishell, t_token *filename
-	, char **new_filename)
-{
-	t_expand	tmp;
 	int			ret;
 
 	ret = EXIT_SUCCESS;
-	if (init_expand(&tmp))
-		error_lexer(minishell, MALLOC_IOFILE, 1);
-	while (filename->data[tmp.j] && (ret == EXIT_SUCCESS || ret == NOT_FOUND))
+	while (name[tmp->j] && (ret == EXIT_SUCCESS || ret == NOT_FOUND))
 	{
-		if (filename->data[tmp.j] == ENV_VAR_SIGN)
-			ret = expand_var_iofile(minishell, filename->data, &tmp);
-		else if (is_quote(filename->data[tmp.j]))
-			ret = expand_quote_iofile(minishell->envp, filename->data, &tmp);
-		else if (filename->data[tmp.j] == '~')
-			ret = expand_tilde(&tmp, filename->data, minishell->envp);
+		if (name[tmp->j] == ENV_VAR_SIGN && name[tmp->j + 1] == '?')
+			ret = get_last_exit_status(tmp);
+		else if (name[tmp->j] == ENV_VAR_SIGN)
+			ret = expand_var_iofile(minishell, name, tmp);
+		else if (is_quote(name[tmp->j]))
+			ret = expand_quote(tmp, name, minishell->envp);
+		else if (name[tmp->j] == '~')
+			ret = expand_tilde(tmp, name, minishell->envp);
 		else
-			ret = cat_c_to_str(&tmp, filename->data[tmp.j]);
-		tmp.j++;
+			ret = cat_c_to_str(tmp, name[tmp->j]);
+		tmp->j++;
 	}
 	if (ret == RET_ERROR)
 	{
-		ft_freestr(&tmp.str);
+		ft_freestr(&tmp->str);
 		error_lexer(minishell, MALLOC_IOFILE, 1);
 	}
-	ft_putstr_fd(tmp.str, STDERR_FILENO);
-	*new_filename = tmp.str;
+	*new_filename = tmp->str;
 	return (ret);
 }
 
 static void	get_filename(t_minishell *minishell, t_cmd *cmd, t_token *token,
 	char **filename)
 {
+	t_expand	tmp;
+	int			ret;
+
 	if (cmd->fd_out != NO_REDIR)
 		close_fd(cmd->fd_out);
 	if (cmd->fd_in != NO_REDIR)
 		close_fd(cmd->fd_out);
 	if (token->type == TOKEN_DOUBLE_LESS)
 		return ;
-	if (expand_iofile(minishell, token->next, filename) == ENV_ERROR)
+	if (init_expand(&tmp))
+		error_lexer(minishell, MALLOC_IOFILE, 1);
+	ret = expand_iofile(minishell, token->next->data, filename, &tmp);
+	if (ret == ENV_ERROR)
 	{
-		cmd->name = token->next->data;;
+		cmd->name = token->next->data;
 		cmd->type = token->type;
 		cmd->set_errno = ENV_ERROR;
 	}
@@ -101,6 +98,7 @@ void	handle_redir(t_minishell *minishell, t_cmd *cmd, t_token *list)
 	char	*filename;
 
 	fd = NO_REDIR;
+	filename = NULL;
 	get_filename(minishell, cmd, list, &filename);
 	if (!cmd->type && list->type == TOKEN_GREAT)
 		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0664);
@@ -120,4 +118,5 @@ void	handle_redir(t_minishell *minishell, t_cmd *cmd, t_token *list)
 		cmd->fd_out = fd;
 	if (list->type == TOKEN_LESS || list->type == TOKEN_DOUBLE_LESS)
 		cmd->fd_in = fd;
+	ft_freestr(&filename);
 }

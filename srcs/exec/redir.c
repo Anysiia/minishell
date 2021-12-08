@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:20:44 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/06 08:44:08 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/08 11:47:59 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,21 @@
 
 void	handle_error_redir(t_cmd *cmd)
 {
-	errno = cmd->set_errno;
-	print_errno(cmd->name, 0);
+	char	str[MAX_MSG];
+
+	if (cmd->set_errno != ENV_ERROR)
+	{
+		errno = cmd->set_errno;
+		print_errno(cmd->name, 0);
+		return ;
+	}
+	g_state = 1;
+	ft_bzero(str, MAX_MSG);
+	buffer_strlcat(str, SHELL_NAME, MAX_MSG);
+	buffer_strlcat(str, ": ", MAX_MSG);
+	buffer_strlcat(str, cmd->name, MAX_MSG);
+	buffer_strlcat(str, " ambiguous redirect\n", MAX_MSG);
+	ft_putstr_fd(str, STDERR_FILENO);
 }
 
 int	redir_file(t_cmd *cmd, int *fd, int fdd, int nb_cmd)
