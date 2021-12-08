@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:20:44 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/08 11:47:59 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/08 17:31:47 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,6 @@ void	default_fd(t_minishell *minishell)
 
 void	close_fd(int fd)
 {
-	if (fd > 0)
+	if (fd >= 0)
 		close(fd);
 }
