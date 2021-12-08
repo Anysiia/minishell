@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:20:44 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/08 17:54:48 by mjacq            ###   ########.fr       */
+/*   Updated: 2021/12/08 18:51:59 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	redir_file(t_cmd *cmd, int *fd, int fdd, int nb_cmd)
 	{
 		close_fd(fd[1]);
 		close_fd(fd[0]);
-		close_fd(fdd);
 	}
+	close_fd(fdd);
 	if (cmd->fd_in != NO_REDIR)
 	{
 		if (dup2(cmd->fd_in, STDIN_FILENO) < 0)
