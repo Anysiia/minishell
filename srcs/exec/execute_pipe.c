@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:40 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/06 08:43:09 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/08 18:32:47 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,12 @@ static void	exec_cmd(t_minishell *minishell, t_cmd *cmd, int *fd, int fdd)
 	if (cmd->type)
 		handle_error_redir(cmd);
 	else if (redir_file(cmd, fd, fdd, minishell->nb_cmd) == RET_ERROR)
+	{
+		close(fdd);
 		exit_shell(minishell);
-	else if (cmd->ac == 0)
+	}
+	close_fd(fdd);
+	if (cmd->ac == 0)
 		g_state = 0;
 	else if (cmd->is_builtin == true)
 		cmd->command(cmd->ac, cmd->av, minishell);
@@ -101,7 +105,8 @@ void	execute_pipe(t_minishell *minishell, t_cmd *command)
 			exec_cmd(minishell, tmp, fd, fdd);
 		if (minishell->nb_cmd > 1)
 			close_fd(fd[1]);
-		close_fd(fdd);
+		if (fdd)
+			close_fd(fdd);
 		fdd = fd[0];
 		tmp = tmp->next;
 	}
