@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:03:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/07 16:13:00 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/08 11:49:39 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,15 @@ static int	wait_command(t_minishell *msh)
 	while (1)
 	{
 		register_signal(msh);
-		msh->lexer->line = readline(create_prompt(str, msh->envp));
+		if (isatty(0))
+			msh->lexer->line = readline(create_prompt(str, msh->envp));
+		else
+			get_next_line(0, &msh->lexer->line);
 		if (!msh->lexer->line)
 			exit_ctrl_d(msh);
 		if (msh->lexer->line[0] == '\006')
 			msh->l_state = 1;
-		if (!msh->l_state)
+		if (!msh->l_state && isatty(0))
 			add_history(msh->lexer->line);
 		if (!msh->l_state)
 		{
@@ -38,6 +41,8 @@ static int	wait_command(t_minishell *msh)
 			parse_tokens(msh);
 		}
 		reset_lexer(msh->lexer, msh);
+		if (!isatty(0))
+			break ;
 	}
 	return (g_state);
 }
