@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:21:00 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/06 08:44:19 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/08 13:28:18 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ static char	*get_variable_name(t_expand *tmp, const char *arg)
 	char	*name;
 
 	len = 0;
-	while (arg[tmp->j + len]
-		&& (ft_isalnum(arg[tmp->j + len]) || arg[tmp->j + len] == '_'))
+	while (arg[tmp->j + len] && char_var(arg[tmp->j + len]))
 		len++;
 	if (len < 1 || ft_isdigit(arg[tmp->j]))
 		return (NULL);
@@ -92,4 +91,10 @@ int	get_last_exit_status(t_expand *tmp)
 	ft_strlcat(tmp->str, exit_value, ARG_LEN * tmp->len);
 	ft_freestr(&exit_value);
 	return (EXIT_SUCCESS);
+}
+
+int	char_var(int c)
+{
+	return ((c >= 48 && c <= 57) || (c >= 65 && c <= 90)
+		|| (c >= 97 && c <= 122) || c == '_');
 }

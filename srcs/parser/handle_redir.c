@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:55:03 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/08 12:20:23 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/08 13:24:54 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static int	expand_var_iofile(t_minishell *minishell, char *line, t_expand *tmp)
 {
@@ -19,8 +19,8 @@ static int	expand_var_iofile(t_minishell *minishell, char *line, t_expand *tmp)
 
 	if (!line[tmp->j + 1] || line[tmp->j + 1] == '$')
 		return (cat_c_to_str(tmp, '$'));
-	if (!ft_isalnum(line[tmp->j + 1]))
-		return (EXIT_SUCCESS);
+	if (!char_var(line[tmp->j + 1]))
+		return (cat_c_to_str(tmp, line[tmp->j]));
 	tmp->j++;
 	content = get_variable_content(tmp, line, minishell->envp);
 	if (!content)
@@ -50,7 +50,7 @@ static int	expand_iofile(t_minishell *minishell, char *name,
 	{
 		if (name[tmp->j] == ENV_VAR_SIGN && name[tmp->j + 1] == '?')
 			ret = get_last_exit_status(tmp);
-		else if (name[tmp->j] == ENV_VAR_SIGN)
+		else if (name[tmp->j] == ENV_VAR_SIGN && char_var(name[tmp->j + 1]))
 			ret = expand_var_iofile(minishell, name, tmp);
 		else if (is_quote(name[tmp->j]))
 			ret = expand_quote(tmp, name, minishell->envp);

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:11:36 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/07 16:50:58 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/08 13:27:38 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static int	expand_var_hd(t_minishell *minishell, char *line, t_expand *tmp)
 
 	if (!line[tmp->j + 1] || line[tmp->j + 1] == '$')
 		return (cat_c_to_str(tmp, '$'));
-	if (!ft_isalnum(line[tmp->j + 1]))
-		return (EXIT_SUCCESS);
+	if (!char_var(line[tmp->j + 1]))
+		return (cat_c_to_str(tmp, '$'));
 	tmp->j++;
 	content = get_variable_content(tmp, line, minishell->envp);
 	if (!content)
@@ -58,7 +58,7 @@ static void	expand_variable_iofile(t_minishell *minishell, char *line, int fd)
 		return (error_lexer(minishell, MALLOC_HD, 1));
 	while (line[tmp.j] && ret != RET_ERROR)
 	{
-		if (line[tmp.j] == ENV_VAR_SIGN)
+		if (line[tmp.j] == ENV_VAR_SIGN && char_var(line[tmp.j + 1]))
 			ret = expand_var_hd(minishell, line, &tmp);
 		else
 			ret = cat_c_to_str(&tmp, line[tmp.j]);

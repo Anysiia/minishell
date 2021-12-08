@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:20:24 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/06 08:43:44 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/08 13:26:51 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,10 @@ int	expand_variable(t_cmd *cmd, t_expand *tmp, int *i, t_env *env)
 	tmp->var = true;
 	if (!cmd->av[*i][tmp->j + 1] || cmd->av[*i][tmp->j + 1] == '$')
 		return (cat_c_to_str(tmp, '$'));
-	else if (ft_isalnum(cmd->av[*i][tmp->j + 1]))
+	else if (char_var(cmd->av[*i][tmp->j + 1]))
 		return (add_variable(cmd, tmp, i, env));
 	else if (cmd->av[*i][tmp->j + 1] == '?')
 		return (get_last_exit_status(tmp));
 	else
-		return (EXIT_SUCCESS);
+		return (cat_c_to_str(tmp, '$'));
 }
