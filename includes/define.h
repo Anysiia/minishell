@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:20 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/04 09:32:55 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/08 09:55:39 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ Len max of a path (1024 on mac, 4096 on linux VM)
 # define GREAT 4
 
 # define NO_REDIR -2
+# define ENV_ERROR -3
 
 /*
  When  a command terminates on a fatal signal whose number is N, Bash uses the
@@ -81,6 +82,7 @@ Errors
 # define MALLOC_TOKEN "fatal error: malloc new token"
 # define MALLOC_TOKEN_DATA "fatal error: malloc token data"
 # define MALLOC_COMMAND "fatal error: malloc new command"
+# define MALLOC_IOFILE "fatal error: malloc iofile expansion"
 # define MALLOC_HD "fatal error: malloc"
 # define MALLOC_ARG_LIST "fatal error: malloc arg list of a command"
 # define SIGN_ERR "fatal error: signal"

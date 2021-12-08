@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:22:10 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/07 17:45:24 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/08 08:22:59 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ static int	get_input(t_minishell *minishell, int fd, char *ending, int mode)
 		}
 		else if (line[0] == '\006')
 		{
+			close_fd(fd);
 			minishell->l_state = 1;
 			return (RET_ERROR);
 		}
@@ -91,7 +92,7 @@ static int	get_input(t_minishell *minishell, int fd, char *ending, int mode)
 	return (EXIT_SUCCESS);
 }
 
-static int	open_heredoc(int ret)
+static int	open_heredoc(t_cmd *cmd, int ret)
 {
 	if (ret)
 		return (ret);
@@ -123,5 +124,5 @@ int	create_heredoc(t_minishell *minishell, t_cmd *cmd, char *ending)
 	else
 		ret = get_input(minishell, fd, ending, 2);
 	close_fd(fd);
-	return (open_heredoc(ret));
+	return (open_heredoc(cmd, ret));
 }
