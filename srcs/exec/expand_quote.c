@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:19:38 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/06 08:43:27 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/08 13:52:38 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ static int	expand_weak_quote(t_expand *tmp, const char *arg, t_env *env)
 			{
 				if (arg[tmp->j + 1] == '?')
 					ret = get_last_exit_status(tmp);
-				else
+				else if (char_var(arg[tmp->j + 1]))
 					ret = add_variable_content(tmp, arg, env);
+				else
+					ret = cat_c_to_str(tmp, arg[tmp->j]);
 			}
 			else
 				ret = cat_c_to_str(tmp, arg[tmp->j]);
