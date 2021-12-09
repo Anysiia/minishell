@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:21:36 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/07 16:56:23 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 17:09:37 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,36 +37,6 @@ static int	get_arg_count(t_minishell *msh, t_token *list)
 	}
 	return (arg);
 }
-
-/*
-static void	handle_redir(t_minishell *minishell, t_cmd *cmd, t_token *list)
-{
-	int		fd;
-
-	fd = NO_REDIR;
-	if (cmd->fd_out != NO_REDIR)
-		close_fd(cmd->fd_out);
-	if (cmd->fd_in != NO_REDIR)
-		close_fd(cmd->fd_out);
-	if (!cmd->type && list->type == TOKEN_GREAT)
-		fd = open(list->next->data, O_WRONLY | O_CREAT | O_TRUNC, 0664);
-	else if (!cmd->type && list->type == TOKEN_DOUBLE_GREAT)
-		fd = open(list->next->data, O_WRONLY | O_CREAT | O_APPEND, 0664);
-	else if (!cmd->type && list->type == TOKEN_LESS)
-		fd = open(list->next->data, O_RDONLY, 0664);
-	else if (list->type == TOKEN_DOUBLE_LESS)
-		fd = create_heredoc(minishell, cmd, list->next->data);
-	if (!cmd->type && fd == RET_ERROR)
-	{
-		cmd->name = list->next->data;
-		cmd->type = list->type;
-		cmd->set_errno = errno;
-	}
-	if (list->type == TOKEN_GREAT || list->type == TOKEN_DOUBLE_GREAT)
-		cmd->fd_out = fd;
-	if (list->type == TOKEN_LESS || list->type == TOKEN_DOUBLE_LESS)
-		cmd->fd_in = fd;
-}*/
 
 static int	get_arg(t_minishell *minishell, t_token *token, t_cmd *cmd)
 {

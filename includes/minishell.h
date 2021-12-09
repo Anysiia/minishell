@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/09 13:46:40 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 17:13:26 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "../libft/libft.h"
+# include "libft.h"
 # include "define.h"
 # include "struct.h"
 
