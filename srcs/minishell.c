@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:03:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/09 10:52:06 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 13:51:17 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	read_input(t_minishell *msh, char *str)
 	int	ret_gnl;
 
 	if (isatty(0))
-		msh->lexer->line = readline(create_prompt(str, msh->envp));
+		msh->lexer->line = readline(create_prompt(str, msh->envp, msh->color));
 	else
 	{
 		ret_gnl = get_next_line(0, &msh->lexer->line);

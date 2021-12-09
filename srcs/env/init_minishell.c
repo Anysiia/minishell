@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 10:25:45 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/09 10:52:01 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 13:55:31 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,10 @@ void	init_minishell(t_minishell *mshell, char **envp)
 {
 	g_state = EXIT_SUCCESS;
 	mshell->gnl_eof = 0;
+	if (envp && envp[0])
+		mshell->color = true;
+	else
+		mshell->color = false;
 	mshell->env = NULL;
 	mshell->envp = NULL;
 	mshell->lexer = NULL;

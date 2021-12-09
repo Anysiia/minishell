@@ -6,11 +6,11 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:24:23 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/06 08:39:46 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 14:13:48 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 static void	exit_code_prompt(char *prompt)
 {
@@ -89,18 +89,22 @@ static void	add_path(char *prompt, t_env *envp)
 	}
 }
 
-char	*create_prompt(char *prompt, t_env *envp)
+char	*create_prompt(char *prompt, t_env *envp, bool color)
 {
+	(void)color;
 	if (!isatty(STDERR_FILENO))
 		return (NULL);
 	ft_bzero(prompt, PATH_MAX);
-	ft_strlcpy(prompt, MAG, PATH_MAX);
-	ft_strlcat(prompt, BLD, PATH_MAX);
+	ft_strlcpy(prompt, MAG BLD, PATH_MAX);
 	ft_strlcat(prompt, SHELL_PROMPT, PATH_MAX);
 	exit_code_prompt(prompt);
 	add_path(prompt, envp);
-	ft_strlcat(prompt, GRN, PATH_MAX);
+	if (color)
+		ft_strlcat(prompt, GRN, PATH_MAX);
+	else
+		ft_strlcat(prompt, NRM, PATH_MAX);
 	ft_strlcat(prompt, "> ", PATH_MAX);
-	ft_strlcat(prompt, NRM, PATH_MAX);
+	if (color)
+		ft_strlcat(prompt, NRM, PATH_MAX);
 	return (prompt);
 }

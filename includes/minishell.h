@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/09 12:01:59 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 13:46:40 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	register_signal(t_minishell *minishell);
 void	exec_signal(t_minishell *minishell);
 int		interrupt_by_signal(void);
 void	handle_signal_error(t_minishell *minishell);
-char	*create_prompt(char *prompt, t_env *envp);
+char	*create_prompt(char *prompt, t_env *envp, bool env_i);
 int		is_directory(const char *path);
 void	exit_shell(t_minishell *minishell);
 

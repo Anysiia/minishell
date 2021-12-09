@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:47 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/09 12:00:48 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 13:50:42 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ struct s_minishell
 	int		back_stdin;
 	int		back_stdout;
 	int		l_state;
+	bool	color;
 	int		gnl_eof;
 	char	**env;
 	t_env	*envp;
