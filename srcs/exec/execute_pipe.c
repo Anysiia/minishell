@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:18:40 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/06 08:43:09 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 09:06:33 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	execute_pipe(t_minishell *minishell, t_cmd *command)
 	pid_t	pid;
 
 	tmp = command;
-	fdd = 0;
+	fdd = NO_REDIR;
 	while (tmp)
 	{
 		if (tmp->next && pipe(fd) < 0)
