@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 11:46:43 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/06 08:40:31 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 10:11:45 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ static int	set_pwd(t_minishell *minishell, bool special_case)
 	else
 	{
 		if (!getcwd(path, PATH_MAX))
+		{
+			ft_freestr(&duppwd);
 			return (RET_ERROR);
+		}
 		path2 = ft_strdup(path);
 	}
 	if (!path2)
@@ -50,7 +53,10 @@ static int	change_old_pwd(t_minishell *minishell)
 	if (!content && !getcwd(path, PATH_MAX))
 	{
 		if (!getcwd(path, PATH_MAX))
+		{
+			ft_freestr(&dupoldpwd);
 			return (RET_ERROR);
+		}
 		return (ft_setenv(minishell, dupoldpwd, content, false));
 	}
 	return (ft_setenv(minishell, dupoldpwd, content, false));
