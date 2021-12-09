@@ -1,7 +1,7 @@
 
 NAME =	minishell
 
-CC =	clang
+CC =	cc
 
 CFLAGS = -Wall -Werror -Wextra
 
