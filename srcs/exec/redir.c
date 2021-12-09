@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:20:44 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/09 09:05:14 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 09:31:34 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,10 @@ int	redir_file(t_cmd *cmd, int *fd, int fdd, int nb_cmd)
 
 void	default_fd(t_minishell *minishell)
 {
+	close_fd(STDIN_FILENO);
 	if (dup2(minishell->back_stdin, STDIN_FILENO) == RET_ERROR)
 		exit_errno(minishell, "dup default fd", DUP);
+	close_fd(STDOUT_FILENO);
 	if (dup2(minishell->back_stdout, STDOUT_FILENO) == RET_ERROR)
 		exit_errno(minishell, "dup default fd", DUP);
 }
