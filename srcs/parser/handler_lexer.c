@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:22:29 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/07 17:40:02 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 12:15:49 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ char	*handle_quote(t_minishell *msh, char *word, t_lexer *lexer)
 	lexer->index++;
 	while (lexer->line[lexer->index] && lexer->line[lexer->index] != c)
 	{
+		if (lexer->line[lexer->index] == '\\' && c == WEAK_QUOTE)
+			warning_semi_backslash(lexer, lexer->line[lexer->index]);
 		word = append_char_to_str(msh, word, lexer->line[lexer->index]);
 		lexer->index++;
 	}

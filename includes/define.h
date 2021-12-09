@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:20 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/08 09:55:39 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 12:11:24 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,10 @@ Errors
 # define SIGN_ERR "fatal error: signal"
 # define SEMI_BACKSLASH "warning: ';' and '\\' are not implemented yet - \
 they are considered as normal char\n"
+# define ERR_BACKSLASH "warning: '\\' is not implemented yet - \
+'\\' is considered as normal char\n"
+# define ERR_SEMI "warning: ';' is not implemented yet - \
+';' is considered as normal char\n"
 # define INVALID_NEWLINE "syntax error near unexpected token « newline »"
 # define MALLOC_CREATE_ENV "fatal error: malloc environnement"
 # define DUP_STD_FILENO "fatal error: dup standard fileno"

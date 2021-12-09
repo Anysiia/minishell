@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:47 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/09 10:33:31 by mjacq            ###   ########.fr       */
+/*   Updated: 2021/12/09 12:00:48 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_lexer
 {
 	char		*line;
 	int			index;
+	bool		warning;
 	t_token		*tokens;
 }				t_lexer;
 

@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:23:46 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/07 15:53:51 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 12:13:28 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,27 @@ void	add_token(t_minishell *minishell, char *s, int type)
 	}
 }
 
-/*void	print_lexer(t_lexer *lexer)
+void	warning_semi_backslash(t_lexer *lexer, char c)
 {
-	t_token	*to_print;
-
-	to_print = lexer->tokens;
-	while (to_print)
+	if (lexer->warning == false)
 	{
-		printf("[%ld] %s - %d\n", lexer->size, to_print->data, to_print->type);
-		to_print = to_print->next;
+		lexer->warning = true;
+		if (c == '\\')
+		{
+			if (ft_test_set(';', lexer->line))
+				ft_putstr_fd(SEMI_BACKSLASH, STDERR_FILENO);
+			else
+				ft_putstr_fd(ERR_BACKSLASH, STDERR_FILENO);
+		}
+		if (c == ';')
+		{
+			if (ft_test_set('\\', lexer->line))
+				ft_putstr_fd(SEMI_BACKSLASH, STDERR_FILENO);
+			else
+				ft_putstr_fd(ERR_SEMI, STDERR_FILENO);
+		}
 	}
-}*/
+}
 
 int	split_into_tokens(t_minishell *msh, t_lexer *lxr)
 {
@@ -61,10 +71,10 @@ int	split_into_tokens(t_minishell *msh, t_lexer *lxr)
 
 	word = NULL;
 	msh->l_state = EXIT_SUCCESS;
-	if (ft_charset_in_str(";\\", lxr->line))
-		ft_putstr_fd(SEMI_BACKSLASH, STDERR_FILENO);
 	while (msh->l_state == EXIT_SUCCESS && lxr->line[lxr->index])
 	{
+		if (lxr->line[lxr->index] == ';' || lxr->line[lxr->index] == '\\')
+			warning_semi_backslash(lxr, lxr->line[lxr->index]);
 		if (is_quote(lxr->line[lxr->index]))
 			word = handle_quote(msh, word, lxr);
 		else if (ft_test_set(lxr->line[lxr->index], METACHARACTER))

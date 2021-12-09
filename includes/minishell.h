@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:27:33 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/08 13:19:21 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 12:01:59 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,5 +136,6 @@ bool	is_redir(t_token *token);
 void	handle_redir(t_minishell *minishell, t_cmd *cmd, t_token *list);
 int		create_heredoc(t_minishell *minishell, t_cmd *cmd, char *ending);
 void	write_heredoc(t_minishell *msh, char *line, int fd, int mode);
+void	warning_semi_backslash(t_lexer *lexer, char c);
 
 #endif
