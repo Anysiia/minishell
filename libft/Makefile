@@ -6,7 +6,7 @@
 #    By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/13 15:42:19 by cmorel-a          #+#    #+#              #
-#    Updated: 2021/10/13 17:18:04 by cmorel-a         ###   ########.fr        #
+#    Updated: 2021/12/09 11:38:31 by cmorel-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ SRCS =	./ft_atoi.c \
 		./gnl.c
 
 OBJS = ${SRCS:.c=.o}
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 LIBMAKER = ar rcs
 
