@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 14:21:26 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/08 13:26:28 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 13:21:57 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_setenv(t_minishell *minishell, char *name, char *value, bool join)
 		{
 			if (join == true)
 				tmp->content = ft_strjoin_free_all(tmp->content, value);
-			else
+			else if (value)
 			{
 				ft_freestr(&tmp->content);
 				tmp->content = value;

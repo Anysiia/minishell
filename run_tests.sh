@@ -84,7 +84,7 @@ run_basic_tests(){#{{{
 	t 'echo -nfds fsd'
 	t 'echo'
 	# Bultin: export
-	# t 'export lll=ooo -fdsfs=fds xxx=iii; echo $lll $fdsfs $xxx; export lll+=yo; echo $lll; export xxx; echo $xxx; export cc; echo $cc; export HELLO_WORLD=yo! ; echo $HELLO_WORLD; echo "$cc"' # export is not supposed to take args anymore
+	t 'export lll=ooo -fdsfs=fds xxx=iii; echo $lll $fdsfs $xxx; export lll+=yo; echo $lll; export xxx; echo $xxx; export cc; echo $cc; export HELLO_WORLD=yo! ; echo $HELLO_WORLD; echo "$cc"' # export is not supposed to take args anymore
 	# t 'export' #issue with process substitution and very long variables
 	# Builtin: unset
 	t 'unset lll -fdsfs LANG=fds xxx; echo $lll $fdsfs $xxx $LANG'
