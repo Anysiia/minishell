@@ -1,17 +1,17 @@
 #! /usr/bin/env zsh
 
 dir="$PWD"
-build() {
-	[ ! -d .build ] && mkdir .build
-
-	cd .build
-	if cmake .. && make ; then
-		[ ! -L ../compile_commands.json ] && ln -s "$PWD/compile_commands.json" ../compile_commands.json
-	else
-		echo "\e[31mFail to build.\e[0m"
-		exit 1
-	fi
-}
+# build() {
+# 	[ ! -d .build ] && mkdir .build
+#
+# 	cd .build
+# 	if cmake .. && make ; then
+# 		[ ! -L ../compile_commands.json ] && ln -s "$PWD/compile_commands.json" ../compile_commands.json
+# 	else
+# 		echo "\e[31mFail to build.\e[0m"
+# 		exit 1
+# 	fi
+# }
 
 title_tests() {
 	printf "\n\e[36m >>>>>>>>><<<<<<<<<\n"
@@ -19,7 +19,7 @@ title_tests() {
 				printf "\n >>>>>>>>><<<<<<<<<\e[0m\n\n"
 }
 
-build
+# build
 title_tests
 
 minishell="$(realpath ./minishell)"
@@ -29,7 +29,7 @@ failure_count=0
 # Test diff with bash
 t() {
 	cd /tmp
-	local bash_diff="$(diff <(echo "$@" | $minishell) <(echo "$@" | bash))"
+	local bash_diff="$(diff <(echo "$@" | tr -s \; "\n" | tr -s \\ / 2>/dev/null | $minishell) <(echo "$@" | tr -s \; "\n" | tr -s \\ / 2>/dev/null | bash))"
 	if [ -n "$bash_diff" ]; then
 		printf "❌\e[31m Error:\e[33m > %s \e[0m (diff: me / bash)\n%s\n" "$@" "$bash_diff"
 		((failure_count++))
@@ -102,8 +102,8 @@ printf "\n\e[37m >>>>>>>>>>><<<<<<<<<<<\n"
 t_redir() {
 	cd /tmp
 
-	local cmd="$(printf "$@")"
-	local bash_result="$(printf "$@" | bash)"
+	local cmd="$(printf "$@" | tr -s \; "\n" | tr -s \\ / 2>/dev/null)"
+	local bash_result="$(printf "$@" | tr -s \; "\n" | tr -s \\ / 2>/dev/null| bash)"
 	local bash_diff
 	local -a bash_file_content
 	local -a mini_file_content
@@ -119,7 +119,7 @@ t_redir() {
 	done
 
 	# stdout diff
-	local minishell_result="$(printf "$@" | $minishell)"
+	local minishell_result="$(printf "$@" | tr -s \; "\n" | tr -s \\ / 2>/dev/null | $minishell)"
 	bash_diff="$(diff <(echo "$minishell_result") <(echo "$bash_result"))"
 
 	# record file content from minishell and diff with bash
@@ -169,9 +169,9 @@ rv() {
 	cd /tmp
 	touch test_file
 	cmd="$@"
-	echo "$cmd" | $minishell >/dev/null
+	echo "$cmd" | tr -s \; "\n" | tr -s \\ / 2>/dev/null| $minishell >/dev/null
 	ret_mini="$?"
-	echo "$cmd" | bash >/dev/null
+	echo "$cmd" | tr -s \; "\n" | tr -s \\ / 2>/dev/null| bash >/dev/null
 	ret_bash="$?"
 	if [ "$ret_mini" -ne "$ret_bash" ]; then
 		printf "❌\e[31m Error:\e[33m > %s \e[0m (return: me[%d] - bash[%d])\n%s\n" "$cmd" "$ret_mini" "$ret_bash"
@@ -217,7 +217,7 @@ leak_test() {
 	cmd="$@"
 	if [ "$(uname)" = "Darwin" ]; then
 		touch ./minishell_leak_report # to test leaks when executing a file without permission
-		echo "$cmd" | $minishell -leaks ${opt:-} > /dev/null & pid=$!
+		echo "$cmd" | tr -s \; "\n" | tr -s \\ / | $minishell -leaks ${opt:-} > /dev/null & pid=$!
 		(leaks $pid | rg -A2 LEAK) && printf "\e[33mwith command: $cmd\e[0m\n" && ((leaks++))
 		rm ./minishell_leak_report
 	elif ! which valgrind >/dev/null; then
