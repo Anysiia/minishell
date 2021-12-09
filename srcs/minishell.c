@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 15:03:59 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/08 12:02:03 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 10:43:10 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,26 @@ static void	exit_ctrl_d(t_minishell *minishell)
 	exit_shell(minishell);
 }
 
+static void	read_input(t_minishell *msh, char *str)
+{
+	int	ret_gnl;
+
+	if (isatty(0))
+		msh->lexer->line = readline(create_prompt(str, msh->envp));
+	else
+	{
+		msh->gnl_eof = 0;
+		ret_gnl = get_next_line(0, &msh->lexer->line);
+		if (ret_gnl < 0)
+		{
+			g_state = 1;
+			exit_shell(msh);
+		}
+		else if (!ret_gnl)
+			msh->gnl_eof = 1;
+	}
+}
+
 static int	wait_command(t_minishell *msh)
 {
 	char	str[PATH_MAX];
@@ -25,10 +45,7 @@ static int	wait_command(t_minishell *msh)
 	while (1)
 	{
 		register_signal(msh);
-		if (isatty(0))
-			msh->lexer->line = readline(create_prompt(str, msh->envp));
-		else
-			get_next_line(0, &msh->lexer->line);
+		read_input(msh, str);
 		if (!msh->lexer->line)
 			exit_ctrl_d(msh);
 		if (msh->lexer->line[0] == '\006')
@@ -41,7 +58,7 @@ static int	wait_command(t_minishell *msh)
 			parse_tokens(msh);
 		}
 		reset_lexer(msh->lexer, msh);
-		if (!isatty(0))
+		if (!isatty(0) && msh->gnl_eof)
 			exit_shell(msh);
 	}
 	return (g_state);
