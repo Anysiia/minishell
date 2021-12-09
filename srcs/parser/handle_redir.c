@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:55:03 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/08 13:24:54 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 11:05:00 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static void	get_filename(t_minishell *minishell, t_cmd *cmd, t_token *token,
 	ret = expand_iofile(minishell, token->next->data, filename, &tmp);
 	if (ret == ENV_ERROR)
 	{
-		cmd->name = token->next->data;
+		cmd->name = ft_strdup(token->next->data);
 		cmd->type = token->type;
 		cmd->set_errno = ENV_ERROR;
 	}
