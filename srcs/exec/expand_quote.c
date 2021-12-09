@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:19:38 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/08 13:52:38 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 08:41:15 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,26 @@ static int	add_variable_content(t_expand *tmp, const char *arg, t_env *env)
 	return (EXIT_SUCCESS);
 }
 
+
+static int	expand_var_in_quote(t_expand *tmp, const char *arg, t_env *env)
+{
+	int	ret;
+
+	if (arg[tmp->j + 1] != WEAK_QUOTE && arg[tmp->j + 1] != '$'
+		&& !ft_test_set(arg[tmp->j + 1], SPLIT_SPACE))
+	{
+		if (arg[tmp->j + 1] == '?')
+			ret = get_last_exit_status(tmp);
+		else if (char_var(arg[tmp->j + 1]))
+			ret = add_variable_content(tmp, arg, env);
+		else
+			ret = cat_c_to_str(tmp, arg[tmp->j]);
+	}
+	else
+		ret = cat_c_to_str(tmp, arg[tmp->j]);
+	return (ret);
+}
+
 static int	expand_weak_quote(t_expand *tmp, const char *arg, t_env *env)
 {
 	int	ret;
@@ -38,20 +58,7 @@ static int	expand_weak_quote(t_expand *tmp, const char *arg, t_env *env)
 	while (arg[tmp->j] && arg[tmp->j] != WEAK_QUOTE)
 	{
 		if (arg[tmp->j] == '$')
-		{
-			if (arg[tmp->j + 1] != WEAK_QUOTE && arg[tmp->j + 1] != '$'
-				&& !ft_test_set(arg[tmp->j + 1], SPLIT_SPACE))
-			{
-				if (arg[tmp->j + 1] == '?')
-					ret = get_last_exit_status(tmp);
-				else if (char_var(arg[tmp->j + 1]))
-					ret = add_variable_content(tmp, arg, env);
-				else
-					ret = cat_c_to_str(tmp, arg[tmp->j]);
-			}
-			else
-				ret = cat_c_to_str(tmp, arg[tmp->j]);
-		}
+			ret = expand_var_in_quote(tmp, arg, env);
 		else
 			ret = cat_c_to_str(tmp, arg[tmp->j]);
 		if (ret == RET_ERROR)
