@@ -5,7 +5,7 @@ CC =	cc
 
 CFLAGS = -Wall -Werror -Wextra
 
-INCLUDE = -I ./includes/ -I ./LIBFT_DIR/
+INCLUDE = -I ./includes/ -Ilibft/
 
 LIBFT_DIR = Libft/
 
