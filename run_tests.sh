@@ -1,35 +1,22 @@
 #! /usr/bin/env zsh
 
 dir="$PWD"
-# build() {
-# 	[ ! -d .build ] && mkdir .build
-#
-# 	cd .build
-# 	if cmake .. && make ; then
-# 		[ ! -L ../compile_commands.json ] && ln -s "$PWD/compile_commands.json" ../compile_commands.json
-# 	else
-# 		echo "\e[31mFail to build.\e[0m"
-# 		exit 1
-# 	fi
-# }
-
-title_tests() {
-	printf "\n\e[36m >>>>>>>>><<<<<<<<<\n"
-				printf "\n > STARTING TESTS <\n"
-				printf "\n >>>>>>>>><<<<<<<<<\e[0m\n\n"
-}
-
-# build
-title_tests
-
 minishell="$(realpath ./minishell)"
 success_count=0
 failure_count=0
 
+title() {#{{{
+	printf "\n\e[36m >>>>>>>>><<<<<<<<<\n"
+				printf "\n > STARTING TESTS <\n"
+				printf "\n >>>>>>>>><<<<<<<<<\e[0m\n\n"
+}
+title
+#}}}
+
 # ============================= TESTS STDIN/OUT ============================== #
 
-# t(): test stdout diff with bash{{{
-t() {
+t() # test stdout diff with bash{{{
+{
 	cd /tmp
 	local bash_diff="$(diff <(echo "$@" | tr -s \; "\n" | tr -s \\ / 2>/dev/null | $minishell) <(echo "$@" | tr -s \; "\n" | tr -s \\ / 2>/dev/null | bash))"
 	if [ -n "$bash_diff" ]; then
@@ -47,8 +34,7 @@ basic_tests() {
 }
 #}}}
 
-# Basic tests:
-run_basic_tests(){
+run_basic_tests(){#{{{
 	basic_tests
 	t 'echo "hello world"'
 	t 'ls -l'
@@ -107,18 +93,13 @@ run_basic_tests(){
 	# fail to open
 	t 'echo hello > i/n/e/x/is/tent'
 }
+#}}}
 run_basic_tests
 
 # ============================ TEST REDIRECTIONS ============================= #
 
-title_redir() {
-printf "\n\e[32m >>>>>>>>>>><<<<<<<<<<<\n"
-			printf "\n > REDIRECTIONS TESTS <\n"
-			printf "\n >>>>>>>>>>><<<<<<<<<<<\e[0m\n\n"
-}
-
-# t_redir() : test redirections{{{
-t_redir() {
+t_redir() # test redirections{{{
+{
 	cd /tmp
 
 	local cmd="$(printf "$@" | tr -s \; "\n" | tr -s \\ / 2>/dev/null)"
@@ -170,27 +151,28 @@ t_redir() {
 	fi
 
 }
+
+title_redir() {
+printf "\n\e[32m >>>>>>>>>>><<<<<<<<<<<\n"
+			printf "\n > REDIRECTIONS TESTS <\n"
+			printf "\n >>>>>>>>>>><<<<<<<<<<<\e[0m\n\n"
+}
 #}}}
 
-run_redir_tests() {
+run_redir_tests() {#{{{
 	title_redir
 	t_redir 'echo hello > %s\n' 'test_redir_file'
 	t_redir 'echo hello world > %1$s; echo yo >> %1$s; head -n1 < %1$s\n' 'test_redir_file'
 	t_redir 'echo hello world > %1$s; echo yo >> %1$s ; cat < %1$s\n' 'test_redir_file'
 	t_redir 'ls /usr > %1$s | cat /etc/hosts | grep lo ; cat %1$s\n' 'test_redir_file'
 }
+#}}}
 run_redir_tests
 
 # ============================ TEST RETURN VALUES ============================ #
 
-title_returns() {
-	printf "\n\e[32m >>>>>>>>>|<<<<<<<<<\n"
-				printf "\n > RET VALUE TESTS <\n"
-				printf "\n >>>>>>>>>|<<<<<<<<<\e[0m\n\n"
-}
-
-# rv() : test return values{{{
-rv() {
+rv() #test return values{{{
+{
 	cd /tmp
 	touch test_file
 	cmd="$@"
@@ -207,9 +189,15 @@ rv() {
 	rm test_file
 	echo
 }
+
+title_returns() {
+	printf "\n\e[32m >>>>>>>>>|<<<<<<<<<\n"
+				printf "\n > RET VALUE TESTS <\n"
+				printf "\n >>>>>>>>>|<<<<<<<<<\e[0m\n\n"
+}
 #}}}
 
-run_return_values_tests(){
+run_return_values_tests(){#{{{
 title_returns
 	rv echo "hello wolrd"
 	rv commande_qui_n_existe_pas argument_a_la_noix
@@ -223,17 +211,12 @@ title_returns
 	rv 'fsdfsd ; exit'
 	rv 'export ='
 }
+#}}}
 run_return_values_tests
 
 # ================================ TEST LEAKS ================================ #
 
 # leak_test() {{{
-title_leaks() {
-	printf "\n\e[32m >>>>>>>>><<<<<<<<<\n"
-				printf "\n > LEAKING  TESTS <\n"
-				printf "\n >>>>>>>>><<<<<<<<<\e[0m\n\n"
-}
-
 leaks=0
 
 leak_report () {
@@ -257,9 +240,15 @@ leak_test() {
 		leak_report
 	fi
 }
+
+title_leaks() {
+	printf "\n\e[32m >>>>>>>>><<<<<<<<<\n"
+				printf "\n > LEAKING  TESTS <\n"
+				printf "\n >>>>>>>>><<<<<<<<<\e[0m\n\n"
+}
 #}}}
 
-run_leak_tests(){
+run_leak_tests(){#{{{
 	title_leaks
 	leak_test echo kanpai
 	leak_test ps -a
@@ -290,9 +279,10 @@ run_leak_tests(){
 	# Unit-test leaks:
 	leak_test -unit-test echo hello
 }
+#}}}
 run_leak_tests
 
-result() {
+result() {#{{{
 	if [ $failure_count -eq 0 ]; then
 		COLOR_FAIL="\e[32m"
 	else
@@ -309,7 +299,7 @@ result() {
 	printf "|| LEAKS: "$COLOR_LEAKS"  %02d\e[36m ||\n" $leaks
 	printf -- "-----------------\e[0m\n"
 }
-
+#}}}
 result
-cd "$dir" ; ctags --excmd=numbers **/*.c **/*.h
+cd "$dir"
 # vim: fdm=marker
