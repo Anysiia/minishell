@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:19:38 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/09 08:41:15 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 10:45:45 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static int	add_variable_content(t_expand *tmp, const char *arg, t_env *env)
 	ft_freestr(&content);
 	return (EXIT_SUCCESS);
 }
-
 
 static int	expand_var_in_quote(t_expand *tmp, const char *arg, t_env *env)
 {
