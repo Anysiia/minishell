@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:55:03 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/09 16:35:37 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 19:06:31 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,11 @@ static void	get_filename(t_minishell *minishell, t_cmd *cmd, t_token *token,
 	t_expand	tmp;
 	int			ret;
 
-	if (cmd->fd_out != NO_REDIR)
+	if ((token->type == TOKEN_GREAT || token->type == TOKEN_DOUBLE_GREAT)
+		&& cmd->fd_out != NO_REDIR)
 		close_fd(cmd->fd_out);
-	if (cmd->fd_in != NO_REDIR)
+	if ((token->type == TOKEN_LESS || token->type == TOKEN_DOUBLE_LESS)
+		&& cmd->fd_in != NO_REDIR)
 		close_fd(cmd->fd_in);
 	if (token->type == TOKEN_DOUBLE_LESS)
 		return ;
