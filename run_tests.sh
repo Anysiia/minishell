@@ -23,6 +23,7 @@ t() # test stdout diff with bash{{{
 		printf "❌\e[31m Error:\e[33m > %s \e[0m (diff: me / bash)\n%s\n" "$@" "$bash_diff"
 		((failure_count++))
 	else
+		printf "✅\n"
 		((success_count++))
 	fi
 }
@@ -137,6 +138,7 @@ t_redir() # test redirections{{{
 			printf "❌\e[31m Error:\e[33m %s \e[0m with file [%s] (diff: me / bash)\n%s\n" "$cmd" "${@[$i]}" "${adiff[$i]}"
 			((failure_count++))
 		else
+		printf "✅\n"
 			((success_count++))
 		fi
 		((i--))
@@ -147,6 +149,7 @@ t_redir() # test redirections{{{
 		printf "❌\e[31m Error:\e[33m %s \e[0m (diff: me / bash)\n%s\n" "$cmd" "$bash_diff"
 		((failure_count++))
 	else
+		printf "✅\n"
 		((success_count++))
 	fi
 
@@ -184,6 +187,7 @@ rv() #test return values{{{
 		printf "❌\e[31m Error:\e[33m > %s \e[0m (return: me[%d] - bash[%d])\n%s\n" "$cmd" "$ret_mini" "$ret_bash"
 		((failure_count++))
 	else
+		printf "✅\n"
 		((success_count++))
 	fi
 	rm test_file
@@ -222,7 +226,7 @@ leaks=0
 leak_report () {
 	local report="$(cat /tmp/minishell_leak_report)"
 	printf "$report"
-	if [ -n "$report" ]; then ((leaks++)); fi
+	if [ -n "$report" ]; then ((leaks++)); else printf "✅\n"; fi
 }
 
 leak_test() {
