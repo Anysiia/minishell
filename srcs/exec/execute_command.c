@@ -12,20 +12,6 @@
 
 #include "minishell.h"
 
-/*static void	print_arg(char **tab)
-{
-	int	i;
-
-	i = 0;
-	printf("List of arguments: \n");
-	while (tab && tab[i])
-	{
-		ft_putendl(tab[i]);
-		i++;
-	}
-	printf("-----------\n");
-}*/
-
 static int	expand_all_args(t_minishell *minishell, t_cmd *command)
 {
 	int		i;
