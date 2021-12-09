@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:55:03 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/09 11:05:00 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 16:00:24 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	get_filename(t_minishell *minishell, t_cmd *cmd, t_token *token,
 	if (init_expand(&tmp))
 		error_lexer(minishell, MALLOC_IOFILE, 1);
 	ret = expand_iofile(minishell, token->next->data, filename, &tmp);
-	if (ret == ENV_ERROR)
+	if (ret == ENV_ERROR || !ft_strcmp(*filename, EMPTY_STRING))
 	{
 		cmd->name = ft_strdup(token->next->data);
 		cmd->type = token->type;

@@ -78,6 +78,7 @@ run_basic_tests(){#{{{
 	# for example the following returns in zsh but not in bash. it's like zsh is wait for last but one pipe, and bash not
 	# t 'grep -R a /usr/share/man > test_file | grep e < test_file | grep e'
 	# Builtin: echo
+	t 'echo - hello world'
 	t 'echo -n hello world'
 	t 'echo -n -n hello world fsdf'
 	t 'echo -n-n hello lala'
