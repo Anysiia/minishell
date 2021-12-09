@@ -6,7 +6,7 @@
 /*   By: cmorel-a <cmorel-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:22:10 by cmorel-a          #+#    #+#             */
-/*   Updated: 2021/12/08 08:22:59 by cmorel-a         ###   ########.fr       */
+/*   Updated: 2021/12/09 16:34:01 by cmorel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int	create_heredoc(t_minishell *minishell, t_cmd *cmd, char *ending)
 		ending_word = remove_all_quote(ending);
 		if (!ending_word)
 		{
+			close_fd(fd);
 			error_lexer(minishell, MALLOC_HD, 1);
 			return (RET_ERROR);
 		}
